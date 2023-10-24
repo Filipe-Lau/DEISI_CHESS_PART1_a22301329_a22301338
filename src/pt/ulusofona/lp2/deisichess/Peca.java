@@ -7,6 +7,7 @@ public class Peca {
     String nomePeca;
     int posX;
     int posY;
+    boolean foiComida = false;
 
     public Peca(String idPeca, int tipoPeca, int equipaPeca, String nomePeca,int posX,int posY) {
         this.idPeca = idPeca;
@@ -19,6 +20,10 @@ public class Peca {
 
     public String getIdPeca() {
         return idPeca;
+    }
+
+    void pecaFoiComida(){
+        foiComida = true;
     }
 
     @Override

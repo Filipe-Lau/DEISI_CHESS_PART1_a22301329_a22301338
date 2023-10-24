@@ -5,18 +5,18 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
 public class GameManager {
-    int boardSize;
-    HashMap<String,Peca> pecaHashMap;
+    Tabuleiro gameBoard = new Tabuleiro();
     public GameManager() {
     }
 
-      boolean loadGame(File file) throws IOException {
+    boolean loadGame(File file) throws IOException {
         // HASHMAP PARA GUARDAR AS PEÇAS
-        this.pecaHashMap = new HashMap<>();
+        gameBoard.pecaHashMap = new HashMap<>();
         // LEITURA DE FICHEIROS
         BufferedReader reader;
         reader = new BufferedReader(new FileReader(file));
@@ -34,7 +34,7 @@ public class GameManager {
         while (line != null) {
             numlinhas++;
             if (numlinhas == 1) {
-               this.boardSize = Integer.parseInt(line); //ESTÁ COMENTADO PARA TESTAR A FUNÇÃO
+               gameBoard.boardSize = Integer.parseInt(line); //ESTÁ COMENTADO PARA TESTAR A FUNÇÃO
                 size = Integer.parseInt(line);
                 System.out.println("size tabuleiro = " + line + "\n");
             } else if (numlinhas == 2) {
@@ -52,13 +52,19 @@ public class GameManager {
                 System.out.println("tipo: " + tipo + "\n");
 
                 int equipa = Integer.parseInt(partes[2].trim());
+                if(equipa == 1) {
+                    gameBoard.numPecasBrancas++;
+                }
+                else {
+                    gameBoard.numPecasPretas++;
+                }
                 System.out.println("equipa: " + equipa + "\n");
 
                 String nome = partes[3].trim();
                 System.out.println("nome: " + nome + "\n");
 
                 Peca peca = new Peca(id, tipo, equipa, nome, 0, 0);
-                pecaHashMap.put(id, peca);
+                gameBoard.pecaHashMap.put(id, peca);
                 System.out.println(peca);
                 count++;
             }
@@ -68,9 +74,9 @@ public class GameManager {
 
                 for (String pos : partes) {
                     if (!Objects.equals(pos, "0")){
-                        pecaHashMap.get(pos).posX = x;
-                        pecaHashMap.get(pos).posY = y;
-                        System.out.println(pecaHashMap.get(pos).toString());
+                        gameBoard.pecaHashMap.get(pos).posX = x;
+                        gameBoard.pecaHashMap.get(pos).posY = y;
+                        System.out.println(gameBoard.pecaHashMap.get(pos).toString());
                     }
                     x++;
                     System.out.println("pos: " + pos);
@@ -86,39 +92,76 @@ public class GameManager {
 
 
     int getBoardSize(){
-        return boardSize;
+        return gameBoard.boardSize;
     }
 
     /*
     boolean move(int x0, int y0, int x1, int y1){
         // SE O boardSize = 4, ENTÃO X E Y SÓ PODEM CHEGAR A 4
         // SE O boardSize = 8, ENTÃO X E Y SÓ PODEM CHEGAR A 8
-    }
-    /*
-    String[] getSquareInfo(int x, int y){
 
+        //SE COMER BRANCA,
+        //peca.pecaFoiComida();
+        //se for 1 branco comido
+        //se for 0 preto comido
+    }
+
+     */
+
+    String[] getSquareInfo(int x, int y){
+        String[]infoSquare = new String[5];
+        for (Peca peca : gameBoard.pecaHashMap.values()) {
+            if(peca.posX == x && peca.posY == y){
+                infoSquare[0] = peca.idPeca;
+                infoSquare[1] = String.valueOf(peca.tipoPeca);
+                infoSquare[2] = String.valueOf(peca.equipaPeca);
+                infoSquare[3] = peca.nomePeca;
+                infoSquare[4] = null;
+            }
+        }
+        return infoSquare;
     }
     String[] getPieceInfo(int ID){
-
+        String[]infoPiece = new String[7];
+        for (Peca peca : gameBoard.pecaHashMap.values()) {
+            if(Integer.parseInt(peca.idPeca) == ID){
+                infoPiece[0] = peca.idPeca;
+                infoPiece[1] = String.valueOf(peca.tipoPeca);
+                infoPiece[2] = String.valueOf(peca.equipaPeca);
+                infoPiece[3] = peca.nomePeca;
+                infoPiece[4] = String.valueOf(peca.foiComida);
+                infoPiece[5] = String.valueOf(peca.posX);
+                infoPiece[6] = String.valueOf(peca.posY);
+            }
+        }
+        return infoPiece;
     }
 
-    String getPieceInfoAsString(int ID){
+    /* String getPieceInfoAsString(int ID){
 
     }
     int getCurrentTeamID(){
+
+    while(!gameOver) {
+
+
+
+    }
 
     }
     boolean gameOver(){
 
     }
-    ArrayList<String> getGameResults(){
+    ArrayList<String> getGameResults() {
 
     }
     JPanel getAuthorsPanel(){
 
     }
 
-*/
+
+     */
+
 
 
 }
