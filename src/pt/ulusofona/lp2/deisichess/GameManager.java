@@ -19,6 +19,11 @@ public class GameManager {
     int vezDeJogar = 0;
     String resultadoJogo = "";
     Tabuleiro gameBoard = new Tabuleiro();
+    int jogadaPretaValida;
+    int jogadaPretaInvalida;
+    int jogadaBrancaValida;
+    int jogadaBrancaInvalida;
+
     public GameManager() {
     }
 
@@ -29,8 +34,6 @@ public class GameManager {
         int x;
         int y = 0;
         int numpecas = 0;
-
-
         String[] partes;
         gameBoard.pecaHashMap = new HashMap<>();
 
@@ -74,6 +77,11 @@ public class GameManager {
 
                 int equipa = Integer.parseInt(partes[2].trim());
                 //System.out.println("equipa: " + equipa + "\n");
+                if (equipa == 0) {
+                    gameBoard.numPecasPretas++;
+                } else {
+                    gameBoard.numPecasBrancas++;
+                }
 
                 String nome = partes[3].trim();
                 //System.out.println("nome: " + nome + "\n");
@@ -92,7 +100,6 @@ public class GameManager {
                         System.out.println(gameBoard.pecaHashMap.toString());
                         gameBoard.pecaHashMap.get(id).posX = x; // ERRO AO TENTAR ABRIR UM JOGO A MEIO DE UM JOGO;
                         gameBoard.pecaHashMap.get(id).posY = y;
-
                     }
                     x++;
                     //System.out.println("pos: " + pos);
@@ -116,6 +123,7 @@ public class GameManager {
 
     public boolean move(int x0, int y0, int x1, int y1) {
         System.out.println("MOVE\n");
+        vezDeJogar = 0;
         // SE O boardSize = 4, ENTÃO X E Y SÓ PODEM CHEGAR A 3
         // SE O boardSize = 8, ENTÃO X E Y SÓ PODEM CHEGAR A 7
         // Peca peca0 = new Peca(); // SITIO DE PARTIDA / PECA QUE ATACA
@@ -126,10 +134,12 @@ public class GameManager {
                 if (peca.posX == x0 && peca.posY == y0) {
                     // VALIDAR QUEM ESTÁ A JOGAR
                     if (getCurrentTeamID() == 1 && peca.equipaPeca == 0) {
-                        peca.jogadaInvalida++;
+                        jogadaBrancaInvalida++;
+                        //peca.jogadaInvalida++;
                         return false;
                     } else if (getCurrentTeamID() == 0 && peca.equipaPeca == 1) {
-                        peca.jogadaInvalida++;
+                        jogadaPretaInvalida++;
+                        //peca.jogadaInvalida++;
                         return false;
                     } else {
                         switch (peca.tipoPeca) {
@@ -145,7 +155,7 @@ public class GameManager {
                                 peca0.idPeca = peca.idPeca;
                             }
                             */
-                                   // peca1Temp(peca, peca1, x1, y1);
+                                    // peca1Temp(peca, peca1, x1, y1);
                              /*
                             if (peca.posX == x1 && peca.posY == y1) {
                                 peca1.idPeca = peca.idPeca;
@@ -158,26 +168,31 @@ public class GameManager {
                                         peca.posX = x1;
                                         peca.posY = y1;
                                         getPieceInfoAsString(Integer.parseInt(peca.idPeca));
-                                        peca.jogadaValida++;
+                                        //peca.jogadaValida++;
                                         if (getCurrentTeamID() == 0) {
+                                            jogadaPretaValida++;
                                             vezDeJogar = 1;
                                         } else {
+                                            jogadaBrancaValida++;
                                             vezDeJogar = 0;
                                         }
                                         return true;
                                     } else {
                                         if (peca.equipaPeca != TESTTemp(x1, y1).equipaPeca) {
-                                            peca.jogadaValida++;
+                                            // peca.jogadaValida++;
+                                            System.out.println(peca.jogadaValida);
                                             gameBoard.pecaHashMap.get(TESTTemp(x1, y1).idPeca).notInJogo();
                                             getSquareInfo(x1, y1);
-                                            peca.posX = TESTTemp(x1, y1).posX;
-                                            peca.posY = TESTTemp(x1, y1).posY;
                                             gameBoard.pecaHashMap.remove(TESTTemp(x1, y1).idPeca);
-                                            if (peca.equipaPeca == 0) { // PECA PRETA COME
+                                            peca.posX = x1;
+                                            peca.posY = y1;
+                                            if (peca.equipaPeca == 0) {// PECA PRETA COME
+                                                jogadaPretaValida++;
                                                 gameBoard.capturadasPorPretas++;
                                                 gameBoard.numPecasBrancas--;
                                                 vezDeJogar = 1;
                                             } else if (peca.equipaPeca == 1) {
+                                                jogadaBrancaValida++;
                                                 gameBoard.capturadasPorBrancas++;
                                                 gameBoard.numPecasPretas--;
                                                 vezDeJogar = 0;
@@ -185,16 +200,26 @@ public class GameManager {
                                             }
                                             //ATUALIZAR AS PECAS DO TABULEIRO
                                             return true;
-
                                         } else {
-                                            peca.jogadaInvalida++;
-                                            return false;
+                                            if (peca.equipaPeca == 1) {
+                                                jogadaBrancaInvalida++;
+                                                //peca.jogadaInvalida++;
+                                            } else {
+                                                jogadaPretaInvalida++;
+                                            }
                                         }
+                                        return false;
                                     }
                                 }
                                 ///////////////////////////////
                                 // NÃO TENHO A CERTEZA DISTO //
-                                peca.jogadaInvalida++;         //
+                                if (peca.equipaPeca == 1) {
+                                    jogadaBrancaInvalida++;
+                                    //peca.jogadaInvalida++;
+                                } else {
+                                    jogadaPretaInvalida++;
+                                }
+                                //peca.jogadaInvalida++;         //
                                 return false;             //
                             ///////////////////////////////
                         }
@@ -203,6 +228,7 @@ public class GameManager {
             }
         }
         //jogadaInvalida++;
+
         return false;
     }
 
@@ -226,6 +252,7 @@ public class GameManager {
         }
         return null;
     }
+
     public Peca peca1Temp(Peca peca, Peca peca1, int x1, int y1) {//É A RAZÃO DE DAR MAL NO estaEmJogo() OU NÃO (ACHO EU); REVER ESTA FUNÇÃO
         for (Peca peca2 : gameBoard.pecaHashMap.values()) {
             if (peca.posX == x1 && peca.posY == y1) {
@@ -288,12 +315,8 @@ public class GameManager {
         }
         for (Peca peca : gameBoard.pecaHashMap.values()) {
             if (peca.posX == x && peca.posY == y) {
-                if (!peca.emJogo){
-                    if (peca.equipaPeca == 1) {
-                        squareInfo[4] = "";
-                    } else {
-                        squareInfo[4] = "";
-                    }
+                if (!peca.emJogo) {
+                    squareInfo[4] = "";
                 }
                 squareInfo[0] = peca.idPeca;
                 squareInfo[1] = String.valueOf(peca.tipoPeca);
@@ -332,7 +355,7 @@ public class GameManager {
         String info = null;
         for (Peca peca : gameBoard.pecaHashMap.values()) {
             if (Integer.parseInt(peca.idPeca) == ID) {
-                if (!peca.emJogo){ // SE A PECA FOI CAPTURADA NÃO MOSTRA MENSAGEM
+                if (!peca.emJogo) { // SE A PECA FOI CAPTURADA NÃO MOSTRA MENSAGEM
                     return info;
                 }
                 info = peca.toString();
@@ -347,8 +370,10 @@ public class GameManager {
     }
 
     public boolean gameOver() {
-        //System.out.println("GAMEOVER\n");
+        System.out.println("GAMEOVER\n");
         // CASO DE EMPATE
+        System.out.println("Num pecas brancas: " + gameBoard.numPecasBrancas);
+        System.out.println("Num pecas pretas: " + gameBoard.numPecasPretas);
         if (gameBoard.numPecasBrancas == 1 && gameBoard.numPecasPretas == 1) {
             resultadoJogo = "EMPATE";
             return true;
@@ -360,7 +385,7 @@ public class GameManager {
         }
         // VITÓRIA PARA AS PRETAS
         else if (gameBoard.numPecasBrancas == 0 && gameBoard.numPecasPretas > 0) {
-            resultadoJogo = "VENCERAM AS PETAS";
+            resultadoJogo = "VENCERAM AS PRETAS";
             return true;
         }
         // JOGO A DECORRER
@@ -379,12 +404,12 @@ public class GameManager {
         gameResult.add("---\n");
         gameResult.add("EQUIPA DAS PRETAS\n");
         gameResult.add(gameBoard.capturadasPorPretas + "\n");
-        gameResult.add(totalValidasPretas() + "\n"); // NUMERO DE JOGADAS
-        gameResult.add(totalInvalidasPretas() + "\n"); // NUMERO DE TENTATIVAS INVALIDAS
+        gameResult.add(jogadaPretaValida + "\n"); // NUMERO DE JOGADAS
+        gameResult.add(jogadaPretaInvalida + "\n"); // NUMERO DE TENTATIVAS INVALIDAS
         gameResult.add("EQUIPA DAS BRANCAS\n");
         gameResult.add(gameBoard.capturadasPorBrancas + "\n");
-        gameResult.add(totalValidasBrancas() + "\n"); // NUMERO DE JOGADAS
-        gameResult.add(totalInvalidasBrancas() + "\n"); // NUMERO DE TENTATIVAS INVALIDAS
+        gameResult.add(jogadaBrancaValida + "\n"); // NUMERO DE JOGADAS
+        gameResult.add(jogadaBrancaInvalida + "\n"); // NUMERO DE TENTATIVAS INVALIDAS
 
         return gameResult;
     }
