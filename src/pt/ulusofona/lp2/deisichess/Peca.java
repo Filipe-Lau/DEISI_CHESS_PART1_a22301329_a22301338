@@ -8,8 +8,13 @@ public class Peca {
     int posX;
     int posY;
     boolean emJogo;
+    int jogadaValida;
+    int jogadaInvalida;
 
-    public Peca(String idPeca, int tipoPeca, int equipaPeca, String nomePeca,int posX,int posY,boolean emJogo) {
+    public Peca() {
+    }
+
+    public Peca(String idPeca, int tipoPeca, int equipaPeca, String nomePeca, int posX, int posY, boolean emJogo,int jogadaValida,int jogadasInvalidas) {
         this.idPeca = idPeca;
         this.tipoPeca = tipoPeca;
         this.equipaPeca = equipaPeca;
@@ -17,18 +22,17 @@ public class Peca {
         this.posX = posX;
         this.posY = posY;
         this.emJogo = emJogo;
+        this.jogadaValida = jogadaValida;
+        this.jogadaInvalida = jogadasInvalidas;
     }
 
     public boolean notInJogo(){
         emJogo = false;
         return false;
     }
-    public boolean isEmJogo() {
-        return emJogo;
-    }
 
     @Override
     public String toString() {
-        return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ " + "(" + posX + "," + posY + ")";
+        return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ " + "(" + posX + "," + posY + ")" + emJogo;
     }
 }
