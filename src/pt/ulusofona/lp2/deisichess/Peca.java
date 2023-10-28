@@ -14,7 +14,7 @@ public class Peca {
     public Peca() {
     }
 
-    public Peca(String idPeca, int tipoPeca, int equipaPeca, String nomePeca, int posX, int posY, String estado, int jogadaValida, int jogadasInvalidas) {
+    public Peca(String idPeca, int tipoPeca, int equipaPeca, String nomePeca, int posX, int posY, String estado) {
         this.idPeca = idPeca;
         this.tipoPeca = tipoPeca;
         this.equipaPeca = equipaPeca;

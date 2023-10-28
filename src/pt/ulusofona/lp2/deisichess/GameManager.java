@@ -91,7 +91,7 @@ public class GameManager {
                 String nome = partes[3].trim();
                 //System.out.println("nome: " + nome + "\n");
 
-                Peca peca = new Peca(id, tipo, equipa, nome, 0, 0, "em jogo", 0, 0);
+                Peca peca = new Peca(id, tipo, equipa, nome, 0, 0, "em jogo");
                 gameBoard.pecaHashMap.put(id, peca);
                 //System.out.println(peca);
                 count++;
@@ -102,7 +102,7 @@ public class GameManager {
 
                 for (String id : partes) {
                     if (!Objects.equals(id, "0")) {
-                        System.out.println(gameBoard.pecaHashMap.toString());
+                        //System.out.println(gameBoard.pecaHashMap.toString());
                         gameBoard.pecaHashMap.get(id).posX = x; // ERRO AO TENTAR ABRIR UM JOGO A MEIO DE UM JOGO;
                         gameBoard.pecaHashMap.get(id).posY = y;
                     }
@@ -121,12 +121,12 @@ public class GameManager {
         return true;
     }
     public int getBoardSize() {
-        System.out.println("BOARDSIZE\n");
+        //System.out.println("BOARDSIZE\n");
         return boardSize;
     }
 
     public boolean move(int x0, int y0, int x1, int y1) {
-        System.out.println("MOVE\n");
+       // System.out.println("MOVE\n");
         //vezDeJogar = 0;
         // SE O boardSize = 4, ENTÃO X E Y SÓ PODEM CHEGAR A 3
         // SE O boardSize = 8, ENTÃO X E Y SÓ PODEM CHEGAR A 7
@@ -362,7 +362,7 @@ public class GameManager {
     }
 
     public String getPieceInfoAsString(int ID) {
-        System.out.println("PIECEINFOASSTRING\n");
+        //System.out.println("PIECEINFOASSTRING\n");
         String info = null;
         for (Peca peca : gameBoard.pecaHashMap.values()) {
             if (Integer.parseInt(peca.idPeca) == ID) {
@@ -381,10 +381,10 @@ public class GameManager {
     }
 
     public boolean gameOver() {
-        System.out.println("GAMEOVER\n");
+        //System.out.println("GAMEOVER\n");
         // CASO DE EMPATE
-        System.out.println("Num pecas brancas: " + gameBoard.numPecasBrancas);
-        System.out.println("Num pecas pretas: " + gameBoard.numPecasPretas);
+        //System.out.println("Num pecas brancas: " + gameBoard.numPecasBrancas);
+        //System.out.println("Num pecas pretas: " + gameBoard.numPecasPretas);
         if (gameBoard.numPecasBrancas == 1 && gameBoard.numPecasPretas == 1) {
             resultadoJogo = "EMPATE";
             return true;
