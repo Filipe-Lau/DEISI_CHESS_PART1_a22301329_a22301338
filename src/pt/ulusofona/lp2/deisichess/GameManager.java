@@ -1,5 +1,6 @@
 package pt.ulusofona.lp2.deisichess;
 
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -10,8 +11,10 @@ import java.util.*;
 POR FAZER:
 * Acabar gameResult() * CONCLUIDO
 * Fazer getAuthorsPanel()
-* Verificar o move() CORRIGIR
-* Partilhar o codigo com o professor
+* Verificar o move() CORRIGIR * CONCLUIDO
+* Partilhar o codigo com o professor * CONCLUIDO
+* QUANDO FAZEMOS UM SEGUNDO JOGO O gameOver() NÃO FUNCIONA * CONCLUIDO
+* APAGAR A INFO DA PEÇA NA POSIÇÃO ANTIGA
 */
 
 public class GameManager {
@@ -36,6 +39,8 @@ public class GameManager {
         int numpecas = 0;
         String[] partes;
         gameBoard.pecaHashMap = new HashMap<>();
+        gameBoard.numPecasBrancas = 0;
+        gameBoard.numPecasPretas = 0;
 
         // LEITURA DE FICHEIROS
         BufferedReader reader;
@@ -86,7 +91,7 @@ public class GameManager {
                 String nome = partes[3].trim();
                 //System.out.println("nome: " + nome + "\n");
 
-                Peca peca = new Peca(id, tipo, equipa, nome, 0, 0, true, 0, 0);
+                Peca peca = new Peca(id, tipo, equipa, nome, 0, 0, "em jogo", 0, 0);
                 gameBoard.pecaHashMap.put(id, peca);
                 //System.out.println(peca);
                 count++;
@@ -115,7 +120,6 @@ public class GameManager {
         //System.out.println("Reader numlinha:" + numlinhas);
         return true;
     }
-
     public int getBoardSize() {
         System.out.println("BOARDSIZE\n");
         return boardSize;
@@ -123,11 +127,11 @@ public class GameManager {
 
     public boolean move(int x0, int y0, int x1, int y1) {
         System.out.println("MOVE\n");
-        vezDeJogar = 0;
+        //vezDeJogar = 0;
         // SE O boardSize = 4, ENTÃO X E Y SÓ PODEM CHEGAR A 3
         // SE O boardSize = 8, ENTÃO X E Y SÓ PODEM CHEGAR A 7
         // Peca peca0 = new Peca(); // SITIO DE PARTIDA / PECA QUE ATACA
-        Peca peca1 = new Peca(); //SITIO ONDE QUERO IR / PECA QUE É ATACADA
+        //Peca peca1 = new Peca(); //SITIO ONDE QUERO IR / PECA QUE É ATACADA
 
         if (x0 >= 0 && x0 <= boardSize - 1 && y0 >= 0 && y0 <= boardSize - 1 && x1 >= 0 && x1 <= boardSize - 1 && y1 >= 0 && y1 <= boardSize - 1) { // VER SE AS COORDENADAS ESTÃO DENTRO DO TABULEIRO
             for (Peca peca : gameBoard.pecaHashMap.values()) {
@@ -142,6 +146,7 @@ public class GameManager {
                         //peca.jogadaInvalida++;
                         return false;
                     } else {
+
                         switch (peca.tipoPeca) {
                             case 0:
                                 // FALTA A DIAGONAL (ACHO QUE NÃO FALTA)
@@ -155,16 +160,17 @@ public class GameManager {
                                 peca0.idPeca = peca.idPeca;
                             }
                             */
-                                    // peca1Temp(peca, peca1, x1, y1);
+                                    // peca1Temp(peca, obterPeca, x1, y1);
                              /*
                             if (peca.posX == x1 && peca.posY == y1) {
-                                peca1.idPeca = peca.idPeca;
-                                peca1.posX = peca.posX;
-                                peca1.posY = peca.posY;
-                                peca1.equipaPeca = peca.equipaPeca;
+                                obterPeca.idPeca = peca.idPeca;
+                                obterPeca.posX = peca.posX;
+                                obterPeca.posY = peca.posY;
+                                obterPeca.equipaPeca = peca.equipaPeca;
                             }
-                             */
-                                    if (TESTTemp(x1, y1) == null) { // CASO DE ANDAR PARA UMA CASA VAZIA
+                             */Peca peca1 = obterPeca(x1, y1);
+                                    if (peca1 == null) {
+                                        // CASO DE ANDAR PARA UMA CASA VAZIA
                                         peca.posX = x1;
                                         peca.posY = y1;
                                         getPieceInfoAsString(Integer.parseInt(peca.idPeca));
@@ -178,12 +184,12 @@ public class GameManager {
                                         }
                                         return true;
                                     } else {
-                                        if (peca.equipaPeca != TESTTemp(x1, y1).equipaPeca) {
+                                        if (peca.equipaPeca != peca1.equipaPeca) {
                                             // peca.jogadaValida++;
-                                            System.out.println(peca.jogadaValida);
-                                            gameBoard.pecaHashMap.get(TESTTemp(x1, y1).idPeca).notInJogo();
+                                            //System.out.println(peca.jogadaValida);
+                                            gameBoard.pecaHashMap.get(peca1.idPeca).notInJogo();
                                             getSquareInfo(x1, y1);
-                                            gameBoard.pecaHashMap.remove(TESTTemp(x1, y1).idPeca);
+                                            gameBoard.pecaHashMap.remove(peca1.idPeca);
                                             peca.posX = x1;
                                             peca.posY = y1;
                                             if (peca.equipaPeca == 0) {// PECA PRETA COME
@@ -232,6 +238,7 @@ public class GameManager {
         return false;
     }
 
+    /*
     public Peca peca0Temp(Peca peca, Peca peca0, int x0, int y0) {
         if (peca.posX == x0 && peca.posY == y0) {
             peca0.posX = peca.posX;
@@ -244,15 +251,18 @@ public class GameManager {
         return peca0;
     }
 
-    public Peca TESTTemp(int x1, int y1) {//É A RAZÃO DE DAR MAL NO estaEmJogo() OU NÃO (ACHO EU); REVER ESTA FUNÇÃO
-        for (Peca peca2 : gameBoard.pecaHashMap.values()) {
-            if (peca2.posX == x1 && peca2.posY == y1) {
-                return peca2;
+     */
+
+    public Peca obterPeca(int x1, int y1) {//É A RAZÃO DE DAR MAL NO estaEmJogo() OU NÃO (ACHO EU); REVER ESTA FUNÇÃO
+        for (Peca peca : gameBoard.pecaHashMap.values()) {
+            if (peca.posX == x1 && peca.posY == y1) {
+                return peca;
             }
         }
         return null;
     }
 
+    /*
     public Peca peca1Temp(Peca peca, Peca peca1, int x1, int y1) {//É A RAZÃO DE DAR MAL NO estaEmJogo() OU NÃO (ACHO EU); REVER ESTA FUNÇÃO
         for (Peca peca2 : gameBoard.pecaHashMap.values()) {
             if (peca.posX == x1 && peca.posY == y1) {
@@ -267,6 +277,7 @@ public class GameManager {
         return peca1;
     }
 
+    /*
     public int totalValidasPretas() {
         int validasPretas = 0;
         for (Peca peca : gameBoard.pecaHashMap.values()) {
@@ -306,7 +317,7 @@ public class GameManager {
         }
         return invalidasBrancas;
     }
-
+*/
     public String[] getSquareInfo(int x, int y) { // FALTA TIRAR A IMAGEM QUANDO A PECA NÃO ESTÁ EM JOGO
         // System.out.println("SQUAREINFO\n");
         String[] squareInfo = new String[5];
@@ -315,7 +326,7 @@ public class GameManager {
         }
         for (Peca peca : gameBoard.pecaHashMap.values()) {
             if (peca.posX == x && peca.posY == y) {
-                if (!peca.emJogo) {
+                if (peca.estado.equals("capturado")) {
                     squareInfo[4] = "";
                 }
                 squareInfo[0] = peca.idPeca;
@@ -342,7 +353,7 @@ public class GameManager {
                 pieceInfo[1] = String.valueOf(peca.tipoPeca);
                 pieceInfo[2] = String.valueOf(peca.equipaPeca);
                 pieceInfo[3] = peca.nomePeca;
-                pieceInfo[4] = String.valueOf(peca.emJogo);
+                pieceInfo[4] = String.valueOf(peca.estado);
                 pieceInfo[5] = String.valueOf(peca.posX);
                 pieceInfo[6] = String.valueOf(peca.posY);
             }
@@ -355,7 +366,7 @@ public class GameManager {
         String info = null;
         for (Peca peca : gameBoard.pecaHashMap.values()) {
             if (Integer.parseInt(peca.idPeca) == ID) {
-                if (!peca.emJogo) { // SE A PECA FOI CAPTURADA NÃO MOSTRA MENSAGEM
+                if (peca.estado.equals("capturado")) { // SE A PECA FOI CAPTURADA NÃO MOSTRA MENSAGEM
                     return info;
                 }
                 info = peca.toString();
@@ -414,8 +425,16 @@ public class GameManager {
         return gameResult;
     }
 
-    /*
+
    public JPanel getAuthorsPanel() {
+        JPanel frame = new JPanel();
+        frame.setLayout(null);
+        frame.setSize(1000,1000);
+        frame.setVisible(true);
+
+
+        return frame;
+
     }
-    */
+
 }
