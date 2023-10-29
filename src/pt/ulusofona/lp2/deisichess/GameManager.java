@@ -107,13 +107,22 @@ public class GameManager {
                 }
                 line = reader.readLine();
             }
+
+            reader.close();
+
             for (Peca peca : gameBoard.pecasEmJogo.values()) {
                 if (peca.posX == -1 && peca.posY == -1) {
                     peca.notInJogo();
                     gameBoard.pecasCapturadas.put(peca.idPeca, peca);
                 }
             }
-            reader.close();
+            for (Peca pecaCapturada : gameBoard.pecasCapturadas.values()) {
+                if (pecaCapturada.equipaPeca == 1){
+                    gameBoard.numPecasBrancas--;
+                }else{
+                    gameBoard.numPecasPretas--;
+                }
+            }
             //System.out.println(gameBoard.numPecasPretas);
             //System.out.println(gameBoard.numPecasBrancas);
             // gameOver();
