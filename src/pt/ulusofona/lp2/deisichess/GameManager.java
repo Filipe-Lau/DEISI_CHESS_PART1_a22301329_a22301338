@@ -42,7 +42,8 @@ public class GameManager {
             int y = 0;
             int numpecas = 0;
             String[] partes;
-            gameBoard.pecaHashMap = new HashMap<>();
+            gameBoard.pecasEmJogo = new HashMap<>();
+            gameBoard.pecasCapturadas = new HashMap<>();
             gameBoard.numPecasBrancas = 0;
             gameBoard.numPecasPretas = 0;
 
@@ -89,7 +90,7 @@ public class GameManager {
                     String nome = partes[3].trim();
 
                     Peca peca = new Peca(id, tipo, equipa, nome, 0, 0, "em jogo");
-                    gameBoard.pecaHashMap.put(id, peca);
+                    gameBoard.pecasEmJogo.put(id, peca);
                     count++;
                 }
                 if (numlinhas > numpecas + 2) {
@@ -98,8 +99,8 @@ public class GameManager {
 
                     for (String id : partes) {
                         if (!Objects.equals(id, "0")) {
-                            gameBoard.pecaHashMap.get(id).posX = x; // ERRO AO TENTAR ABRIR UM JOGO A MEIO DE UM JOGO;
-                            gameBoard.pecaHashMap.get(id).posY = y;
+                            gameBoard.pecasEmJogo.get(id).posX = x; // ERRO AO TENTAR ABRIR UM JOGO A MEIO DE UM JOGO;
+                            gameBoard.pecasEmJogo.get(id).posY = y;
                         }
                         x++;
                     }
@@ -108,14 +109,15 @@ public class GameManager {
                 line = reader.readLine();
             }
             reader.close();
-            System.out.println(gameBoard.numPecasPretas);
-            System.out.println(gameBoard.numPecasBrancas);
-           // gameOver();
+            //System.out.println(gameBoard.numPecasPretas);
+            //System.out.println(gameBoard.numPecasBrancas);
+            // gameOver();
             return true;
-        }catch (IOException e){
+        } catch (IOException e) {
             return false;
         }
     }
+
     public int getBoardSize() {
         System.out.println("BOARDSIZE\n");
         return boardSize;
@@ -123,57 +125,35 @@ public class GameManager {
 
     public boolean move(int x0, int y0, int x1, int y1) {
         System.out.println("MOVE\n");
-        //vezDeJogar = 0;
         // SE O boardSize = 4, ENTÃO X E Y SÓ PODEM CHEGAR A 3
         // SE O boardSize = 8, ENTÃO X E Y SÓ PODEM CHEGAR A 7
         // Peca peca0 = new Peca(); // SITIO DE PARTIDA / PECA QUE ATACA
         //Peca peca1 = new Peca(); //SITIO ONDE QUERO IR / PECA QUE É ATACADA
 
         if (x0 >= 0 && x0 <= boardSize - 1 && y0 >= 0 && y0 <= boardSize - 1 && x1 >= 0 && x1 <= boardSize - 1 && y1 >= 0 && y1 <= boardSize - 1) { // VER SE AS COORDENADAS ESTÃO DENTRO DO TABULEIRO
-            for (Peca peca : gameBoard.pecaHashMap.values()) {
+            for (Peca peca : gameBoard.pecasEmJogo.values()) {
                 if (peca.posX == x0 && peca.posY == y0) {
                     // VALIDAR QUEM ESTÁ A JOGAR
                     if (getCurrentTeamID() == 1 && peca.equipaPeca == 0) {
                         jogadaBrancaInvalida++;
-                        //peca.jogadaInvalida++;
                         return false;
                     } else if (getCurrentTeamID() == 0 && peca.equipaPeca == 1) {
                         jogadaPretaInvalida++;
-                        //peca.jogadaInvalida++;
                         return false;
                     } else {
 
                         switch (peca.tipoPeca) {
                             case 0:
-                                // FALTA A DIAGONAL (ACHO QUE NÃO FALTA)
                                 if ((x1 - x0 >= -1 && x1 - x0 <= 1) && (y1 - y0 >= -1 && y1 - y0 <= 1)) { // ESTÁ BEM
-                                    // peca0Temp(peca, peca0, x0, y0);
-                            /*
-                            if (peca.posX == x0 && peca.posY == y0) {
-                                peca0.posX = peca.posX;
-                                peca0.posY = peca.posY;
-                                peca0.equipaPeca = peca.equipaPeca;
-                                peca0.idPeca = peca.idPeca;
-                            }
-                            */
-                                    // peca1Temp(peca, obterPeca, x1, y1);
-                             /*
-                            if (peca.posX == x1 && peca.posY == y1) {
-                                obterPeca.idPeca = peca.idPeca;
-                                obterPeca.posX = peca.posX;
-                                obterPeca.posY = peca.posY;
-                                obterPeca.equipaPeca = peca.equipaPeca;
-                            }
-                             */Peca peca1 = obterPeca(x1, y1);
+                                    Peca peca1 = obterPeca(x1, y1);
                                     if (peca1 == null) {
                                         // CASO DE ANDAR PARA UMA CASA VAZIA
                                         peca.posX = x1;
                                         peca.posY = y1;
-                                        if(houveCaptura) {
+                                        if (houveCaptura) {
                                             jogadasSemComer++;
                                         }
                                         getPieceInfoAsString(Integer.parseInt(peca.idPeca));
-                                        //peca.jogadaValida++;
                                         if (getCurrentTeamID() == 0) {
                                             jogadaPretaValida++;
                                             vezDeJogar = 1;
@@ -184,17 +164,16 @@ public class GameManager {
                                         return true;
                                     } else {
                                         if (peca.equipaPeca != peca1.equipaPeca) {
-                                            // peca.jogadaValida++;
-                                            //System.out.println(peca.jogadaValida);
-                                            gameBoard.pecaHashMap.get(peca1.idPeca).estado = "capturado";
-                                            getSquareInfo(x1, y1);
-                                            //gameBoard.pecaHashMap.remove(peca1.idPeca);
+                                            gameBoard.pecasEmJogo.get(peca1.idPeca).estado = "capturado";
+                                            gameBoard.pecasCapturadas.put(peca1.idPeca, peca1);
+                                            gameBoard.pecasEmJogo.remove(peca1.idPeca);
+                                            //getSquareInfo(x1, y1);
                                             peca.posX = x1;
                                             peca.posY = y1;
-                                            if(houveCaptura) {
+                                            if (houveCaptura) {
                                                 jogadasSemComer++;
                                             }
-                                            if(!houveCaptura) {
+                                            if (!houveCaptura) {
                                                 houveCaptura = true;
                                             }
                                             if (peca.equipaPeca == 0) {// PECA PRETA COME
@@ -230,36 +209,17 @@ public class GameManager {
                                 } else {
                                     jogadaPretaInvalida++;
                                 }
-                                //peca.jogadaInvalida++;         //
-                                return false;             //
-                            ///////////////////////////////
+                                return false;
                         }
                     }
                 }
             }
         }
-        //jogadaInvalida++;
-
         return false;
     }
 
-    /*
-    public Peca peca0Temp(Peca peca, Peca peca0, int x0, int y0) {
-        if (peca.posX == x0 && peca.posY == y0) {
-            peca0.posX = peca.posX;
-            peca0.posY = peca.posY;
-            peca0.equipaPeca = peca.equipaPeca;
-            peca0.idPeca = peca.idPeca;
-            peca0.jogadaValida = peca.jogadaValida;
-            peca0.jogadaInvalida = peca.jogadaInvalida;
-        }
-        return peca0;
-    }
-
-     */
-
     public Peca obterPeca(int x1, int y1) {//É A RAZÃO DE DAR MAL NO estaEmJogo() OU NÃO (ACHO EU); REVER ESTA FUNÇÃO
-        for (Peca peca : gameBoard.pecaHashMap.values()) {
+        for (Peca peca : gameBoard.pecasEmJogo.values()) {
             if (peca.posX == x1 && peca.posY == y1) {
                 return peca;
             }
@@ -267,72 +227,16 @@ public class GameManager {
         return null;
     }
 
-    /*
-    public Peca peca1Temp(Peca peca, Peca peca1, int x1, int y1) {//É A RAZÃO DE DAR MAL NO estaEmJogo() OU NÃO (ACHO EU); REVER ESTA FUNÇÃO
-        for (Peca peca2 : gameBoard.pecaHashMap.values()) {
-            if (peca.posX == x1 && peca.posY == y1) {
-                peca1.posX = peca.posX;
-                peca1.posY = peca.posY;
-                peca1.equipaPeca = peca.equipaPeca;
-                peca1.idPeca = peca.idPeca;
-            } else {
-                return null;
-            }
-        }
-        return peca1;
-    }
-
-    /*
-    public int totalValidasPretas() {
-        int validasPretas = 0;
-        for (Peca peca : gameBoard.pecaHashMap.values()) {
-            if (peca.equipaPeca == 0) {
-                validasPretas += peca.jogadaValida;
-            }
-        }
-        return validasPretas;
-    }
-
-    public int totalInvalidasPretas() {
-        int invalidasPretas = 0;
-        for (Peca peca : gameBoard.pecaHashMap.values()) {
-            if (peca.equipaPeca == 1) {
-                invalidasPretas += peca.jogadaInvalida;
-            }
-        }
-        return invalidasPretas;
-    }
-
-    public int totalValidasBrancas() {
-        int validasBrancas = 0;
-        for (Peca peca : gameBoard.pecaHashMap.values()) {
-            if (peca.equipaPeca == 1) {
-                validasBrancas += peca.jogadaValida;
-            }
-        }
-        return validasBrancas;
-    }
-
-    public int totalInvalidasBrancas() {
-        int invalidasBrancas = 0;
-        for (Peca peca : gameBoard.pecaHashMap.values()) {
-            if (peca.equipaPeca == 1) {
-                invalidasBrancas += peca.jogadaInvalida;
-            }
-        }
-        return invalidasBrancas;
-    }
-*/
     public String[] getSquareInfo(int x, int y) { // FALTA TIRAR A IMAGEM QUANDO A PECA NÃO ESTÁ EM JOGO
         System.out.println("SQUAREINFO\n");
         String[] squareInfo = new String[5];
         if (x < 0 || x >= boardSize && y < 0 || y >= boardSize) {
             return null;
         }
-        for (Peca peca : gameBoard.pecaHashMap.values()) {
+        for (Peca peca : gameBoard.pecasEmJogo.values()) {
             if (peca.posX == x && peca.posY == y) {
                 if (peca.estado.equals("capturado")) {
-                    gameBoard.pecaHashMap.remove(peca.idPeca);
+                    //gameBoard.pecasEmJogo.remove(peca.idPeca);
                     squareInfo[4] = "";
                 }
                 squareInfo[0] = peca.idPeca;
@@ -353,7 +257,18 @@ public class GameManager {
     public String[] getPieceInfo(int ID) {  //FUNCAO PARA OS TESTES
         System.out.println("PIECEINFO\n");
         String[] pieceInfo = new String[7];
-        for (Peca peca : gameBoard.pecaHashMap.values()) {
+        for (Peca peca : gameBoard.pecasEmJogo.values()) {
+            if (Integer.parseInt(peca.idPeca) == ID) {
+                pieceInfo[0] = peca.idPeca;
+                pieceInfo[1] = String.valueOf(peca.tipoPeca);
+                pieceInfo[2] = String.valueOf(peca.equipaPeca);
+                pieceInfo[3] = peca.nomePeca;
+                pieceInfo[4] = String.valueOf(peca.estado);
+                pieceInfo[5] = String.valueOf(peca.posX);
+                pieceInfo[6] = String.valueOf(peca.posY);
+            }
+        }
+        for (Peca peca : gameBoard.pecasCapturadas.values()) {
             if (Integer.parseInt(peca.idPeca) == ID) {
                 pieceInfo[0] = peca.idPeca;
                 pieceInfo[1] = String.valueOf(peca.tipoPeca);
@@ -370,7 +285,12 @@ public class GameManager {
     public String getPieceInfoAsString(int ID) {
         System.out.println("PIECEINFOASSTRING\n");
         String info = "";
-        for (Peca peca : gameBoard.pecaHashMap.values()) {
+        for (Peca peca : gameBoard.pecasEmJogo.values()) {
+            if (Integer.parseInt(peca.idPeca) == ID) {
+                info = peca.toString();
+            }
+        }
+        for (Peca peca : gameBoard.pecasCapturadas.values()) {
             if (Integer.parseInt(peca.idPeca) == ID) {
                 info = peca.toString();
             }
@@ -386,8 +306,6 @@ public class GameManager {
     public boolean gameOver() {
         System.out.println("GAMEOVER\n");
         // CASO DE EMPATE
-        //System.out.println("Num pecas brancas: " + gameBoard.numPecasBrancas);
-        //System.out.println("Num pecas pretas: " + gameBoard.numPecasPretas);
         if (gameBoard.numPecasBrancas == 1 && gameBoard.numPecasPretas == 1) {
             resultadoJogo = "EMPATE";
             return true;
@@ -403,7 +321,7 @@ public class GameManager {
             return true;
         }
         // EMPATE POR AFOGAMENTO
-        else if(houveCaptura && jogadasSemComer >= 10){
+        else if (houveCaptura && jogadasSemComer >= 10) {
             resultadoJogo = "EMPATE";
             return true;
         }
@@ -433,11 +351,10 @@ public class GameManager {
         return gameResult;
     }
 
-
     public JPanel getAuthorsPanel() {
         JPanel frame = new JPanel();
         frame.setLayout(null);
-        frame.setSize(1000,1000);
+        frame.setSize(1000, 1000);
         frame.setVisible(true);
 
 

@@ -8,17 +8,19 @@ public class Tabuleiro {
     //int boardSize;
     int capturadasPorPretas = 0;
     int capturadasPorBrancas = 0;
-    HashMap<String,Peca> pecaHashMap;
+    HashMap<String,Peca> pecasEmJogo;
+
+    HashMap<String,Peca> pecasCapturadas;
 
     public Tabuleiro() {
     }
 
     /*
-    public Tabuleiro(int numPecasBrancas, int numPecasPretas, int boardSize, HashMap<String, Peca> pecaHashMap) {
+    public Tabuleiro(int numPecasBrancas, int numPecasPretas, int boardSize, HashMap<String, Peca> pecasEmJogo) {
         this.numPecasBrancas = numPecasBrancas;
         this.numPecasPretas = numPecasPretas;
         this.boardSize = boardSize;
-        this.pecaHashMap = pecaHashMap;
+        this.pecasEmJogo = pecasEmJogo;
     }
      */
 
