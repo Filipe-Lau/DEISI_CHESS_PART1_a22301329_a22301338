@@ -369,16 +369,13 @@ public class GameManager {
 
     public String getPieceInfoAsString(int ID) {
         System.out.println("PIECEINFOASSTRING\n");
-        String info = null;
+        String info = "";
         for (Peca peca : gameBoard.pecaHashMap.values()) {
             if (Integer.parseInt(peca.idPeca) == ID) {
-                if (peca.estado.equals("capturado")) { // SE A PECA FOI CAPTURADA NÃO MOSTRA MENSAGEM
-                    return peca.toString();
-                }
                 info = peca.toString();
             }
         }
-        return info; // SE O ID NÃO EXISTIR NÃO MOSTRA MENSAGEM
+        return info;
     }
 
     public int getCurrentTeamID() {
