@@ -29,8 +29,12 @@ public class Peca {
     public void notInJogo(){
         estado = "capturado";
     }
+
     @Override
     public String toString() {
+        if (estado.equals("capturado")){
+            return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ " + "(" + "n/a" + ")";
+        }
         return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ " + "(" + posX + ", " + posY + ")";
     }
 }

@@ -332,8 +332,8 @@ public class GameManager {
         for (Peca peca : gameBoard.pecaHashMap.values()) {
             if (peca.posX == x && peca.posY == y) {
                 if (peca.estado.equals("capturado")) {
-                    gameBoard.pecaHashMap.remove(peca.idPeca);
-                    //squareInfo[4] = "";
+                    //gameBoard.pecaHashMap.remove(peca.idPeca);
+                    squareInfo[4] = "";
                 }
                 squareInfo[0] = peca.idPeca;
                 squareInfo[1] = String.valueOf(peca.tipoPeca);
@@ -421,17 +421,17 @@ public class GameManager {
 
         ArrayList<String> gameResult = new ArrayList<>();
 
-        gameResult.add("JOGO DE CRAZY CHESS\n");
-        gameResult.add("Resultado: " + resultadoJogo + "\n");
-        gameResult.add("---\n");
-        gameResult.add("Equipa das Pretas\n");
-        gameResult.add(gameBoard.capturadasPorPretas + "\n");
-        gameResult.add(jogadaPretaValida + "\n"); // NUMERO DE JOGADAS
-        gameResult.add(jogadaPretaInvalida + "\n"); // NUMERO DE TENTATIVAS INVALIDAS
-        gameResult.add("Equipa das Brancas\n");
-        gameResult.add(gameBoard.capturadasPorBrancas + "\n");
-        gameResult.add(jogadaBrancaValida + "\n"); // NUMERO DE JOGADAS
-        gameResult.add(jogadaBrancaInvalida + "\n"); // NUMERO DE TENTATIVAS INVALIDAS
+        gameResult.add("JOGO DE CRAZY CHESS");
+        gameResult.add("Resultado: " + resultadoJogo);
+        gameResult.add("---");
+        gameResult.add("Equipa das Pretas");
+        gameResult.add(gameBoard.capturadasPorPretas + "");
+        gameResult.add(jogadaPretaValida + ""); // NUMERO DE JOGADAS
+        gameResult.add(jogadaPretaInvalida + ""); // NUMERO DE TENTATIVAS INVALIDAS
+        gameResult.add("Equipa das Brancas");
+        gameResult.add(gameBoard.capturadasPorBrancas + "");
+        gameResult.add(jogadaBrancaValida + ""); // NUMERO DE JOGADAS
+        gameResult.add(jogadaBrancaInvalida + ""); // NUMERO DE TENTATIVAS INVALIDAS
 
         return gameResult;
     }
