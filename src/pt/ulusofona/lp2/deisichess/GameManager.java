@@ -165,6 +165,8 @@ public class GameManager {
                                     } else {
                                         if (peca.equipaPeca != peca1.equipaPeca) {
                                             gameBoard.pecasEmJogo.get(peca1.idPeca).estado = "capturado";
+                                            peca1.posX = Integer.parseInt("");
+                                            peca1.posY = Integer.parseInt("");
                                             gameBoard.pecasCapturadas.put(peca1.idPeca, peca1);
                                             gameBoard.pecasEmJogo.remove(peca1.idPeca);
                                             //getSquareInfo(x1, y1);
@@ -235,10 +237,13 @@ public class GameManager {
         }
         for (Peca peca : gameBoard.pecasEmJogo.values()) {
             if (peca.posX == x && peca.posY == y) {
+                /*
                 if (peca.estado.equals("capturado")) {
                     //gameBoard.pecasEmJogo.remove(peca.idPeca);
                     squareInfo[4] = "";
                 }
+
+                 */
                 squareInfo[0] = peca.idPeca;
                 squareInfo[1] = String.valueOf(peca.tipoPeca);
                 squareInfo[2] = String.valueOf(peca.equipaPeca);
@@ -268,7 +273,7 @@ public class GameManager {
                 pieceInfo[6] = String.valueOf(peca.posY);
             }
         }
-        /*
+
         for (Peca peca : gameBoard.pecasCapturadas.values()) {
             if (Integer.parseInt(peca.idPeca) == ID) {
                 pieceInfo[0] = peca.idPeca;
@@ -281,7 +286,6 @@ public class GameManager {
             }
         }
 
-         */
         return pieceInfo;
     }
 
