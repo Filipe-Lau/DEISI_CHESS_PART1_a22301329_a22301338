@@ -373,7 +373,7 @@ public class GameManager {
         for (Peca peca : gameBoard.pecaHashMap.values()) {
             if (Integer.parseInt(peca.idPeca) == ID) {
                 if (peca.estado.equals("capturado")) { // SE A PECA FOI CAPTURADA NÃO MOSTRA MENSAGEM
-                    return info;
+                    return peca.toString();
                 }
                 info = peca.toString();
             }
