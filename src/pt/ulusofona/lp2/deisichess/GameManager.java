@@ -32,8 +32,9 @@ public class GameManager {
     public GameManager() {
     }
 
-    public boolean loadGame(File file) throws IOException {
+    public boolean loadGame(File file) {
         // HASHMAP PARA GUARDAR AS PEÇAS
+        System.out.println("LOADGAME\n");
         try {
             int count = 2;
             int numlinhas = 0;
@@ -64,13 +65,9 @@ public class GameManager {
             // CICLO DE LEITURA
             while (line != null) {
                 numlinhas++;
-                //System.out.println("linha:" + line);
                 if (numlinhas == 1) {
                     this.boardSize = Integer.parseInt(line); //ESTÁ COMENTADO PARA TESTAR A FUNÇÃO
-                    //size = Integer.parseInt(line);
-                    //System.out.println("size tabuleiro = " + line + "\n");
                 } else if (numlinhas == 2) {
-                    //System.out.println("num pecas = " + line + "\n");
                     numpecas = Integer.parseInt(line);
                 }
                 if (numlinhas >= 3 && count < numpecas + 2) {
@@ -78,25 +75,21 @@ public class GameManager {
                     partes = line.split(":");
 
                     String id = partes[0];
-                    //System.out.println("ID: " + id + "\n");
 
                     int tipo = Integer.parseInt(partes[1]);
-                    //System.out.println("tipo: " + tipo + "\n");
 
                     int equipa = Integer.parseInt(partes[2].trim());
-                    //System.out.println("equipa: " + equipa + "\n");
                     if (equipa == 0) {
                         gameBoard.numPecasPretas++;
                     } else {
                         gameBoard.numPecasBrancas++;
                     }
 
+
                     String nome = partes[3].trim();
-                    //System.out.println("nome: " + nome + "\n");
 
                     Peca peca = new Peca(id, tipo, equipa, nome, 0, 0, "em jogo");
                     gameBoard.pecaHashMap.put(id, peca);
-                    //System.out.println(peca);
                     count++;
                 }
                 if (numlinhas > numpecas + 2) {
@@ -105,35 +98,31 @@ public class GameManager {
 
                     for (String id : partes) {
                         if (!Objects.equals(id, "0")) {
-                            //System.out.println(gameBoard.pecaHashMap.toString());
                             gameBoard.pecaHashMap.get(id).posX = x; // ERRO AO TENTAR ABRIR UM JOGO A MEIO DE UM JOGO;
                             gameBoard.pecaHashMap.get(id).posY = y;
                         }
                         x++;
-                        //System.out.println("pos: " + pos);
                     }
                     y++;
                 }
-                //System.out.println("Antesnumlinha:" + numlinhas);
                 line = reader.readLine();
-                //System.out.println("numlinha:" + numlinhas);
             }
-            //System.out.println("FORAwhilenumlinha:" + numlinhas);
             reader.close();
-            //System.out.println("Reader numlinha:" + numlinhas);
+            System.out.println(gameBoard.numPecasPretas);
+            System.out.println(gameBoard.numPecasBrancas);
+           // gameOver();
+            return true;
         }catch (IOException e){
-            e.printStackTrace();
             return false;
         }
-        return true;
     }
     public int getBoardSize() {
-        //System.out.println("BOARDSIZE\n");
+        System.out.println("BOARDSIZE\n");
         return boardSize;
     }
 
     public boolean move(int x0, int y0, int x1, int y1) {
-        // System.out.println("MOVE\n");
+        System.out.println("MOVE\n");
         //vezDeJogar = 0;
         // SE O boardSize = 4, ENTÃO X E Y SÓ PODEM CHEGAR A 3
         // SE O boardSize = 8, ENTÃO X E Y SÓ PODEM CHEGAR A 7
@@ -335,7 +324,7 @@ public class GameManager {
     }
 */
     public String[] getSquareInfo(int x, int y) { // FALTA TIRAR A IMAGEM QUANDO A PECA NÃO ESTÁ EM JOGO
-        // System.out.println("SQUAREINFO\n");
+        System.out.println("SQUAREINFO\n");
         String[] squareInfo = new String[5];
         if (x < 0 || x >= boardSize && y < 0 || y >= boardSize) {
             return null;
@@ -361,7 +350,7 @@ public class GameManager {
     }
 
     public String[] getPieceInfo(int ID) {  //FUNCAO PARA OS TESTES
-        //System.out.println("PIECEINFO\n");
+        System.out.println("PIECEINFO\n");
         String[] pieceInfo = new String[7];
         for (Peca peca : gameBoard.pecaHashMap.values()) {
             if (Integer.parseInt(peca.idPeca) == ID) {
@@ -378,7 +367,7 @@ public class GameManager {
     }
 
     public String getPieceInfoAsString(int ID) {
-        //System.out.println("PIECEINFOASSTRING\n");
+        System.out.println("PIECEINFOASSTRING\n");
         String info = null;
         for (Peca peca : gameBoard.pecaHashMap.values()) {
             if (Integer.parseInt(peca.idPeca) == ID) {
@@ -392,12 +381,12 @@ public class GameManager {
     }
 
     public int getCurrentTeamID() {
-        //System.out.println("GETCURRENTTEAMID\n");
+        System.out.println("GETCURRENTTEAMID\n");
         return vezDeJogar;
     }
 
     public boolean gameOver() {
-        //System.out.println("GAMEOVER\n");
+        System.out.println("GAMEOVER\n");
         // CASO DE EMPATE
         //System.out.println("Num pecas brancas: " + gameBoard.numPecasBrancas);
         //System.out.println("Num pecas pretas: " + gameBoard.numPecasPretas);
@@ -427,7 +416,7 @@ public class GameManager {
     }
 
     public ArrayList<String> getGameResults() {
-        //System.out.println("GETGAMERESULTS\n");
+        System.out.println("GETGAMERESULTS\n");
 
         ArrayList<String> gameResult = new ArrayList<>();
 
