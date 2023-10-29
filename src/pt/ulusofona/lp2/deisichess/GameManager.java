@@ -407,7 +407,7 @@ public class GameManager {
         }
         // EMPATE POR AFOGAMENTO
         else if(houveCaptura && jogadasSemComer >= 10){
-            resultadoJogo = "EMPATE POR AFOGAMENTO";
+            resultadoJogo = "EMPATE";
             return true;
         }
         // JOGO A DECORRER
