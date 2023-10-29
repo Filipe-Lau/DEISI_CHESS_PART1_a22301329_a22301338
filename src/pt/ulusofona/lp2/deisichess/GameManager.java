@@ -34,22 +34,23 @@ public class GameManager {
 
     public boolean loadGame(File file) throws IOException {
         // HASHMAP PARA GUARDAR AS PEÇAS
-        int count = 2;
-        int numlinhas = 0;
-        int x;
-        int y = 0;
-        int numpecas = 0;
-        String[] partes;
-        gameBoard.pecaHashMap = new HashMap<>();
-        gameBoard.numPecasBrancas = 0;
-        gameBoard.numPecasPretas = 0;
+        try {
+            int count = 2;
+            int numlinhas = 0;
+            int x;
+            int y = 0;
+            int numpecas = 0;
+            String[] partes;
+            gameBoard.pecaHashMap = new HashMap<>();
+            gameBoard.numPecasBrancas = 0;
+            gameBoard.numPecasPretas = 0;
 
-        // LEITURA DE FICHEIROS
-        BufferedReader reader;
-        reader = new BufferedReader(new FileReader(file));
-        String line = reader.readLine();
+            // LEITURA DE FICHEIROS
+            BufferedReader reader;
+            reader = new BufferedReader(new FileReader(file));
+            String line = reader.readLine();
 
-        // VARIAVEIS
+            // VARIAVEIS
         /*
         int count = 2;
         int numlinhas = 0;
@@ -58,69 +59,72 @@ public class GameManager {
         int numpecas = 0;
 
          */
-        //int size = 0;
+            //int size = 0;
 
-        // CICLO DE LEITURA
-        while (line != null) {
-            numlinhas++;
-            //System.out.println("linha:" + line);
-            if (numlinhas == 1) {
-                this.boardSize = Integer.parseInt(line); //ESTÁ COMENTADO PARA TESTAR A FUNÇÃO
-                //size = Integer.parseInt(line);
-                //System.out.println("size tabuleiro = " + line + "\n");
-            } else if (numlinhas == 2) {
-                //System.out.println("num pecas = " + line + "\n");
-                numpecas = Integer.parseInt(line);
-            }
-            if (numlinhas >= 3 && count < numpecas + 2) {
-
-                partes = line.split(":");
-
-                String id = partes[0];
-                //System.out.println("ID: " + id + "\n");
-
-                int tipo = Integer.parseInt(partes[1]);
-                //System.out.println("tipo: " + tipo + "\n");
-
-                int equipa = Integer.parseInt(partes[2].trim());
-                //System.out.println("equipa: " + equipa + "\n");
-                if (equipa == 0) {
-                    gameBoard.numPecasPretas++;
-                } else {
-                    gameBoard.numPecasBrancas++;
+            // CICLO DE LEITURA
+            while (line != null) {
+                numlinhas++;
+                //System.out.println("linha:" + line);
+                if (numlinhas == 1) {
+                    this.boardSize = Integer.parseInt(line); //ESTÁ COMENTADO PARA TESTAR A FUNÇÃO
+                    //size = Integer.parseInt(line);
+                    //System.out.println("size tabuleiro = " + line + "\n");
+                } else if (numlinhas == 2) {
+                    //System.out.println("num pecas = " + line + "\n");
+                    numpecas = Integer.parseInt(line);
                 }
+                if (numlinhas >= 3 && count < numpecas + 2) {
 
-                String nome = partes[3].trim();
-                //System.out.println("nome: " + nome + "\n");
+                    partes = line.split(":");
 
-                Peca peca = new Peca(id, tipo, equipa, nome, 0, 0, "em jogo");
-                gameBoard.pecaHashMap.put(id, peca);
-                //System.out.println(peca);
-                count++;
-            }
-            if (numlinhas > numpecas + 2) {
-                partes = line.split(":", boardSize);
-                x = 0;
+                    String id = partes[0];
+                    //System.out.println("ID: " + id + "\n");
 
-                for (String id : partes) {
-                    if (!Objects.equals(id, "0")) {
-                        //System.out.println(gameBoard.pecaHashMap.toString());
-                        gameBoard.pecaHashMap.get(id).posX = x; // ERRO AO TENTAR ABRIR UM JOGO A MEIO DE UM JOGO;
-                        gameBoard.pecaHashMap.get(id).posY = y;
+                    int tipo = Integer.parseInt(partes[1]);
+                    //System.out.println("tipo: " + tipo + "\n");
+
+                    int equipa = Integer.parseInt(partes[2].trim());
+                    //System.out.println("equipa: " + equipa + "\n");
+                    if (equipa == 0) {
+                        gameBoard.numPecasPretas++;
+                    } else {
+                        gameBoard.numPecasBrancas++;
                     }
-                    x++;
-                    //System.out.println("pos: " + pos);
+
+                    String nome = partes[3].trim();
+                    //System.out.println("nome: " + nome + "\n");
+
+                    Peca peca = new Peca(id, tipo, equipa, nome, 0, 0, "em jogo");
+                    gameBoard.pecaHashMap.put(id, peca);
+                    //System.out.println(peca);
+                    count++;
                 }
-                y++;
+                if (numlinhas > numpecas + 2) {
+                    partes = line.split(":", boardSize);
+                    x = 0;
+
+                    for (String id : partes) {
+                        if (!Objects.equals(id, "0")) {
+                            //System.out.println(gameBoard.pecaHashMap.toString());
+                            gameBoard.pecaHashMap.get(id).posX = x; // ERRO AO TENTAR ABRIR UM JOGO A MEIO DE UM JOGO;
+                            gameBoard.pecaHashMap.get(id).posY = y;
+                        }
+                        x++;
+                        //System.out.println("pos: " + pos);
+                    }
+                    y++;
+                }
+                //System.out.println("Antesnumlinha:" + numlinhas);
+                line = reader.readLine();
+                //System.out.println("numlinha:" + numlinhas);
             }
-            //System.out.println("Antesnumlinha:" + numlinhas);
-            line = reader.readLine();
-            //System.out.println("numlinha:" + numlinhas);
+            //System.out.println("FORAwhilenumlinha:" + numlinhas);
+            reader.close();
+            //System.out.println("Reader numlinha:" + numlinhas);
+            return true;
+        }catch (IOException e){
+            return false;
         }
-        //System.out.println("FORAwhilenumlinha:" + numlinhas);
-        reader.close();
-        //System.out.println("Reader numlinha:" + numlinhas);
-        return true;
     }
     public int getBoardSize() {
         //System.out.println("BOARDSIZE\n");
