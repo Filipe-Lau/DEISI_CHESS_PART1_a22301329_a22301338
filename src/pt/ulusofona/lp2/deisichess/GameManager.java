@@ -100,19 +100,18 @@ public class GameManager {
                         if (!Objects.equals(id, "0")) {
                             gameBoard.pecasEmJogo.get(id).posX = x;
                             gameBoard.pecasEmJogo.get(id).posY = y;
-                            for (Peca peca : gameBoard.pecasEmJogo.values()) {
-                                if (peca.posX == -1 && peca.posY == -1) {
-                                    peca.notInJogo();
-                                    gameBoard.pecasCapturadas.put(peca.idPeca, peca);
-                                }
-                            }
-
                         }
                         x++;
                     }
                     y++;
                 }
                 line = reader.readLine();
+            }
+            for (Peca peca : gameBoard.pecasEmJogo.values()) {
+                if (peca.posX == -1 && peca.posY == -1) {
+                    peca.notInJogo();
+                    gameBoard.pecasCapturadas.put(peca.idPeca, peca);
+                }
             }
             reader.close();
             //System.out.println(gameBoard.numPecasPretas);
