@@ -268,6 +268,7 @@ public class GameManager {
                 pieceInfo[6] = String.valueOf(peca.posY);
             }
         }
+        /*
         for (Peca peca : gameBoard.pecasCapturadas.values()) {
             if (Integer.parseInt(peca.idPeca) == ID) {
                 pieceInfo[0] = peca.idPeca;
@@ -279,6 +280,8 @@ public class GameManager {
                 pieceInfo[6] = String.valueOf(peca.posY);
             }
         }
+
+         */
         return pieceInfo;
     }
 
