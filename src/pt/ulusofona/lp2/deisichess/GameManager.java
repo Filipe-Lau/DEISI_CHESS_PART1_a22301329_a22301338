@@ -165,8 +165,8 @@ public class GameManager {
                                     } else {
                                         if (peca.equipaPeca != peca1.equipaPeca) {
                                             gameBoard.pecasEmJogo.get(peca1.idPeca).estado = "capturado";
-                                            peca1.posX = Integer.parseInt("");
-                                            peca1.posY = Integer.parseInt("");
+                                            //peca1.posX = Integer.parseInt("");
+                                            //peca1.posY = Integer.parseInt("");
                                             gameBoard.pecasCapturadas.put(peca1.idPeca, peca1);
                                             gameBoard.pecasEmJogo.remove(peca1.idPeca);
                                             //getSquareInfo(x1, y1);
