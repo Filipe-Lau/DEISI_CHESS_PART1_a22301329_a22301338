@@ -123,6 +123,7 @@ public class GameManager {
             //System.out.println("Reader numlinha:" + numlinhas);
             return true;
         }catch (IOException e){
+            e.getCause();
             return false;
         }
     }
