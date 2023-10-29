@@ -186,7 +186,7 @@ public class GameManager {
                                         if (peca.equipaPeca != peca1.equipaPeca) {
                                             // peca.jogadaValida++;
                                             //System.out.println(peca.jogadaValida);
-                                            gameBoard.pecaHashMap.get(peca1.idPeca).notInJogo();
+                                            gameBoard.pecaHashMap.get(peca1.idPeca).estado = "capturado";
                                             getSquareInfo(x1, y1);
                                             //gameBoard.pecaHashMap.remove(peca1.idPeca);
                                             peca.posX = x1;
@@ -332,7 +332,7 @@ public class GameManager {
         for (Peca peca : gameBoard.pecaHashMap.values()) {
             if (peca.posX == x && peca.posY == y) {
                 if (peca.estado.equals("capturado")) {
-                    //gameBoard.pecaHashMap.remove(peca.idPeca);
+                    gameBoard.pecaHashMap.remove(peca.idPeca);
                     squareInfo[4] = "";
                 }
                 squareInfo[0] = peca.idPeca;
