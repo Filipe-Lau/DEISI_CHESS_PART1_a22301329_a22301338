@@ -86,10 +86,9 @@ public class GameManager {
                         gameBoard.numPecasBrancas++;
                     }
 
-
                     String nome = partes[3].trim();
 
-                    Peca peca = new Peca(id, tipo, equipa, nome, 0, 0, "em jogo");
+                    Peca peca = new Peca(id, tipo, equipa, nome, -1, -1, "em jogo");
                     gameBoard.pecasEmJogo.put(id, peca);
                     count++;
                 }
@@ -99,8 +98,15 @@ public class GameManager {
 
                     for (String id : partes) {
                         if (!Objects.equals(id, "0")) {
-                            gameBoard.pecasEmJogo.get(id).posX = x; // ERRO AO TENTAR ABRIR UM JOGO A MEIO DE UM JOGO;
+                            gameBoard.pecasEmJogo.get(id).posX = x;
                             gameBoard.pecasEmJogo.get(id).posY = y;
+                            for (Peca peca : gameBoard.pecasEmJogo.values()) {
+                                if (peca.posX == -1 && peca.posY == -1) {
+                                    peca.notInJogo();
+                                    gameBoard.pecasCapturadas.put(peca.idPeca, peca);
+                                }
+                            }
+
                         }
                         x++;
                     }
