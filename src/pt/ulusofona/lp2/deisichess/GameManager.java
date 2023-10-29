@@ -121,11 +121,11 @@ public class GameManager {
             //System.out.println("FORAwhilenumlinha:" + numlinhas);
             reader.close();
             //System.out.println("Reader numlinha:" + numlinhas);
-            return true;
         }catch (IOException e){
-            e.getCause();
+            e.printStackTrace();
             return false;
         }
+        return true;
     }
     public int getBoardSize() {
         //System.out.println("BOARDSIZE\n");
