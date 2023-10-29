@@ -31,6 +31,6 @@ public class Peca {
     }
     @Override
     public String toString() {
-        return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ " + "(" + posX + "," + posY + ")" + estado;
+        return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ " + "(" + posX + "," + posY + ")";
     }
 }

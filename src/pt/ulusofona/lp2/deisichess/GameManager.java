@@ -26,6 +26,8 @@ public class GameManager {
     int jogadaPretaInvalida;
     int jogadaBrancaValida;
     int jogadaBrancaInvalida;
+    int jogadasSemComer;
+    boolean houveCaptura;
 
     public GameManager() {
     }
@@ -126,7 +128,7 @@ public class GameManager {
     }
 
     public boolean move(int x0, int y0, int x1, int y1) {
-       // System.out.println("MOVE\n");
+        // System.out.println("MOVE\n");
         //vezDeJogar = 0;
         // SE O boardSize = 4, ENTÃO X E Y SÓ PODEM CHEGAR A 3
         // SE O boardSize = 8, ENTÃO X E Y SÓ PODEM CHEGAR A 7
@@ -173,6 +175,9 @@ public class GameManager {
                                         // CASO DE ANDAR PARA UMA CASA VAZIA
                                         peca.posX = x1;
                                         peca.posY = y1;
+                                        if(houveCaptura) {
+                                            jogadasSemComer++;
+                                        }
                                         getPieceInfoAsString(Integer.parseInt(peca.idPeca));
                                         //peca.jogadaValida++;
                                         if (getCurrentTeamID() == 0) {
@@ -192,6 +197,12 @@ public class GameManager {
                                             gameBoard.pecaHashMap.remove(peca1.idPeca);
                                             peca.posX = x1;
                                             peca.posY = y1;
+                                            if(houveCaptura) {
+                                                jogadasSemComer++;
+                                            }
+                                            if(!houveCaptura) {
+                                                houveCaptura = true;
+                                            }
                                             if (peca.equipaPeca == 0) {// PECA PRETA COME
                                                 jogadaPretaValida++;
                                                 gameBoard.capturadasPorPretas++;
@@ -399,6 +410,11 @@ public class GameManager {
             resultadoJogo = "VENCERAM AS PRETAS";
             return true;
         }
+        // EMPATE POR AFOGAMENTO
+        else if(houveCaptura && jogadasSemComer >= 10){
+            resultadoJogo = "EMPATE POR AFOGAMENTO";
+            return true;
+        }
         // JOGO A DECORRER
         else {
             return false;
@@ -426,7 +442,7 @@ public class GameManager {
     }
 
 
-   public JPanel getAuthorsPanel() {
+    public JPanel getAuthorsPanel() {
         JPanel frame = new JPanel();
         frame.setLayout(null);
         frame.setSize(1000,1000);
