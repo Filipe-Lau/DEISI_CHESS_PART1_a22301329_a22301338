@@ -164,10 +164,12 @@ public class GameManager {
                                         return true;
                                     } else {
                                         if (peca.equipaPeca != peca1.equipaPeca) {
-                                            gameBoard.pecasEmJogo.get(peca1.idPeca).estado = "capturado";
+                                            gameBoard.pecasEmJogo.get(peca1.idPeca).notInJogo();
+                                            //System.out.println(peca1.estado);
                                             //peca1.posX = Integer.parseInt("");
                                             //peca1.posY = Integer.parseInt("");
                                             gameBoard.pecasCapturadas.put(peca1.idPeca, peca1);
+                                            //System.out.println(gameBoard.pecasCapturadas.get(peca1.idPeca).estado);
                                             gameBoard.pecasEmJogo.remove(peca1.idPeca);
                                             //getSquareInfo(x1, y1);
                                             peca.posX = x1;
@@ -195,7 +197,6 @@ public class GameManager {
                                         } else {
                                             if (peca.equipaPeca == 1) {
                                                 jogadaBrancaInvalida++;
-                                                //peca.jogadaInvalida++;
                                             } else {
                                                 jogadaPretaInvalida++;
                                             }
@@ -280,7 +281,7 @@ public class GameManager {
                 pieceInfo[1] = String.valueOf(peca.tipoPeca);
                 pieceInfo[2] = String.valueOf(peca.equipaPeca);
                 pieceInfo[3] = peca.nomePeca;
-                pieceInfo[4] = "capturado";
+                pieceInfo[4] = peca.estado;
                 pieceInfo[5] = "";
                 pieceInfo[6] = "";
             }
