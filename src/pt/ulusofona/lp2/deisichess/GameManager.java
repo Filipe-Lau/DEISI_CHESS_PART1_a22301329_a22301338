@@ -280,9 +280,9 @@ public class GameManager {
                 pieceInfo[1] = String.valueOf(peca.tipoPeca);
                 pieceInfo[2] = String.valueOf(peca.equipaPeca);
                 pieceInfo[3] = peca.nomePeca;
-                pieceInfo[4] = String.valueOf(peca.estado);
-                pieceInfo[5] = String.valueOf(peca.posX);
-                pieceInfo[6] = String.valueOf(peca.posY);
+                pieceInfo[4] = "capturado";
+                pieceInfo[5] = "";
+                pieceInfo[6] = "";
             }
         }
 
