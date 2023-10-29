@@ -188,7 +188,7 @@ public class GameManager {
                                             //System.out.println(peca.jogadaValida);
                                             gameBoard.pecaHashMap.get(peca1.idPeca).notInJogo();
                                             getSquareInfo(x1, y1);
-                                            gameBoard.pecaHashMap.remove(peca1.idPeca);
+                                            //gameBoard.pecaHashMap.remove(peca1.idPeca);
                                             peca.posX = x1;
                                             peca.posY = y1;
                                             if(houveCaptura) {
@@ -332,7 +332,8 @@ public class GameManager {
         for (Peca peca : gameBoard.pecaHashMap.values()) {
             if (peca.posX == x && peca.posY == y) {
                 if (peca.estado.equals("capturado")) {
-                    squareInfo[4] = "";
+                    gameBoard.pecaHashMap.remove(peca.idPeca);
+                    //squareInfo[4] = "";
                 }
                 squareInfo[0] = peca.idPeca;
                 squareInfo[1] = String.valueOf(peca.tipoPeca);
@@ -421,13 +422,13 @@ public class GameManager {
         ArrayList<String> gameResult = new ArrayList<>();
 
         gameResult.add("JOGO DE CRAZY CHESS\n");
-        gameResult.add("RESULTADO: " + resultadoJogo + "\n");
+        gameResult.add("Resultado: " + resultadoJogo + "\n");
         gameResult.add("---\n");
-        gameResult.add("EQUIPA DAS PRETAS\n");
+        gameResult.add("Equipa das Pretas\n");
         gameResult.add(gameBoard.capturadasPorPretas + "\n");
         gameResult.add(jogadaPretaValida + "\n"); // NUMERO DE JOGADAS
         gameResult.add(jogadaPretaInvalida + "\n"); // NUMERO DE TENTATIVAS INVALIDAS
-        gameResult.add("EQUIPA DAS BRANCAS\n");
+        gameResult.add("Equipa das Brancas\n");
         gameResult.add(gameBoard.capturadasPorBrancas + "\n");
         gameResult.add(jogadaBrancaValida + "\n"); // NUMERO DE JOGADAS
         gameResult.add(jogadaBrancaInvalida + "\n"); // NUMERO DE TENTATIVAS INVALIDAS

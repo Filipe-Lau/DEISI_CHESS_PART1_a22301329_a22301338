@@ -27,10 +27,10 @@ public class Peca {
     }
 
     public void notInJogo(){
-        estado = "capturada";
+        estado = "capturado";
     }
     @Override
     public String toString() {
-        return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ " + "(" + posX + "," + posY + ")";
+        return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ " + "(" + posX + ", " + posY + ")" + estado;
     }
 }
