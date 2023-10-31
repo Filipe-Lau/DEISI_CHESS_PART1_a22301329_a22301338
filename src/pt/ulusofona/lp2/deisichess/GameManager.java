@@ -221,14 +221,13 @@ public class GameManager {
         }
 
         // NÃO FAZ SENTIDO
-        /*
-        if (houveCaptura) {
-            jogadasSemComer++;
-        }
 
-         */
-        if (!houveCaptura) {
+        if (houveCaptura) {
+            jogadasSemComer = 0;
+        }
+        else {
             houveCaptura = true;
+            jogadasSemComer = 0;
         }
     }
 
@@ -282,19 +281,6 @@ public class GameManager {
                 }
             }
         }
-/*
-        for (Peca peca : gameBoard.getPecasCapturadas().values()) {
-            if (Integer.parseInt(peca.getIdPeca()) == ID) {
-                pieceInfo[0] = peca.getIdPeca();
-                pieceInfo[1] = String.valueOf(peca.getTipoPeca());
-                pieceInfo[2] = String.valueOf(peca.getEquipaPeca());
-                pieceInfo[3] = peca.getNomePeca();
-                pieceInfo[4] = String.valueOf(peca.getEstado());
-                pieceInfo[5] = "";
-                pieceInfo[6] = "";
-            }
-        }
-*/
         return pieceInfo;
     }
 
