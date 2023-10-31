@@ -13,8 +13,8 @@ public class TestGameManager {
 
         gameManager.gameBoard.pecasEmJogo = new HashMap<>();
 
-        Peca pecaBranca1 = new Peca("1", 0, 1, "Peça Branca 1", 0, 0, "em jogo");
-        Peca pecaBranca2 = new Peca("2", 0, 1, "Peça Branca 2", 1, 0, "em jogo");
+        Peca pecaBranca1 = new Peca("1", 0, 1, "Peça Branca 1");
+        Peca pecaBranca2 = new Peca("2", 0, 1, "Peça Branca 2");
 
         gameManager.gameBoard.pecasEmJogo.put("1", pecaBranca1);
         gameManager.gameBoard.pecasEmJogo.put("2", pecaBranca2);
@@ -37,19 +37,19 @@ public class TestGameManager {
         gameManager.gameBoard.pecasEmJogo = new HashMap<>();
         gameManager.gameBoard.pecasCapturadas = new HashMap<>();
 
-        Peca pecaBranca1 = new Peca("1", 0, 1, "Peça Branca 1", 0, 0, "em jogo");
-        Peca pecaBranca2 = new Peca("2", 0, 1, "Peça Branca 2", 1, 0, "em jogo");
+        Peca pecaBranca1 = new Peca("1", 0, 1, "Peça Branca 1");
+        Peca pecaBranca2 = new Peca("2", 0, 1, "Peça Branca 2");
 
         gameManager.gameBoard.pecasEmJogo.put("1", pecaBranca1);
         gameManager.gameBoard.pecasEmJogo.put("2", pecaBranca2);
 
         String[] infoPeca = gameManager.getPieceInfo(1);
-        if(infoPeca[0].equals(pecaBranca1.idPeca) && infoPeca[1].equals(String.valueOf(pecaBranca1.tipoPeca)) &&
-                infoPeca[2].equals(String.valueOf(pecaBranca1.equipaPeca)) &&
-                infoPeca[3].equals(pecaBranca1.nomePeca) &&
-                infoPeca[4].equals(String.valueOf(pecaBranca1.estado)) &&
-                infoPeca[5].equals(String.valueOf(pecaBranca1.posX)) &&
-                infoPeca[6].equals(String.valueOf(pecaBranca1.posY))) {
+        if(infoPeca[0].equals(pecaBranca1.getIdPeca()) && infoPeca[1].equals(String.valueOf(pecaBranca1.getIdPeca())) &&
+                infoPeca[2].equals(String.valueOf(pecaBranca1.getEquipaPeca())) &&
+                infoPeca[3].equals(pecaBranca1.getNomePeca()) &&
+                infoPeca[4].equals(String.valueOf(pecaBranca1.getEstado())) &&
+                infoPeca[5].equals(String.valueOf(pecaBranca1.getPosX())) &&
+                infoPeca[6].equals(String.valueOf(pecaBranca1.getPosY()))) {
             System.out.println("TESTE PASSOU");
         } else {
             System.out.println("TESTE FALHOU");
@@ -63,8 +63,8 @@ public class TestGameManager {
 
         gameManager.gameBoard.pecasEmJogo = new HashMap<>();
 
-        Peca pecaPreta = new Peca("1", 0, 0, "Peça Preta", 3, 3, "em jogo");
-        Peca pecaBranca = new Peca("2", 0, 1, "Peça Branca", 1, 1, "em jogo");
+        Peca pecaPreta = new Peca("1", 0, 0, "Peça Preta");
+        Peca pecaBranca = new Peca("2", 0, 1, "Peça Branca");
 
         gameManager.gameBoard.pecasEmJogo.put("1", pecaPreta);
         gameManager.gameBoard.pecasEmJogo.put("2", pecaBranca);
@@ -88,9 +88,9 @@ public class TestGameManager {
 
         gameManager.gameBoard.pecasEmJogo = new HashMap<>();
 
-        Peca pecaPreta = new Peca("1", 0, 0, "Peça Preta", 3, 3, "em jogo");
-        Peca pecaPreta2 = new Peca("2", 0, 0, "Peça Preta2", 3, 2, "em jogo");
-        Peca pecaBranca = new Peca("3", 0, 1, "Peça Branca", 1, 1, "em jogo");
+        Peca pecaPreta = new Peca("1", 0, 0, "Peça Preta");
+        Peca pecaPreta2 = new Peca("2", 0, 0, "Peça Preta2");
+        Peca pecaBranca = new Peca("3", 0, 1, "Peça Branca");
 
         gameManager.gameBoard.pecasEmJogo.put("1", pecaPreta);
         gameManager.gameBoard.pecasEmJogo.put("3", pecaBranca);

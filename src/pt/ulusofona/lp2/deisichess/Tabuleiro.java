@@ -3,15 +3,14 @@ package pt.ulusofona.lp2.deisichess;
 import java.util.HashMap;
 
 public class Tabuleiro {
-    int numPecasBrancas = 0;
-    int numPecasPretas = 0;
+    int numPecasBrancas;
+    int numPecasPretas;
     //int boardSize;
-    int capturadasPorPretas = 0;
-    int capturadasPorBrancas = 0;
+    int capturadasPorPretas;
+    int capturadasPorBrancas;
 
     String resultadoJogo;
     HashMap<String,Peca> pecasEmJogo;
-
     HashMap<String,Peca> pecasCapturadas;
 
     public Tabuleiro() {
@@ -57,6 +56,14 @@ public class Tabuleiro {
         return capturadasPorBrancas;
     }
 
+    public HashMap<String, Peca> getPecasEmJogo() {
+        return pecasEmJogo;
+    }
+
+    public HashMap<String, Peca> getPecasCapturadas() {
+        return pecasCapturadas;
+    }
+
     void aumentaNumPecasPretas(){
         numPecasPretas++;
     }
@@ -64,7 +71,6 @@ public class Tabuleiro {
     void aumentaNumPecasBrancas(){
         numPecasBrancas++;
     }
-
 
     void capturaPorBrancas(){
         capturadasPorBrancas++;

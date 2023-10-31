@@ -5,36 +5,17 @@ public class Peca {
     int tipoPeca;
     int equipaPeca;
     String nomePeca;
-    int posX;
-    int posY;
-    String estado;
+    int posX = -1;
+    int posY = -1;
+    String estado = "capturado";
 
     public Peca() {
     }
 
-    public Peca(String idPeca, int tipoPeca, int equipaPeca, String nomePeca, int posX, int posY, String estado) {
+    public Peca(String idPeca, int tipoPeca, int equipaPeca, String nomePeca) {
         this.idPeca = idPeca;
         this.tipoPeca = tipoPeca;
         this.equipaPeca = equipaPeca;
-        this.nomePeca = nomePeca;
-        this.posX = posX;
-        this.posY = posY;
-        this.estado = estado;
-    }
-
-    public void setIdPeca(String idPeca) {
-        this.idPeca = idPeca;
-    }
-
-    public void setTipoPeca(int tipoPeca) {
-        this.tipoPeca = tipoPeca;
-    }
-
-    public void setEquipaPeca(int equipaPeca) {
-        this.equipaPeca = equipaPeca;
-    }
-
-    public void setNomePeca(String nomePeca) {
         this.nomePeca = nomePeca;
     }
 
@@ -87,6 +68,6 @@ public class Peca {
         if (estado.equals("capturado")){
             return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ " + "(" + "n/a" + ")";
         }
-        return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ " + "(" + posX + ", " + posY + ")";
+        return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ " + "(" + posX + ", " + posY + ")" + estado;
     }
 }
