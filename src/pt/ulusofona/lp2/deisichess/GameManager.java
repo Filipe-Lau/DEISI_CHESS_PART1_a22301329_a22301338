@@ -220,9 +220,13 @@ public class GameManager {
             vezDeJogar = 0;
         }
 
+        // NÃO FAZ SENTIDO
+        /*
         if (houveCaptura) {
             jogadasSemComer++;
         }
+
+         */
         if (!houveCaptura) {
             houveCaptura = true;
         }

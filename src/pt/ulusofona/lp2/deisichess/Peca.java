@@ -66,7 +66,7 @@ public class Peca {
     @Override
     public String toString() {
         if (estado.equals("capturado")){
-            return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ " + "(" + "n/a" + ")";
+            return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ " + "(n/a)";
         }
         return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ " + "(" + posX + ", " + posY + ")" + estado;
     }
