@@ -276,9 +276,10 @@ public class GameManager {
                 if (peca.getEstado().equals("capturado")){
                     pieceInfo[5] = "";
                     pieceInfo[6] = "";
+                }else {
+                    pieceInfo[5] = String.valueOf(peca.getPosX());
+                    pieceInfo[6] = String.valueOf(peca.getPosY());
                 }
-                pieceInfo[5] = String.valueOf(peca.getPosX());
-                pieceInfo[6] = String.valueOf(peca.getPosY());
             }
         }
 /*
