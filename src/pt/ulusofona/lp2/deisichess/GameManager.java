@@ -10,8 +10,7 @@ import java.util.*;
 
 /*
 POR FAZER:
-* Fazer getAuthorsPanel()
-* APAGAR A INFO DA PEÇA NA POSIÇÃO ANTIGA
+* Acabar o getAuthorsPanel()
 */
 
 public class GameManager {
@@ -45,7 +44,7 @@ public class GameManager {
             jogadasSemComer = 0;
             vezDeJogar = 0;
             gameBoard.pecasEmJogo = new HashMap<>();
-            gameBoard.pecasCapturadas = new HashMap<>();
+            //gameBoard.pecasCapturadas = new HashMap<>();
             gameBoard.setNumPecasBrancas(0); // fazer set
             gameBoard.setNumPecasPretas(0); // fazer set
             gameBoard.setCapturadasPorPretas(0);
@@ -60,7 +59,7 @@ public class GameManager {
             while (line != null) {
                 numlinhas++;
                 if (numlinhas == 1) {
-                    this.boardSize = Integer.parseInt(line); //ESTÁ COMENTADO PARA TESTAR A FUNÇÃO
+                    this.boardSize = Integer.parseInt(line); // ESTÁ COMENTADO PARA TESTAR A FUNÇÃO
                 } else if (numlinhas == 2) {
                     numpecas = Integer.parseInt(line);
                 }
@@ -107,9 +106,15 @@ public class GameManager {
             for (Peca peca : gameBoard.getPecasEmJogo().values()) {
                 if (peca.getPosX() == -1 && peca.getPosY() == -1) {
                     peca.notInJogo();
-                    gameBoard.getPecasCapturadas().put(peca.getIdPeca(), peca);
+                    if (peca.getEquipaPeca() == 1) {
+                        gameBoard.pecaBrancaComida();
+                    } else {
+                        gameBoard.pecaPretaComida();
+                    }
+                    //gameBoard.getPecasCapturadas().put(peca.getIdPeca(), peca);
                 }
             }
+            /*
             for (Peca pecaCapturada : gameBoard.getPecasCapturadas().values()) { // CALCULA O NUM DE PEÇAS PARA SABER SE O JOGO TERMINOU
                 if (pecaCapturada.getEquipaPeca() == 1) {
                     gameBoard.pecaBrancaComida();
@@ -117,6 +122,8 @@ public class GameManager {
                     gameBoard.pecaPretaComida();
                 }
             }
+
+             */
             return true;
         } catch (IOException e) {
             return false;
@@ -194,8 +201,10 @@ public class GameManager {
 
     public void atacar(Peca peca, Peca peca1, int x1, int y1) {
         gameBoard.getPecasEmJogo().get(peca1.getIdPeca()).notInJogo();
-        gameBoard.getPecasCapturadas().put(peca1.getIdPeca(), peca1);
-        gameBoard.getPecasEmJogo().remove(peca1.getIdPeca());
+        peca1.setPosX(-1); // METEMOS A -1 PARA FICAR FORA DO TABULEIRO, PARA O SQUAREINFO FUNCIONAR
+        peca1.setPosY(-1);
+        //gameBoard.getPecasCapturadas().put(peca1.getIdPeca(), peca1);
+        //gameBoard.getPecasEmJogo().remove(peca1.getIdPeca());
         peca.setPosX(x1);
         peca.setPosY(y1);
 
@@ -260,11 +269,15 @@ public class GameManager {
                 pieceInfo[2] = String.valueOf(peca.getEquipaPeca());
                 pieceInfo[3] = peca.getNomePeca();
                 pieceInfo[4] = String.valueOf(peca.getEstado());
+                if (peca.getEstado().equals("capturado")){
+                    pieceInfo[5] = "";
+                    pieceInfo[6] = "";
+                }
                 pieceInfo[5] = String.valueOf(peca.getPosX());
                 pieceInfo[6] = String.valueOf(peca.getPosY());
             }
         }
-
+/*
         for (Peca peca : gameBoard.getPecasCapturadas().values()) {
             if (Integer.parseInt(peca.getIdPeca()) == ID) {
                 pieceInfo[0] = peca.getIdPeca();
@@ -276,7 +289,7 @@ public class GameManager {
                 pieceInfo[6] = "";
             }
         }
-
+*/
         return pieceInfo;
     }
 
@@ -284,11 +297,6 @@ public class GameManager {
         System.out.println("PIECEINFOASSTRING\n");
         String info = "";
         for (Peca peca : gameBoard.getPecasEmJogo().values()) {
-            if (Integer.parseInt(peca.getIdPeca()) == ID) {
-                info = peca.toString();
-            }
-        }
-        for (Peca peca : gameBoard.getPecasCapturadas().values()) {
             if (Integer.parseInt(peca.getIdPeca()) == ID) {
                 info = peca.toString();
             }

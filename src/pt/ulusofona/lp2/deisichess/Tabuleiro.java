@@ -11,7 +11,7 @@ public class Tabuleiro {
 
     String resultadoJogo;
     HashMap<String,Peca> pecasEmJogo;
-    HashMap<String,Peca> pecasCapturadas;
+    //HashMap<String,Peca> pecasCapturadas;
 
     public Tabuleiro() {
     }
@@ -59,11 +59,11 @@ public class Tabuleiro {
     public HashMap<String, Peca> getPecasEmJogo() {
         return pecasEmJogo;
     }
-
+/*
     public HashMap<String, Peca> getPecasCapturadas() {
         return pecasCapturadas;
     }
-
+ */
     void aumentaNumPecasPretas(){
         numPecasPretas++;
     }

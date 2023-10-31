@@ -35,7 +35,7 @@ public class TestGameManager {
         gameManager.getBoardSize();
 
         gameManager.gameBoard.pecasEmJogo = new HashMap<>();
-        gameManager.gameBoard.pecasCapturadas = new HashMap<>();
+        //gameManager.gameBoard.pecasCapturadas = new HashMap<>();
 
         Peca pecaBranca1 = new Peca("1", 0, 1, "Peça Branca 1");
         Peca pecaBranca2 = new Peca("2", 0, 1, "Peça Branca 2");
