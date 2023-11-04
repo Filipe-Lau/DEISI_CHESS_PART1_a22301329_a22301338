@@ -17,13 +17,7 @@ public class GameManager {
     int boardSize;
     int vezDeJogar = 0;
     Tabuleiro gameBoard = new Tabuleiro();
-    GameResult gameResult;
-    int jogadaPretaValida; // CRIAR UMA NOVA CLASSE CHAMADA "GAMERESULT"
-    int jogadaPretaInvalida; // CRIAR UMA NOVA CLASSE CHAMADA "GAMERESULT"
-    int jogadaBrancaValida; // CRIAR UMA NOVA CLASSE CHAMADA "GAMERESULT"
-    int jogadaBrancaInvalida; // CRIAR UMA NOVA CLASSE CHAMADA "GAMERESULT"
-    int jogadasSemComer;
-    boolean houveCaptura;
+    GameResult gameResult = new GameResult();
 
     public GameManager() {
     }
@@ -38,11 +32,11 @@ public class GameManager {
             int y = 0;
             int numpecas = 0;
             String[] partes;
-            jogadaPretaValida = 0;
-            jogadaPretaInvalida = 0;
-            jogadaBrancaValida = 0;
-            jogadaBrancaInvalida = 0;
-            jogadasSemComer = 0;
+            gameResult.setJogadaPretaValida(0);
+            gameResult.setJogadaPretaInvalida(0);
+            gameResult.setJogadaBrancaValida(0);
+            gameResult.setJogadaBrancaInvalida(0);
+            gameResult.setJogadasSemComer(0);
             vezDeJogar = 0;
             gameBoard.pecasEmJogo = new HashMap<>();
             //gameBoard.pecasCapturadas = new HashMap<>();
@@ -142,10 +136,10 @@ public class GameManager {
                 if (peca.getPosX() == x0 && peca.getPosY() == y0) {
                     // VALIDAR QUEM ESTÁ A JOGAR
                     if (getCurrentTeamID() == 1 && peca.getEquipaPeca() == 0) {
-                        jogadaBrancaInvalida++;
+                        gameResult.aumentaJogadaBrancaInvalida();
                         return false;
                     } else if (getCurrentTeamID() == 0 && peca.getEquipaPeca() == 1) {
-                        jogadaPretaInvalida++;
+                        gameResult.aumentaJogadaPretaInvalida();
                         return false;
                     } else {
 
@@ -188,14 +182,14 @@ public class GameManager {
     public void moverParaPosicaoVazia(Peca peca, int x1, int y1) {
         peca.setPosX(x1);
         peca.setPosY(y1);
-        if (houveCaptura) {
-            jogadasSemComer++;
+        if (gameResult.getHouveCaptura()) {
+            gameResult.aumentaJogadasSemComer();
         }
         if (getCurrentTeamID() == 0) {
-            jogadaPretaValida++;
+            gameResult.aumentaJogadaPretaValida();
             vezDeJogar = 1;
         } else {
-            jogadaBrancaValida++;
+            gameResult.aumentaJogadaBrancaValida();
             vezDeJogar = 0;
         }
     }
@@ -210,28 +204,33 @@ public class GameManager {
         peca.setPosY(y1);
 
         if (peca.getEquipaPeca() == 0) { // PECA PRETA COME
-            jogadaPretaValida++;
+            gameResult.aumentaJogadaPretaValida();
             gameBoard.capturaPorPretas();
             gameBoard.pecaBrancaComida();
             vezDeJogar = 1;
         } else {
-            jogadaBrancaValida++;
+            gameResult.aumentaJogadaBrancaValida();
             gameBoard.capturaPorBrancas();
             gameBoard.pecaPretaComida();
             vezDeJogar = 0;
         }
 
-        if (!houveCaptura) {
-            houveCaptura = true;
+        // NÃO FAZ SENTIDO
+
+        if (gameResult.getHouveCaptura()) {
+            gameResult.setJogadasSemComer(0);
         }
-        jogadasSemComer = 0;
+        else {
+            gameResult.setHouveCaptura(true);
+            gameResult.setJogadasSemComer(0);
+        }
     }
 
     public void contadorJogadaInvalida(Peca peca) {
         if (peca.getEquipaPeca() == 1) {
-            jogadaBrancaInvalida++;
+            gameResult.aumentaJogadaBrancaInvalida();
         } else {
-            jogadaPretaInvalida++;
+            gameResult.aumentaJogadaPretaInvalida();
         }
     }
 
@@ -268,10 +267,10 @@ public class GameManager {
                 pieceInfo[2] = String.valueOf(peca.getEquipaPeca());
                 pieceInfo[3] = peca.getNomePeca();
                 pieceInfo[4] = String.valueOf(peca.getEstado());
-                if (peca.getEstado().equals("capturado")) {
+                if (peca.getEstado().equals("capturado")){
                     pieceInfo[5] = "";
                     pieceInfo[6] = "";
-                } else {
+                }else {
                     pieceInfo[5] = String.valueOf(peca.getPosX());
                     pieceInfo[6] = String.valueOf(peca.getPosY());
                 }
@@ -312,7 +311,7 @@ public class GameManager {
             return true;
         }
         // EMPATE POR EXAUSTÃO
-        else if (houveCaptura && jogadasSemComer >= 10) {
+        else if (gameResult.getHouveCaptura() && gameResult.getJogadasSemComer() >= 10) {
             gameBoard.setResultadoJogo("EMPATE");
             return true;
         }
@@ -321,7 +320,6 @@ public class GameManager {
             return false;
         }
     }
-
 
     public ArrayList<String> getGameResults() {
         System.out.println("GETGAMERESULTS\n");
@@ -342,6 +340,7 @@ public class GameManager {
 
         return resultadosJogo;
     }
+
     public JPanel getAuthorsPanel() {
 
         ImageIcon image = new ImageIcon("pecaPreta2.png");
@@ -354,7 +353,7 @@ public class GameManager {
 
         JPanel panel = new JPanel();
         panel.setBackground(Color.BLACK);
-        panel.setBounds(0, 0, 250, 250);
+        panel.setBounds(0,0,250,250);
         panel.add(label);
 
         /*
@@ -372,6 +371,7 @@ public class GameManager {
         panel.add(label);
         //frame.add(panel2);
         */
+
         return panel;
 
     }
