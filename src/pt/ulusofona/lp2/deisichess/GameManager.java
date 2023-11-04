@@ -17,6 +17,7 @@ public class GameManager {
     int boardSize;
     int vezDeJogar = 0;
     Tabuleiro gameBoard = new Tabuleiro();
+    GameResult gameResult;
     int jogadaPretaValida; // CRIAR UMA NOVA CLASSE CHAMADA "GAMERESULT"
     int jogadaPretaInvalida; // CRIAR UMA NOVA CLASSE CHAMADA "GAMERESULT"
     int jogadaBrancaValida; // CRIAR UMA NOVA CLASSE CHAMADA "GAMERESULT"
@@ -220,15 +221,10 @@ public class GameManager {
             vezDeJogar = 0;
         }
 
-        // NÃO FAZ SENTIDO
-
-        if (houveCaptura) {
-            jogadasSemComer = 0;
-        }
-        else {
+        if (!houveCaptura) {
             houveCaptura = true;
-            jogadasSemComer = 0;
         }
+        jogadasSemComer = 0;
     }
 
     public void contadorJogadaInvalida(Peca peca) {
@@ -272,10 +268,10 @@ public class GameManager {
                 pieceInfo[2] = String.valueOf(peca.getEquipaPeca());
                 pieceInfo[3] = peca.getNomePeca();
                 pieceInfo[4] = String.valueOf(peca.getEstado());
-                if (peca.getEstado().equals("capturado")){
+                if (peca.getEstado().equals("capturado")) {
                     pieceInfo[5] = "";
                     pieceInfo[6] = "";
-                }else {
+                } else {
                     pieceInfo[5] = String.valueOf(peca.getPosX());
                     pieceInfo[6] = String.valueOf(peca.getPosY());
                 }
@@ -326,26 +322,26 @@ public class GameManager {
         }
     }
 
+
     public ArrayList<String> getGameResults() {
         System.out.println("GETGAMERESULTS\n");
 
-        ArrayList<String> gameResult = new ArrayList<>();
+        ArrayList<String> resultadosJogo = new ArrayList<>();
 
-        gameResult.add("JOGO DE CRAZY CHESS");
-        gameResult.add("Resultado: " + gameBoard.getResultadoJogo());
-        gameResult.add("---");
-        gameResult.add("Equipa das Pretas");
-        gameResult.add(gameBoard.getCapturadasPorPretas() + "");
-        gameResult.add(jogadaPretaValida + ""); // NUMERO DE JOGADAS
-        gameResult.add(jogadaPretaInvalida + ""); // NUMERO DE TENTATIVAS INVALIDAS
-        gameResult.add("Equipa das Brancas");
-        gameResult.add(gameBoard.getCapturadasPorBrancas() + "");
-        gameResult.add(jogadaBrancaValida + ""); // NUMERO DE JOGADAS
-        gameResult.add(jogadaBrancaInvalida + ""); // NUMERO DE TENTATIVAS INVALIDAS
+        resultadosJogo.add("JOGO DE CRAZY CHESS");
+        resultadosJogo.add("Resultado: " + gameBoard.getResultadoJogo());
+        resultadosJogo.add("---");
+        resultadosJogo.add("Equipa das Pretas");
+        resultadosJogo.add(gameBoard.getCapturadasPorPretas() + "");
+        resultadosJogo.add(gameResult.getJogadaPretaValida() + ""); // NUMERO DE JOGADAS
+        resultadosJogo.add(gameResult.getJogadaPretaInvalida() + ""); // NUMERO DE TENTATIVAS INVALIDAS
+        resultadosJogo.add("Equipa das Brancas");
+        resultadosJogo.add(gameBoard.getCapturadasPorBrancas() + "");
+        resultadosJogo.add(gameResult.getJogadaBrancaValida() + ""); // NUMERO DE JOGADAS
+        resultadosJogo.add(gameResult.getJogadaBrancaInvalida() + ""); // NUMERO DE TENTATIVAS INVALIDAS
 
-        return gameResult;
+        return resultadosJogo;
     }
-
     public JPanel getAuthorsPanel() {
 
         ImageIcon image = new ImageIcon("pecaPreta2.png");
@@ -358,7 +354,7 @@ public class GameManager {
 
         JPanel panel = new JPanel();
         panel.setBackground(Color.BLACK);
-        panel.setBounds(0,0,250,250);
+        panel.setBounds(0, 0, 250, 250);
         panel.add(label);
 
         /*
@@ -376,7 +372,6 @@ public class GameManager {
         panel.add(label);
         //frame.add(panel2);
         */
-
         return panel;
 
     }
