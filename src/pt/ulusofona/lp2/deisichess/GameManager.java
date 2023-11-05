@@ -343,17 +343,18 @@ public class GameManager {
 
     public JPanel getAuthorsPanel() {
 
+        // VOU COMENTAR PARA O COMMIT NÃO TRIVIAL #1
+
         ImageIcon image = new ImageIcon("pecaPreta2.png");
 
         JLabel label = new JLabel();
         label.setIcon(image);
-        label.setText("I did it, but at what cost?");
-        label.setForeground(Color.WHITE);
-
+        label.setText("Feito por: Bernardo Pinheiro a22301338 e Filipe Lau a22301329");
+        label.setForeground(Color.BLACK);
 
         JPanel panel = new JPanel();
-        panel.setBackground(Color.BLACK);
-        panel.setBounds(0,0,250,250);
+        panel.setBackground(Color.WHITE);
+        panel.setBounds(0,0,500,500);
         panel.add(label);
 
         /*
