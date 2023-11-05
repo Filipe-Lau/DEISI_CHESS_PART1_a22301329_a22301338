@@ -323,6 +323,7 @@ public class GameManager {
 
     public ArrayList<String> getGameResults() {
         System.out.println("GETGAMERESULTS\n");
+        //para dar para fazer commit vou comentar 2 vezes
 
         ArrayList<String> resultadosJogo = new ArrayList<>();
 
