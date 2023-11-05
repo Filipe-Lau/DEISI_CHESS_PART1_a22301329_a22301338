@@ -343,7 +343,7 @@ public class GameManager {
 
     public JPanel getAuthorsPanel() {
 
-        // commint não trivial 1
+        // commint não trivial 2
 
         ImageIcon image = new ImageIcon("pecaPreta2.png");
 
