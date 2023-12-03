@@ -2,7 +2,9 @@ package pt.ulusofona.lp2.deisichess;
 
 public class Peca {
     String idPeca;
-    int tipoPeca;
+    int tipoPeca; // AGORA É UMA STRING
+
+    int pontos;
     int equipaPeca;
     String nomePeca;
     int posX = -1;
@@ -66,8 +68,9 @@ public class Peca {
     @Override
     public String toString() {
         if (estado.equals("capturado")){
-            return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ " + "(n/a)";
+            return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
         }
-        return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ " + "(" + posX + ", " + posY + ")";
+        //PARTE 2// return idPeca + " | " + tipoPeca em STRING (REI) + " | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ "(" + posX + ", " + posY + ")";
+        return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
     }
 }

@@ -8,21 +8,22 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
-/*
-POR FAZER:
-* Acabar o getAuthorsPanel()
-*/
+
+// 10 pretas
+// 20 brancas
 
 public class GameManager {
     int boardSize;
-    int vezDeJogar = 0;
+    int vezDeJogar = 10;
     Tabuleiro gameBoard = new Tabuleiro();
     GameResult gameResult = new GameResult();
+
+    ArrayList<Integer> undo = new ArrayList<>();
 
     public GameManager() {
     }
 
-    public boolean loadGame(File file) {
+    public boolean loadGame(File file) throws InvalidGameInputException, IOException{
         // HASHMAP PARA GUARDAR AS PEÇAS
         System.out.println("LOADGAME\n");
         try {
@@ -37,9 +38,8 @@ public class GameManager {
             gameResult.setJogadaBrancaValida(0);
             gameResult.setJogadaBrancaInvalida(0);
             gameResult.setJogadasSemComer(0);
-            vezDeJogar = 0;
+            vezDeJogar = 10;
             gameBoard.pecasEmJogo = new HashMap<>();
-            //gameBoard.pecasCapturadas = new HashMap<>();
             gameBoard.setNumPecasBrancas(0); // fazer set
             gameBoard.setNumPecasPretas(0); // fazer set
             gameBoard.setCapturadasPorPretas(0);
@@ -78,6 +78,7 @@ public class GameManager {
                     Peca peca = new Peca(id, tipo, equipa, nome);
                     gameBoard.getPecasEmJogo().put(id, peca);
                     count++;
+
                 }
                 if (numlinhas > numpecas + 2) {
                     partes = line.split(":", boardSize);
@@ -106,19 +107,8 @@ public class GameManager {
                     } else {
                         gameBoard.pecaPretaComida();
                     }
-                    //gameBoard.getPecasCapturadas().put(peca.getIdPeca(), peca);
                 }
             }
-            /*
-            for (Peca pecaCapturada : gameBoard.getPecasCapturadas().values()) { // CALCULA O NUM DE PEÇAS PARA SABER SE O JOGO TERMINOU
-                if (pecaCapturada.getEquipaPeca() == 1) {
-                    gameBoard.pecaBrancaComida();
-                } else {
-                    gameBoard.pecaPretaComida();
-                }
-            }
-
-             */
             return true;
         } catch (IOException e) {
             return false;
@@ -149,6 +139,12 @@ public class GameManager {
                                     Peca peca1 = obterPeca(x1, y1);
                                     if (peca1 == null) {// CASO DE ANDAR PARA UMA CASA VAZIA
                                         moverParaPosicaoVazia(peca, x1, y1);
+
+                                        undo.add(x0);
+                                        undo.add(y0);
+                                        undo.add(x1);
+                                        undo.add(y1);
+
                                         return true;
                                     } else {
                                         if (peca.getEquipaPeca() != peca1.getEquipaPeca()) {
@@ -187,19 +183,21 @@ public class GameManager {
         }
         if (getCurrentTeamID() == 0) {
             gameResult.aumentaJogadaPretaValida();
-            vezDeJogar = 1;
+            vezDeJogar = 20;
         } else {
             gameResult.aumentaJogadaBrancaValida();
-            vezDeJogar = 0;
+            vezDeJogar = 10;
         }
     }
 
     public void atacar(Peca peca, Peca peca1, int x1, int y1) {
         gameBoard.getPecasEmJogo().get(peca1.getIdPeca()).notInJogo();
+        undo.add(peca.getPosX());
+        undo.add(peca.getPosY());
+        undo.add(x1);
+        undo.add(y1);
         peca1.setPosX(-1); // METEMOS A -1 PARA FICAR FORA DO TABULEIRO, PARA O SQUAREINFO FUNCIONAR
         peca1.setPosY(-1);
-        //gameBoard.getPecasCapturadas().put(peca1.getIdPeca(), peca1);
-        //gameBoard.getPecasEmJogo().remove(peca1.getIdPeca());
         peca.setPosX(x1);
         peca.setPosY(y1);
 
@@ -207,20 +205,19 @@ public class GameManager {
             gameResult.aumentaJogadaPretaValida();
             gameBoard.capturaPorPretas();
             gameBoard.pecaBrancaComida();
-            vezDeJogar = 1;
+            vezDeJogar = 20;
         } else {
             gameResult.aumentaJogadaBrancaValida();
             gameBoard.capturaPorBrancas();
             gameBoard.pecaPretaComida();
-            vezDeJogar = 0;
+            vezDeJogar = 10;
         }
 
         // NÃO FAZ SENTIDO
 
         if (gameResult.getHouveCaptura()) {
             gameResult.setJogadasSemComer(0);
-        }
-        else {
+        } else {
             gameResult.setHouveCaptura(true);
             gameResult.setJogadasSemComer(0);
         }
@@ -267,10 +264,10 @@ public class GameManager {
                 pieceInfo[2] = String.valueOf(peca.getEquipaPeca());
                 pieceInfo[3] = peca.getNomePeca();
                 pieceInfo[4] = String.valueOf(peca.getEstado());
-                if (peca.getEstado().equals("capturado")){
+                if (peca.getEstado().equals("capturado")) {
                     pieceInfo[5] = "";
                     pieceInfo[6] = "";
-                }else {
+                } else {
                     pieceInfo[5] = String.valueOf(peca.getPosX());
                     pieceInfo[6] = String.valueOf(peca.getPosY());
                 }
@@ -343,8 +340,6 @@ public class GameManager {
 
     public JPanel getAuthorsPanel() {
 
-        // commint não trivial 2
-
         ImageIcon image = new ImageIcon("pecaPreta2.png");
 
         JLabel label = new JLabel();
@@ -352,29 +347,23 @@ public class GameManager {
         label.setText("I did it, but at what cost?");
         label.setForeground(Color.WHITE);
 
-
         JPanel panel = new JPanel();
         panel.setBackground(Color.BLACK);
-        panel.setBounds(0,0,250,250);
+        panel.setBounds(0, 0, 250, 250);
         panel.add(label);
-
-        /*
-        JPanel panel2 = new JPanel();
-        panel.setBackground(Color.RED);
-        panel.setBounds(250,0,250,250);
-
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(null);
-        frame.setSize(750, 750);
-        frame.setVisible(true);
-        //frame.add(label);
-        frame.add(panel);
-        panel.add(label);
-        //frame.add(panel2);
-        */
 
         return panel;
+
+    }
+
+    void undo(){
+
+       move(undo.size()-1, undo.size()-2, undo.size()-3, undo.size()-4);
+
+       undo.remove(undo.size()-1);
+       undo.remove(undo.size()-1);
+       undo.remove(undo.size()-1);
+       undo.remove(undo.size()-1);
 
     }
 
