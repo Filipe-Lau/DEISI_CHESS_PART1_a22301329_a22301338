@@ -33,6 +33,10 @@ public class Peca {
         this.estado = estado;
     }
 
+    public void setPontos(int pontos) {
+        this.pontos = pontos;
+    }
+
     public String getIdPeca() {
         return idPeca;
     }
@@ -61,16 +65,50 @@ public class Peca {
         return estado;
     }
 
+    public int getPontos() {
+        return pontos;
+    }
+
     public void notInJogo(){
         estado = "capturado";
     }
 
+    public void inJogo(){
+        estado = "em jogo";
+    }
+
     @Override
     public String toString() {
+
+        String tipoPecaString = "";
+
         if (estado.equals("capturado")){
             return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
         }
-        //PARTE 2// return idPeca + " | " + tipoPeca em STRING (REI) + " | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ "(" + posX + ", " + posY + ")";
-        return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
+        tipoPecaString = switch (tipoPeca) {
+            case 0 -> // REI
+                    "Rei";
+            case 1 -> //RAINHA
+                    "Rainha";
+            case 2 ->// PONEI MAGICO
+                    "Ponei Mágico";
+            case 3 ->// PADRE DA VILA
+                    "Padre da Vila";
+            case 4 ->// TORRE HORIZONTAL
+                    "Torre Horizontal";
+            case 5 ->// TORRE VERTICAL
+                    "Torre Vertical";
+            case 6 ->// HOMER SIMPSON
+                    "Homer Simpson";
+            case 7 ->// JOKER
+                    "Joker";
+            default -> tipoPecaString;
+        };
+
+        if (getPontos() == 1000){
+            return idPeca + " | " + tipoPecaString + " | (infinito) | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
+        }
+        //FALTA MUDAR O TIPODEPECA STRING NO JOKER QUANDO MUDA DE PEÇA EXEMPLO: JOKER/RAINHA -> JOKER/PONEI MÁGICO
+        return idPeca + " | " + tipoPecaString + " | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
     }
 }

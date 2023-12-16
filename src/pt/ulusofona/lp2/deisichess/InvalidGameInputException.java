@@ -11,7 +11,7 @@ public class InvalidGameInputException extends Throwable {
         this.problemDescription = problemDescription;
     }
 
-    public int getNumLine() {
+    public int getLineWithError() {
         return numLine;
     }
 
