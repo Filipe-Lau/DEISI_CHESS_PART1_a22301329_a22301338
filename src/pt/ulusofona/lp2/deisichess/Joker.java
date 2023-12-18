@@ -29,9 +29,35 @@ public class Joker extends Peca{
         return null;
     }
 
+    public Peca getPecaEmUso(int tipoPeca){
+        switch (tipoPeca){
+            case 1:
+                pecaEmUso = new Rainha(idPeca,equipaPeca,nomePeca);
+                break;
+            case 2:
+                pecaEmUso = new PoneiMagico(idPeca,equipaPeca,nomePeca);
+                break;
+            case 3:
+                pecaEmUso = new PadreDaVila(idPeca,equipaPeca,nomePeca);
+                break;
+            case 4:
+                pecaEmUso = new TorreH(idPeca,equipaPeca,nomePeca);
+                break;
+            case 5:
+                pecaEmUso = new TorreV(idPeca,equipaPeca,nomePeca);
+                break;
+            case 6:
+                pecaEmUso = new HomerSimpson(idPeca,equipaPeca,nomePeca);
+                break;
+        }
+        return pecaEmUso;
+    }
+
     public boolean movePeca(int x1,int y1){
 
+        return pecaEmUso.movePeca(x1,y1);
 
+        /*
         switch (pecaEmUso.getTipoPecaString()){
             case "Rainha":
                 if (pecaEmUso.getEstado().equals("emJogo")) {
@@ -61,21 +87,11 @@ public class Joker extends Peca{
                 if (pecaEmUso.getEstado().equals("emJogo")) {
                     return pecaEmUso.movePeca(x1, y1);
                 }
-        }
-        return pecaEmUso.movePeca(x1,y1);
-    }
+         }
 
-    public Peca getPecaEmUso(int tipoPeca){
-        switch (tipoPeca){
-            case 1:
-                pecaEmUso = new Rainha(idPeca,equipaPeca,nomePeca);
+         */
 
-            case 2:
-                pecaEmUso = new PoneiMagico(idPeca,equipaPeca,nomePeca);
 
-        }
-
-        return pecaEmUso;
     }
 
 

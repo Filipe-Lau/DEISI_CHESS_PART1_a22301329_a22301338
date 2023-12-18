@@ -33,6 +33,11 @@ public class TorreH extends Peca {
     }
 
     @Override
+    String getTipoPecaString() {
+        return tipoPecaString;
+    }
+
+    @Override
     boolean movePeca(int x1, int y1) {
         return false;
     }

@@ -66,11 +66,12 @@ public class GameManager {
 
                     partes = line.split(":");
 
-                    String id = partes[0];
-
-                    int tipo = Integer.parseInt(partes[1]);
-
                     try {
+
+                        String id = partes[0];
+
+                        int tipo = Integer.parseInt(partes[1]);
+
                         int equipa = Integer.parseInt(partes[2].trim());
 
                         if (equipa == 10) {
@@ -81,31 +82,94 @@ public class GameManager {
 
                         String nome = partes[3].trim();
 
-                        Peca peca = new Peca(id, tipo, equipa, nome);
+                        //Peca peca = new Peca(id, tipo, equipa, nome);
 
-                        switch (tipo) {  // ISTO É TEMPORÁRIO
+                        switch (tipo) {
                             case 0:
-                                peca.setPontos(1000); // REI
+                                if (equipa == 20){
+                                    Peca reiBranco= new Rei(id, equipa, nome);
+                                    gameBoard.getPecasEmJogo().put(id, reiBranco);
+                                }else {
+                                    Peca reiPreto = new Rei(id, equipa, nome);
+                                    gameBoard.getPecasEmJogo().put(id, reiPreto);
+                                }
+                                //Peca rei = new Rei(id, equipa, nome);
                                 break;
                             case 1:
-                                peca.setPontos(8); //RAINHA
+                                if (equipa == 20){
+                                    Peca rainhaBranco = new Rainha(id, equipa, nome);
+                                    gameBoard.getPecasEmJogo().put(id, rainhaBranco);
+                                }else {
+                                    Peca rainhaPreto = new Rainha(id, equipa, nome);
+                                    gameBoard.getPecasEmJogo().put(id, rainhaPreto);
+                                }
+//                                Peca rainha = new Rainha(id, equipa, nome);
                                 break;
                             case 2:
-                                peca.setPontos(5); // PONEI MAGICO
+                                if (equipa == 20){
+                                    Peca poneiMagicoBranco = new PoneiMagico(id, equipa, nome);
+                                    gameBoard.getPecasEmJogo().put(id, poneiMagicoBranco);
+                                }else {
+                                    Peca poneiMagicoPreto = new PoneiMagico(id, equipa, nome);
+                                    gameBoard.getPecasEmJogo().put(id, poneiMagicoPreto);
+                                }
+//                                Peca poneiMagico = new PoneiMagico(id, equipa, nome);
                                 break;
-                            case 3, 4, 5:
-                                peca.setPontos(3); // PADRE DA VILA
+                            case 3:
+                                if (equipa == 20){
+                                    Peca padreBranco = new PadreDaVila(id, equipa, nome);
+                                    gameBoard.getPecasEmJogo().put(id, padreBranco);
+                                }else {
+                                    Peca padrePreto = new PadreDaVila(id, equipa, nome);
+                                    gameBoard.getPecasEmJogo().put(id, padrePreto);
+                                }// padre da vila
+//                                Peca padre = new PadreDaVila(id, equipa, nome);
+                                break;
+                            case 4:
+                                if (equipa == 20){
+                                    Peca torreHBranco = new TorreH(id, equipa, nome);
+                                    gameBoard.getPecasEmJogo().put(id, torreHBranco);
+                                }else {
+                                    Peca torreHPreto = new TorreH(id, equipa, nome);
+                                    gameBoard.getPecasEmJogo().put(id, torreHPreto);
+                                }// th
+//                                Peca torreH = new TorreH(id, equipa, nome);
+                                break;
+                            case 5:
+                                if (equipa == 20){
+                                    Peca torreVBranco = new TorreV(id, equipa, nome);
+                                    gameBoard.getPecasEmJogo().put(id, torreVBranco);
+                                }else {
+                                    Peca torreVPreto = new TorreV(id, equipa, nome);
+                                    gameBoard.getPecasEmJogo().put(id, torreVPreto);
+                                }//tv
+//                                Peca torreV = new TorreV(id, equipa, nome);
                                 break;
                             case 6:
-                                peca.setPontos(2); // HOMER SIMPSON
+                                if (equipa == 20){
+                                    Peca homerBranco = new HomerSimpson(id, equipa, nome);
+                                    gameBoard.getPecasEmJogo().put(id, homerBranco);
+                                }else {
+                                    Peca homerPreto = new HomerSimpson(id, equipa, nome);
+                                    gameBoard.getPecasEmJogo().put(id, homerPreto);
+                                }
+//                                Peca homer = new HomerSimpson(id, equipa, nome);
                                 break;
                             case 7:
-                                peca.setPontos(4); // JOKER
+                                if (equipa == 20){
+                                    Peca jokerBranco= new Joker(id, equipa, nome);
+                                    gameBoard.getPecasEmJogo().put(id, jokerBranco);
+                                }else {
+                                    Peca jokerPreto = new Joker(id, equipa, nome);
+                                    gameBoard.getPecasEmJogo().put(id, jokerPreto);
+                                }
+                                //                     break;
+//                                Peca joker = new Joker(id, equipa, nome);
                         }
-                        gameBoard.getPecasEmJogo().put(id, peca);
+                        //gameBoard.getPecasEmJogo().put(id, peca);
                         count++;
 
-                    }catch (NumberFormatException e){
+                    }catch (NumberFormatException | ArrayIndexOutOfBoundsException e){
                         throw new InvalidGameInputException(numlinha, "DADOS A MENOS (Esperava: " + 4 + " Obtive: " + partes.length + ")");
                     }
 
@@ -157,20 +221,46 @@ public class GameManager {
         if (x0 >= -1 && x0 <= boardSize - 1 && y0 >= -1 && y0 <= boardSize - 1 && x1 >= -1 && x1 <= boardSize - 1 && y1 >= -1 && y1 <= boardSize - 1) { // VER SE AS COORDENADAS ESTÃO DENTRO DO TABULEIRO
             for (Peca peca : gameBoard.getPecasEmJogo().values()) {
                 if (peca.getPosX() == x0 && peca.getPosY() == y0) {
-                    // VALIDAR QUEM ESTÁ A JOGAR
+                    // VALIDAR QUEM ESTÁ A JOGAR // PODEMOS CRIAR UMA FUNÇÃO PARA ESTES DOIS IF´S
                     if (getCurrentTeamID() == 20 && peca.getEquipaPeca() == 10) {
                         System.out.println("ada");
                         gameResult.aumentaJogadaBrancaInvalida();
                         return false;
-                    } else if (getCurrentTeamID() == 10 && peca.getEquipaPeca() == 20) {
+                    }
+
+                    if (getCurrentTeamID() == 10 && peca.getEquipaPeca() == 20) {
                         System.out.println("dad");
                         gameResult.aumentaJogadaPretaInvalida();
                         return false;
                     } else {
+                        /*
+                        Peca peca1 = obterPeca(x1, y1);
+                         if(peca1 != null){// EXISTE UMA PEÇA NA CASA ONDE QUERO IR, LOGO VOU COMER
+                              if(peca1.getEquipaPeca() == peca.getEquipaPeca()){
+                                 contadorJogadaInvalida(peca);
+                                 return false;
+                              } else {
+                                peca1.setPosX(-1);
+                                peca1.setPosY(-1);
+                              }
+                            }
+                         */
+
                         switch (peca.getTipoPeca()) {
                             case 0:
-                                if ((x1 - x0 >= -1 && x1 - x0 <= 1) && (y1 - y0 >= -1 && y1 - y0 <= 1)) { // ESTÁ BEM
+                                if ((x1 - x0 >= -1 && x1 - x0 <= 1) && (y1 - y0 >= -1 && y1 - y0 <= 1)) { // VAI ESTAR IMPLEMENTADO NO MOVE DO REI
                                     Peca peca1 = obterPeca(x1, y1);
+
+                                    /*
+                                       peca.movePeca(x1,y1);
+                                    if(peca.movePeca(x1,y1) == false){
+                                        contadorJogadaInvalida(peca); // SE O REI ANDAR MAIS QUE UMA CASA
+                                        return false;
+                                    }
+                                    undo();
+                                    return true;
+                                    */
+
                                     if (peca1 == null) {// CASO DE ANDAR PARA UMA CASA VAZIA
                                         moverParaPosicaoVazia(peca, x1, y1);
 
@@ -178,19 +268,33 @@ public class GameManager {
                                         undo.add(y0);
                                         undo.add(x1);
                                         undo.add(y1);
-
                                         return true;
                                     } else {
                                         if (peca.getEquipaPeca() != peca1.getEquipaPeca()) {
                                             atacar(peca, peca1, x1, y1);
                                             return true;
                                         } else {
-                                            contadorJogadaInvalida(peca);
+                                            contadorJogadaInvalida(peca); // SE O REI TENTAR COMER DA MESMA EQUIPA
                                         }
                                         return false;
                                     }
                                 }
-                                contadorJogadaInvalida(peca);
+                                contadorJogadaInvalida(peca); // SE O REI ANDAR MAIS QUE UMA CASA
+                                return false;
+
+                            case 1:
+                                return false;
+                            case 2:
+                                return false;
+                            case 3:
+                                return false;
+                            case 4:
+                                return false;
+                            case 5:
+                                return false;
+                            case 6:
+                                return false;
+                            case 7:
                                 return false;
                         }
                     }
@@ -254,8 +358,6 @@ public class GameManager {
             gameBoard.pecaPretaComida();
             vezDeJogar = 10;
         }
-
-        // NÃO FAZ SENTIDO
 
         if (gameResult.getHouveCaptura()) {
             gameResult.setJogadasSemComer(0);
