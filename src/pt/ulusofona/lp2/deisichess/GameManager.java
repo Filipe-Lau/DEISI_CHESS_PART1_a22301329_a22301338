@@ -18,7 +18,7 @@ public class GameManager {
     GameResult gameResult = new GameResult();
     ArrayList<Integer> undo = new ArrayList<>();
 
-    Peca pecaCapturada = new Peca();
+    Peca pecaCapturada = new Rei();
 
     public GameManager() {
     }
@@ -153,7 +153,6 @@ public class GameManager {
         //System.out.println("BOARDSIZE\n");
         return boardSize;
     }
-
     public boolean move(int x0, int y0, int x1, int y1) {
         if (x0 >= -1 && x0 <= boardSize - 1 && y0 >= -1 && y0 <= boardSize - 1 && x1 >= -1 && x1 <= boardSize - 1 && y1 >= -1 && y1 <= boardSize - 1) { // VER SE AS COORDENADAS ESTÃO DENTRO DO TABULEIRO
             for (Peca peca : gameBoard.getPecasEmJogo().values()) {
@@ -287,7 +286,7 @@ public class GameManager {
                 squareInfo[2] = String.valueOf(peca.getEquipaPeca());
                 squareInfo[3] = peca.getNomePeca();
 
-                switch (peca.tipoPeca){
+                switch (peca.getTipoPeca()){
 
                     case 0: // REI
                         if (peca.getEquipaPeca() == 20) {

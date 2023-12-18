@@ -1,10 +1,7 @@
 package pt.ulusofona.lp2.deisichess;
 
-public class Peca {
+public abstract class Peca {
     String idPeca;
-    int tipoPeca; // AGORA É UMA STRING
-
-    int pontos;
     int equipaPeca;
     String nomePeca;
     int posX = -1;
@@ -14,15 +11,17 @@ public class Peca {
     public Peca() {
     }
 
-    public Peca(String idPeca, int tipoPeca, int equipaPeca, String nomePeca) {
+    public Peca(String idPeca,int equipaPeca, String nomePeca) {
         this.idPeca = idPeca;
-        this.tipoPeca = tipoPeca;
         this.equipaPeca = equipaPeca;
         this.nomePeca = nomePeca;
     }
 
+    abstract int getPontos();
+    abstract int getTipoPeca();
     public void setPosX(int posX) {
         this.posX = posX;
+
     }
 
     public void setPosY(int posY) {
@@ -34,15 +33,11 @@ public class Peca {
     }
 
     public void setPontos(int pontos) {
-        this.pontos = pontos;
+        //this.pontos = pontos;
     }
 
     public String getIdPeca() {
         return idPeca;
-    }
-
-    public int getTipoPeca() {
-        return tipoPeca;
     }
 
     public int getEquipaPeca() {
@@ -65,10 +60,6 @@ public class Peca {
         return estado;
     }
 
-    public int getPontos() {
-        return pontos;
-    }
-
     public void notInJogo(){
         estado = "capturado";
     }
@@ -83,9 +74,9 @@ public class Peca {
         String tipoPecaString = "";
 
         if (estado.equals("capturado")){
-            return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
+            return idPeca + " | " + /*tipoPeca +*/ " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
         }
-        tipoPecaString = switch (tipoPeca) {
+        tipoPecaString = switch (equipaPeca /* esta mal devia ser tipoPeca*/) {
             case 0 -> // REI
                     "Rei";
             case 1 -> //RAINHA
@@ -109,6 +100,7 @@ public class Peca {
             return idPeca + " | " + tipoPecaString + " | (infinito) | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
         }
         //FALTA MUDAR O TIPODEPECA STRING NO JOKER QUANDO MUDA DE PEÇA EXEMPLO: JOKER/RAINHA -> JOKER/PONEI MÁGICO
-        return idPeca + " | " + tipoPecaString + " | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
+        //return idPeca + " | " + tipoPecaString + " | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
+    return "";
     }
 }
