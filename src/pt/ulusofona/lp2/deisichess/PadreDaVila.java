@@ -13,10 +13,15 @@ public class PadreDaVila extends Peca {
 
     }
 
-    public PadreDaVila(String idPeca, int tipoPeca, int equipaPeca, String nomePeca) {
+    public PadreDaVila(String idPeca, int equipaPeca, String nomePeca) {
         super(idPeca, equipaPeca, nomePeca);
-        this.tipoPeca = tipoPeca;
     }
+
+    public String toString() {
+        if (estado.equals("capturado")){
+            return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
+        }
+        return idPeca + " | Padre da Vila | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";    }
 
     public int getPontos(){
         return pontos;

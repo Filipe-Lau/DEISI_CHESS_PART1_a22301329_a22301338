@@ -19,6 +19,8 @@ public abstract class Peca {
 
     abstract int getPontos();
     abstract int getTipoPeca();
+    abstract boolean movePeca(int x1,int y1);
+    abstract public String toString();
     public void setPosX(int posX) {
         this.posX = posX;
 
@@ -68,39 +70,4 @@ public abstract class Peca {
         estado = "em jogo";
     }
 
-    @Override
-    public String toString() {
-
-        String tipoPecaString = "";
-
-        if (estado.equals("capturado")){
-            return idPeca + " | " + /*tipoPeca +*/ " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
-        }
-        tipoPecaString = switch (equipaPeca /* esta mal devia ser tipoPeca*/) {
-            case 0 -> // REI
-                    "Rei";
-            case 1 -> //RAINHA
-                    "Rainha";
-            case 2 ->// PONEI MAGICO
-                    "Ponei Mágico";
-            case 3 ->// PADRE DA VILA
-                    "Padre da Vila";
-            case 4 ->// TORRE HORIZONTAL
-                    "Torre Horizontal";
-            case 5 ->// TORRE VERTICAL
-                    "Torre Vertical";
-            case 6 ->// HOMER SIMPSON
-                    "Homer Simpson";
-            case 7 ->// JOKER
-                    "Joker";
-            default -> tipoPecaString;
-        };
-
-        if (getPontos() == 1000){
-            return idPeca + " | " + tipoPecaString + " | (infinito) | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
-        }
-        //FALTA MUDAR O TIPODEPECA STRING NO JOKER QUANDO MUDA DE PEÇA EXEMPLO: JOKER/RAINHA -> JOKER/PONEI MÁGICO
-        //return idPeca + " | " + tipoPecaString + " | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
-    return "";
-    }
 }

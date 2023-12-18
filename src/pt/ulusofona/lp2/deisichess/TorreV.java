@@ -12,9 +12,15 @@ public class TorreV extends Peca{
 
     }
 
-    public TorreV(String idPeca, int tipoPeca, int equipaPeca, String nomePeca) {
+    public TorreV(String idPeca, int equipaPeca, String nomePeca) {
         super(idPeca,equipaPeca, nomePeca);
-        this.tipoPeca = tipoPeca;
+    }
+
+    public String toString() {
+        if (estado.equals("capturado")){
+            return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
+        }
+        return idPeca + " | TorreVert | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
     }
 
     public int getPontos(){

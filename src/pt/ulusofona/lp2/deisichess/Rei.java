@@ -9,9 +9,16 @@ public class Rei extends Peca{
 
     }
 
-    public Rei(String idPeca, int equipaPeca, String nomePeca, int tipoPeca) {
+    @Override
+    public String toString() {
+        if (estado.equals("capturado")){
+            return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
+        }
+        return idPeca + " | Rei | (infinito) | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
+    }
+
+    public Rei(String idPeca, int equipaPeca, String nomePeca) {
         super(idPeca, equipaPeca, nomePeca);
-        this.tipoPeca = tipoPeca;
     }
 
     public int getPontos(){
@@ -22,3 +29,4 @@ public class Rei extends Peca{
         return tipoPeca;
     }
 }
+

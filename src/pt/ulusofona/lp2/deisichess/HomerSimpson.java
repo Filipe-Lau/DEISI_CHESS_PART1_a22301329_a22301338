@@ -12,9 +12,15 @@ public class HomerSimpson extends Peca{
 
     }
 
-    public HomerSimpson(String idPeca, int tipoPeca, int equipaPeca, String nomePeca) {
+    public HomerSimpson(String idPeca, int equipaPeca, String nomePeca) {
         super(idPeca, equipaPeca, nomePeca);
-        this.tipoPeca = tipoPeca;
+    }
+
+    public String toString() {
+        if (estado.equals("capturado")){
+            return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
+        }
+        return idPeca + " | Homer Simpson | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
     }
 
     public int getPontos(){
@@ -23,4 +29,15 @@ public class HomerSimpson extends Peca{
     public int getTipoPeca(){
         return tipoPeca;
     }
+
+    public boolean moverPeca(int x1,int y1){
+        if ((x1 - posX >= -1 && x1 - posX <= 1) && (y1 - posY >= -1 && y1 - posY <= 1)){
+            setPosX(x1);
+            setPosY(y1);
+            return true;
+        }
+        return false;
+    }
+
+
 }

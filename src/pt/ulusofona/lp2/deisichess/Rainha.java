@@ -12,9 +12,17 @@ public class Rainha extends Peca { //ATENÇÃO NO MOVE, RAINHA NÃO PODE COMER R
     public Rainha(){
 
     }
-    public Rainha(String idPeca, int tipoPeca, int equipaPeca, String nomePeca) {
+
+    @Override
+     public String toString() {
+        if (estado.equals("capturado")){
+            return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
+        }
+        return idPeca + " | Rainha | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
+    }
+
+    public Rainha(String idPeca, int equipaPeca, String nomePeca) {
         super(idPeca,equipaPeca, nomePeca);
-        this.tipoPeca = tipoPeca;
     }
 
     public int getPontos(){

@@ -1,6 +1,6 @@
 8
 16
-1:0:10:O Poderoso Chefao
+0:10:O Poderoso Chefao
 2:1:10:A Dama Selvagem
 3:2:10:O Grande Artista
 4:3:10:Amante de Praia
