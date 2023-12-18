@@ -4,7 +4,7 @@ public class Joker extends Peca{
     int pontos = 4;
     String tipoPecaString = "Joker";
     int tipoPeca = 7;
-    Peca pecaEmUso;
+    Peca pecaEmUso = new Rainha();
 
     public Joker(String idPeca, int equipaPeca, String nomePeca) {
         super(idPeca,equipaPeca, nomePeca);
@@ -31,8 +31,6 @@ public class Joker extends Peca{
 
     public boolean movePeca(int x1,int y1){
 
-
-        return pecaEmUso.movePeca(x1,y1);
 
         switch (pecaEmUso.getTipoPecaString()){
             case "Rainha":
@@ -64,19 +62,20 @@ public class Joker extends Peca{
                     return pecaEmUso.movePeca(x1, y1);
                 }
         }
-        return false;
+        return pecaEmUso.movePeca(x1,y1);
     }
 
-    public Peca getPecaEmUso(){
-        int count = 1;
+    public Peca getPecaEmUso(int tipoPeca){
+        switch (tipoPeca){
+            case 1:
+                pecaEmUso = new Rainha(idPeca,equipaPeca,nomePeca);
 
-        while (count < 7){
+            case 2:
+                pecaEmUso = new PoneiMagico(idPeca,equipaPeca,nomePeca);
 
-
-
-
-            count++;
         }
+
+        return pecaEmUso;
     }
 
 
