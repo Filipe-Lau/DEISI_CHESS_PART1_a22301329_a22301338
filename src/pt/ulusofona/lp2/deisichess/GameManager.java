@@ -225,43 +225,33 @@ public class GameManager {
         if (x0 >= -1 && x0 <= boardSize - 1 && y0 >= -1 && y0 <= boardSize - 1 && x1 >= -1 && x1 <= boardSize - 1 && y1 >= -1 && y1 <= boardSize - 1) { // VER SE AS COORDENADAS ESTÃO DENTRO DO TABULEIRO
             for (Peca peca : gameBoard.getPecasEmJogo().values()) {
                 if (peca.getPosX() == x0 && peca.getPosY() == y0) {
-                    // VALIDAR QUEM ESTÁ A JOGAR
-                    if (getCurrentTeamID() == 20 && peca.getEquipaPeca() == 10) {
-                        gameResult.aumentaJogadaBrancaInvalida();
-                        return false;
-                    }
-
-                    if (getCurrentTeamID() == 10 && peca.getEquipaPeca() == 20) {
-                        gameResult.aumentaJogadaPretaInvalida();
-                        return false;
-                    }
-
-                    Peca peca1 = obterPeca(x1, y1);
-                    if (peca1 != null) {// EXISTE UMA PEÇA NA CASA ONDE QUERO IR, LOGO VOU COMER
-                        if (peca1.getEquipaPeca() == peca.getEquipaPeca()) {
-                            contadorJogadaInvalida(peca);
-                            return false;
-                        } else {
-                            ataque = true;
-                            peca1.setPosX(-1);
-                            peca1.setPosY(-1);
-                            pecaCapturada = peca1;
-                            gameBoard.getPecasEmJogo().get(peca1.getIdPeca()).notInJogo();
+                    if (validaVezDeJogar(peca)) { // VALIDAR QUEM ESTÁ A JOGAR
+                        Peca peca1 = obterPeca(x1, y1);
+                        if (peca1 != null) { // EXISTE UMA PEÇA NA CASA ONDE QUERO IR, LOGO VOU COMER
+                            if (peca1.getEquipaPeca() == peca.getEquipaPeca()) {
+                                contadorJogadaInvalida(peca);
+                                return false;
+                            } else {
+                                ataque = true;
+                                peca1.setPosX(-1);
+                                peca1.setPosY(-1);
+                                pecaCapturada = peca1;
+                                gameBoard.getPecasEmJogo().get(peca1.getIdPeca()).notInJogo();
+                            }
                         }
-                    }
 
-                    if (!peca.movePeca(x1, y1)) {
-                        contadorJogadaInvalida(peca); // SE O PECA ANDAR MAIS QUE O LIMITE DE CASAS QUE PODE ANDAR
-                        return false;
-                    }
+                        if (!peca.movePeca(x1, y1)) {
+                            contadorJogadaInvalida(peca); // SE O PECA ANDAR MAIS QUE O LIMITE DE CASAS QUE PODE ANDAR
+                            return false;
+                        }
 
-                    if (ataque){
-                        atualizarCapturas(peca);
-                    }
+                        if (ataque) {
+                            atualizarCapturas(peca);
+                        }
 
-                    atualizarJogadasValidas(); // INCREMENTA AS JOGADAS VALIDAS DAS EQUIPAS
-                    atualizarVezDeJogar(); // PRETA JOGA, A VEZ DE JOGAR MUDA PARA AS BRANCAS
-                    return true;
+                        atualizarJogadasValidas(); // INCREMENTA AS JOGADAS VALIDAS DAS EQUIPAS
+                        atualizarVezDeJogar(); // PRETA JOGA, A VEZ DE JOGAR MUDA PARA AS BRANCAS
+                        return true;
 
                     /*
                     switch (peca.getTipoPeca()) {
@@ -362,6 +352,9 @@ public class GameManager {
                     }
                  */
 
+                    } else {
+                        return false;
+                    }
                 }
             }
         }
@@ -376,6 +369,7 @@ public class GameManager {
         }
         return null;
     }
+
 
     public void moverParaPosicaoVazia(Peca peca, int x1, int y1) {
         peca.setPosX(x1);
@@ -393,21 +387,29 @@ public class GameManager {
     }
 
 
-    public void validaVezDeJogar(){
+    public boolean validaVezDeJogar(Peca peca) {
+        if (getCurrentTeamID() == 20 && peca.getEquipaPeca() == 10) {
+            gameResult.aumentaJogadaBrancaInvalida();
+            return false;
+        }
 
+        if (getCurrentTeamID() == 10 && peca.getEquipaPeca() == 20) {
+            gameResult.aumentaJogadaPretaInvalida();
+            return false;
+        }
+
+        return true;
     }
 
-    public void atualizarCapturas(Peca peca){
+    public void atualizarCapturas(Peca peca) {
         if (peca.getEquipaPeca() == 10) { // PECA PRETA COME
             //gameResult.aumentaJogadaPretaValida();
             gameBoard.capturaPorPretas();
             gameBoard.pecaBrancaComida();
-            // vezDeJogar = 20;
         } else {
             //gameResult.aumentaJogadaBrancaValida();
             gameBoard.capturaPorBrancas();
             gameBoard.pecaPretaComida();
-            // vezDeJogar = 10;
         }
 
         if (gameResult.getHouveCaptura()) {
@@ -418,24 +420,26 @@ public class GameManager {
         }
     }
 
-    public void atualizarJogadasValidas(){
+    public void atualizarJogadasValidas() {
         if (gameResult.getHouveCaptura()) {
             gameResult.aumentaJogadasSemComer();
         }
         if (getCurrentTeamID() == 10) {
             gameResult.aumentaJogadaPretaValida();
-           // vezDeJogar = 20;
         } else {
             gameResult.aumentaJogadaBrancaValida();
-           // vezDeJogar = 10;
         }
     }
-    public void atualizarVezDeJogar(){
-       // if (gameResult.getHouveCaptura()) {
-        //    gameResult.aumentaJogadasSemComer();
-       // }
+
+    public void atualizarVezDeJogar() {
+        /*
+        if (gameResult.getHouveCaptura()) {
+            gameResult.aumentaJogadasSemComer();
+        }
+
+         */
         if (getCurrentTeamID() == 10) {
-           // gameResult.aumentaJogadaPretaValida();
+            //gameResult.aumentaJogadaPretaValida();
             vezDeJogar = 20;
         } else {
             //gameResult.aumentaJogadaBrancaValida();

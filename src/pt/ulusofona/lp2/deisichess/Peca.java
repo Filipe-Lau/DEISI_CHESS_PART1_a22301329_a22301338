@@ -25,7 +25,6 @@ public abstract class Peca {
     abstract public String toString();
     public void setPosX(int posX) {
         this.posX = posX;
-
     }
 
     public void setPosY(int posY) {
