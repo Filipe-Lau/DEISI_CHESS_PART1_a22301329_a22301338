@@ -3,6 +3,7 @@ package pt.ulusofona.lp2.deisichess;
 public class PadreDaVila extends Peca {
 
     int pontos = 3;
+    String tipoPecaString = "Padre da Vila";
     int tipoPeca = 3;
     int limiteCasas = 3;
     boolean diagonal = true;
@@ -29,5 +30,15 @@ public class PadreDaVila extends Peca {
 
     public int getTipoPeca(){
         return tipoPeca;
+    }
+
+    @Override
+    String getTipoPecaString() {
+        return tipoPecaString;
+    }
+
+    @Override
+    boolean movePeca(int x1, int y1) {
+        return false;
     }
 }

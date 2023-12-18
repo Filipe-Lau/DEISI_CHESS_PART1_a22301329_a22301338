@@ -2,6 +2,7 @@ package pt.ulusofona.lp2.deisichess;
 
 public class Rei extends Peca{
     int pontos = 1000;
+    String tipoPecaString = "Rei";
     int tipoPeca = 0;
     int limiteCasas = 1;
 
@@ -27,6 +28,16 @@ public class Rei extends Peca{
 
     public int getTipoPeca(){
         return tipoPeca;
+    }
+
+    @Override
+    String getTipoPecaString() {
+        return tipoPecaString;
+    }
+
+    @Override
+    boolean movePeca(int x1, int y1) {
+        return false;
     }
 }
 

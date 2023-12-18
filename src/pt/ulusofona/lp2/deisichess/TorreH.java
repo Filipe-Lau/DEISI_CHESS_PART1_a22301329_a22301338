@@ -2,6 +2,8 @@ package pt.ulusofona.lp2.deisichess;
 
 public class TorreH extends Peca {
     int pontos = 3;
+
+    String tipoPecaString = "TorreHor";
     int tipoPeca = 4;
     int limiteCasas = 0; //0 quer dizer que nao tem limite
     boolean horizontal = true;
@@ -28,5 +30,10 @@ public class TorreH extends Peca {
 
     public int getTipoPeca(){
         return tipoPeca;
+    }
+
+    @Override
+    boolean movePeca(int x1, int y1) {
+        return false;
     }
 }

@@ -3,6 +3,7 @@ package pt.ulusofona.lp2.deisichess;
 public class Rainha extends Peca { //ATENÇÃO NO MOVE, RAINHA NÃO PODE COMER RAINHA!!!
 
     int pontos = 8;
+    String tipoPecaString = "Rainha";
     int tipoPeca = 1;
     int limiteCasas = 5;
     boolean diagonal = true;
@@ -31,5 +32,15 @@ public class Rainha extends Peca { //ATENÇÃO NO MOVE, RAINHA NÃO PODE COMER R
 
     public int getTipoPeca(){
         return tipoPeca;
+    }
+
+    @Override
+    String getTipoPecaString() {
+        return tipoPecaString;
+    }
+
+    @Override
+    boolean movePeca(int x1, int y1) {
+        return false;
     }
 }

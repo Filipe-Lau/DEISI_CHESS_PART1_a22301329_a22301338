@@ -2,6 +2,7 @@ package pt.ulusofona.lp2.deisichess;
 
 public class HomerSimpson extends Peca{
     int pontos = 2;
+    String tipoPecaString = "Homer Simpson";
     int tipoPeca = 6;
     int limiteCasas = 1;
     boolean horizontal = false;
@@ -30,7 +31,12 @@ public class HomerSimpson extends Peca{
         return tipoPeca;
     }
 
-    public boolean moverPeca(int x1,int y1){
+    @Override
+    String getTipoPecaString() {
+        return tipoPecaString;
+    }
+
+    public boolean movePeca(int x1,int y1){
         if ((x1 - posX >= -1 && x1 - posX <= 1) && (y1 - posY >= -1 && y1 - posY <= 1)){
             setPosX(x1);
             setPosY(y1);

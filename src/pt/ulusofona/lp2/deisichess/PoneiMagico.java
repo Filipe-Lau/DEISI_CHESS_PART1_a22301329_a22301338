@@ -2,6 +2,7 @@ package pt.ulusofona.lp2.deisichess;
 
 public class PoneiMagico extends Peca {
     int pontos = 5;
+    String tipoPecaString = "Ponei Magico";
     int tipoPeca = 2;
 
     public PoneiMagico() {
@@ -28,8 +29,13 @@ public class PoneiMagico extends Peca {
         return tipoPeca;
     }
 
-    public boolean move(int x1,int y1){
-        // limites da jogada;
+    @Override
+    String getTipoPecaString() {
+        return tipoPecaString;
+    }
+
+    @Override
+    boolean movePeca(int x1, int y1) {
         if ((x1 - posX == 2 && y1 - posY == 2) || (x1 - posX == -2 && y1 - posY == 2) || (x1 - posX == 2 && y1 - posY == -2) || (x1 - posX == -2 && y1 - posY == -2)){
             setPosX(x1);
             setPosY(y1);

@@ -2,6 +2,7 @@ package pt.ulusofona.lp2.deisichess;
 
 public abstract class Peca {
     String idPeca;
+    String tipoPecaString = "";
     int equipaPeca;
     String nomePeca;
     int posX = -1;
@@ -19,6 +20,7 @@ public abstract class Peca {
 
     abstract int getPontos();
     abstract int getTipoPeca();
+    abstract String getTipoPecaString();
     abstract boolean movePeca(int x1,int y1);
     abstract public String toString();
     public void setPosX(int posX) {
