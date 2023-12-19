@@ -37,6 +37,11 @@ public class Rei extends Peca{
 
     @Override
     boolean movePeca(int x1, int y1) {
+        if ((x1 - posX >= -1 && x1 - posX <= 1) && (y1 - posY >= -1 && y1 - posY <= 1)){
+            setPosX(x1);
+            setPosY(y1);
+            return true;
+        }
         return false;
     }
 }

@@ -39,6 +39,13 @@ public class TorreH extends Peca {
 
     @Override
     boolean movePeca(int x1, int y1) {
+        if (y1 == posY && x1 != posX && x1 >= -1 && x1 <= 7)/* de 0 a 7, 8 casas possiveis?*/ {
+            setPosX(x1);
+            setPosY(y1);
+            return true;
+        }
+
+        // Retorna falso se o movimento não for válido.
         return false;
     }
 }

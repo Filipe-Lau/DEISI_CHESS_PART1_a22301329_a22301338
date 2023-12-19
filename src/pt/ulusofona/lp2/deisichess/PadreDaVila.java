@@ -39,6 +39,11 @@ public class PadreDaVila extends Peca {
 
     @Override
     boolean movePeca(int x1, int y1) {
+        if ((x1 - posX == y1 - posY || posX - x1 == posY - y1) && (x1 - posX <= 3 && x1 - posX >= -3)) /**/ {
+            setPosX(x1);
+            setPosY(y1);
+            return true;
+        }
         return false;
     }
 }
