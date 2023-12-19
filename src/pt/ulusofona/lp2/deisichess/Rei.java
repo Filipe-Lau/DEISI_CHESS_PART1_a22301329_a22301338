@@ -30,7 +30,7 @@ public class Rei extends Peca{
         return tipoPeca;
     }
 
-    @Override
+    //@Override
     String getTipoPecaString() {
         return tipoPecaString;
     }

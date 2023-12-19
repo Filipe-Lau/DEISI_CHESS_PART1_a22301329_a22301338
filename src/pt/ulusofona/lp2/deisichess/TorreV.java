@@ -1,6 +1,6 @@
 package pt.ulusofona.lp2.deisichess;
 
-public class TorreV extends Peca{
+public class TorreV extends Peca {
     int pontos = 3;
 
     String tipoPecaString = "TorreVert";
@@ -10,26 +10,26 @@ public class TorreV extends Peca{
     boolean vertical = true;
     boolean diagonal = false;
 
-    public TorreV(){
+    public TorreV() {
 
     }
 
     public TorreV(String idPeca, int equipaPeca, String nomePeca) {
-        super(idPeca,equipaPeca, nomePeca);
+        super(idPeca, equipaPeca, nomePeca);
     }
 
     public String toString() {
-        if (estado.equals("capturado")){
+        if (estado.equals("capturado")) {
             return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
         }
         return idPeca + " | TorreVert | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
     }
 
-    public int getPontos(){
+    public int getPontos() {
         return pontos;
     }
 
-    public int getTipoPeca(){
+    public int getTipoPeca() {
         return tipoPeca;
     }
 
@@ -40,7 +40,8 @@ public class TorreV extends Peca{
 
     @Override
     boolean movePeca(int x1, int y1) {
-        if (x1 == posX && y1 != posY && y1 >= -1 && y1 <= 7)/* de 0 a 7, 8 casas possiveis?*/ {
+        //if (x1 == posX && y1 != posY && y1 >= -1 && y1 <= 7)/* de 0 a 7, 8 casas possiveis?*/
+        if (x1 == posX && y1 <= 7) {
             setPosX(x1);
             setPosY(y1);
             return true;

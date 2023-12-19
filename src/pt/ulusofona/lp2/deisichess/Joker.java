@@ -6,15 +6,12 @@ public class Joker extends Peca{
     int tipoPeca = 7;
     Peca pecaEmUso = new Rainha();
 
-    public Joker(String idPeca, int equipaPeca, String nomePeca) {
-        super(idPeca,equipaPeca, nomePeca);
+    public Joker(){
+
     }
 
-    public String toString() {
-        if (estado.equals("capturado")){
-            return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
-        }
-        return idPeca + " | Joker/" + pecaEmUso.getTipoPecaString() + " | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
+    public Joker(String idPeca, int equipaPeca, String nomePeca) {
+        super(idPeca,equipaPeca, nomePeca);
     }
 
     public int getPontos(){
@@ -26,31 +23,45 @@ public class Joker extends Peca{
 
     @Override
     String getTipoPecaString() {
-        return null;
+        return tipoPecaString;
     }
 
-    public Peca getPecaEmUso(int tipoPeca){
-        switch (tipoPeca){
+    public Peca getPecaEmUso(int tipoPeca){ //NÃO ESTÁ A FAZER A MUNDANÇA
+         switch (tipoPeca) {
             case 1:
-                pecaEmUso = new Rainha(idPeca,equipaPeca,nomePeca);
-                break;
+               return new Rainha(idPeca, equipaPeca, nomePeca);
+
+                //pecaEmUso = new Rainha(idPeca, equipaPeca, nomePeca);
+            //break;
             case 2:
-                pecaEmUso = new PoneiMagico(idPeca,equipaPeca,nomePeca);
-                break;
+              return new PoneiMagico(idPeca, equipaPeca, nomePeca);
+                //pecaEmUso = new PoneiMagico(idPeca, equipaPeca, nomePeca);
+            //break;
             case 3:
-                pecaEmUso = new PadreDaVila(idPeca,equipaPeca,nomePeca);
-                break;
+              return new PadreDaVila(idPeca, equipaPeca, nomePeca);
+                //pecaEmUso = new PadreDaVila(idPeca, equipaPeca, nomePeca);
+            //break;
             case 4:
-                pecaEmUso = new TorreH(idPeca,equipaPeca,nomePeca);
-                break;
+              return pecaEmUso = new TorreH(idPeca, equipaPeca, nomePeca);
+                 //pecaEmUso = new TorreH(idPeca, equipaPeca, nomePeca);
+            //break;
             case 5:
-                pecaEmUso = new TorreV(idPeca,equipaPeca,nomePeca);
-                break;
+                 pecaEmUso = new TorreV(idPeca, equipaPeca, nomePeca);
+                 //pecaEmUso = new TorreV(idPeca, equipaPeca, nomePeca);
+            break;
             case 6:
-                pecaEmUso = new HomerSimpson(idPeca,equipaPeca,nomePeca);
-                break;
+                pecaEmUso = new HomerSimpson(idPeca, equipaPeca, nomePeca);
+               // pecaEmUso = new HomerSimpson(idPeca, equipaPeca, nomePeca);
+
         }
         return pecaEmUso;
+    }
+
+    public String toString() { // NÃO ESTÁ A MUDAR O getTipoPecaString(), ESTÁ SEMPRE NA RAINHA
+        if (estado.equals("capturado")){
+            return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
+        }
+        return idPeca + " | Joker/" + pecaEmUso.getTipoPecaString() + " | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
     }
 
     public boolean movePeca(int x1,int y1){
@@ -90,7 +101,6 @@ public class Joker extends Peca{
          }
 
          */
-
 
     }
 

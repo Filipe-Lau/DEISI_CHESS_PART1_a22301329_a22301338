@@ -10,22 +10,22 @@ public class PoneiMagico extends Peca {
     }
 
     public PoneiMagico(String idPeca, int equipaPeca, String nomePeca) {
-        super(idPeca,equipaPeca, nomePeca);
+        super(idPeca, equipaPeca, nomePeca);
     }
 
     @Override
     public String toString() {
-        if (estado.equals("capturado")){
+        if (estado.equals("capturado")) {
             return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
         }
         return idPeca + " | Ponei Magico | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
     }
 
-    public int getPontos(){
+    public int getPontos() {
         return pontos;
     }
 
-    public int getTipoPeca(){
+    public int getTipoPeca() {
         return tipoPeca;
     }
 
@@ -36,11 +36,16 @@ public class PoneiMagico extends Peca {
 
     @Override
     boolean movePeca(int x1, int y1) {
-        if ((x1 - posX == 2 && y1 - posY == 2) || (x1 - posX == -2 && y1 - posY == 2) || (x1 - posX == 2 && y1 - posY == -2) || (x1 - posX == -2 && y1 - posY == -2)){
+        int diffX = Math.abs(x1 - posX);
+        int diffY = Math.abs(y1 - posY);
+
+        //if ((x1 - posX == 2 && y1 - posY == 2) || (x1 - posX == -2 && y1 - posY == 2) || (x1 - posX == 2 && y1 - posY == -2) || (x1 - posX == -2 && y1 - posY == -2)){
+        if (diffX == 2 && diffY == 2) {
             setPosX(x1);
             setPosY(y1);
             return true;
         }
+        //}
         return false;
     }
 

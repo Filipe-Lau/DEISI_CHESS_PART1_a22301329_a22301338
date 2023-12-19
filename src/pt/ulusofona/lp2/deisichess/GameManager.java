@@ -17,8 +17,7 @@ public class GameManager {
     Tabuleiro gameBoard = new Tabuleiro();
     GameResult gameResult = new GameResult();
     ArrayList<Integer> undo = new ArrayList<>();
-
-    Peca pecaCapturada = new Rei();
+    Peca pecaCapturada;
 
     public GameManager() {
     }
@@ -219,8 +218,8 @@ public class GameManager {
     }
 
     public boolean move(int x0, int y0, int x1, int y1) {
-
         boolean ataque = false;
+        Joker joker = new Joker();
 
         if (x0 >= -1 && x0 <= boardSize - 1 && y0 >= -1 && y0 <= boardSize - 1 && x1 >= -1 && x1 <= boardSize - 1 && y1 >= -1 && y1 <= boardSize - 1) { // VER SE AS COORDENADAS ESTÃO DENTRO DO TABULEIRO
             for (Peca peca : gameBoard.getPecasEmJogo().values()) {
@@ -228,11 +227,17 @@ public class GameManager {
                     if (validaVezDeJogar(peca)) { // VALIDAR QUEM ESTÁ A JOGAR
                         Peca peca1 = obterPeca(x1, y1);
                         if (peca1 != null) { // EXISTE UMA PEÇA NA CASA ONDE QUERO IR, LOGO VOU COMER
-                            if (peca1.getEquipaPeca() == peca.getEquipaPeca()) {
+                            if ((peca1.getEquipaPeca() == peca.getEquipaPeca()) || (peca.getTipoPeca() == 1 && peca1.getTipoPeca() == 1)) { // SE FOREM DA MESMA EQUIPA OU AMBAS SÃO RAINHAS
                                 contadorJogadaInvalida(peca);
                                 return false;
                             } else {
                                 ataque = true;
+                                /*
+                                undo.add(peca1.getPosX());
+                                undo.add(peca1.getPosY());
+                                undo.add(-1);
+                                undo.add(-1);
+                                 */
                                 peca1.setPosX(-1);
                                 peca1.setPosY(-1);
                                 pecaCapturada = peca1;
@@ -244,10 +249,24 @@ public class GameManager {
                             contadorJogadaInvalida(peca); // SE O PECA ANDAR MAIS QUE O LIMITE DE CASAS QUE PODE ANDAR
                             return false;
                         }
+/*
+                        undo.add(x0);
+                        undo.add(y0);
+                        undo.add(x1);
+                        undo.add(y1);
+ */
+                        //LINHAS DE TESTE PARA VER COMO O JOKER ESTÁ A FUNCIONAR
+                        System.out.println("ANTES DO GET PECA EM USO: " + joker.pecaEmUso.getTipoPecaString());
+                        peca = joker.getPecaEmUso(2); // PONEI MAGICO
+                        joker.pecaEmUso = peca;
+                        System.out.println("DEPOIS DO GET PECA EM USO: " + joker.pecaEmUso.getTipoPecaString());
+                        System.out.println("O JOKER ESTÁ A IMITAR: " + peca.getTipoPecaString());
 
                         if (ataque) {
                             atualizarCapturas(peca);
                         }
+
+                        //joker.getPecaEmUso(count); // NÃO POSSO USAR UM COUNT VOU TER DE USAR UM ARRAY / OU UM HASMMAP(INTEGER,PECA)
 
                         atualizarJogadasValidas(); // INCREMENTA AS JOGADAS VALIDAS DAS EQUIPAS
                         atualizarVezDeJogar(); // PRETA JOGA, A VEZ DE JOGAR MUDA PARA AS BRANCAS
@@ -370,34 +389,18 @@ public class GameManager {
         return null;
     }
 
-
-    public void moverParaPosicaoVazia(Peca peca, int x1, int y1) {
-        peca.setPosX(x1);
-        peca.setPosY(y1);
-        if (gameResult.getHouveCaptura()) {
-            gameResult.aumentaJogadasSemComer();
-        }
-        if (getCurrentTeamID() == 10) {
-            gameResult.aumentaJogadaPretaValida();
-            vezDeJogar = 20;
-        } else {
-            gameResult.aumentaJogadaBrancaValida();
-            vezDeJogar = 10;
-        }
-    }
-
-
     public boolean validaVezDeJogar(Peca peca) {
         if (getCurrentTeamID() == 20 && peca.getEquipaPeca() == 10) {
+            System.out.println("VEZ DE JOGAR BRANCO MAS JOGOU PRETO");
             gameResult.aumentaJogadaBrancaInvalida();
             return false;
         }
 
         if (getCurrentTeamID() == 10 && peca.getEquipaPeca() == 20) {
+            System.out.println("VEZ DE JOGAR PRETO MAS JOGOU BRANCO");
             gameResult.aumentaJogadaPretaInvalida();
             return false;
         }
-
         return true;
     }
 
@@ -432,12 +435,7 @@ public class GameManager {
     }
 
     public void atualizarVezDeJogar() {
-        /*
-        if (gameResult.getHouveCaptura()) {
-            gameResult.aumentaJogadasSemComer();
-        }
 
-         */
         if (getCurrentTeamID() == 10) {
             //gameResult.aumentaJogadaPretaValida();
             vezDeJogar = 20;
@@ -494,7 +492,7 @@ public class GameManager {
         }
     }
 
-    public String[] getSquareInfo(int x, int y) { // FALTA TIRAR A IMAGEM QUANDO A PECA NÃO ESTÁ EM JOGO
+    public String[] getSquareInfo(int x, int y) {
         //  System.out.println("SQUAREINFO\n");
         String[] squareInfo = new String[5];
         if (x < 0 || x >= boardSize || y < 0 || y >= boardSize) {
@@ -674,7 +672,7 @@ public class GameManager {
 
     }
 
-    public void undo() { // FALTA DAR UNDO DE UMA PEÇA CAPTURADA
+    public void undo() {
         // gameBoard.getPecasEmJogo().get(pecaCapturada.getIdPeca()).inJogo();
         //String idPeca = pecaCapturada.getIdPeca();
 
@@ -691,10 +689,9 @@ public class GameManager {
         if (undo.size() > 4) {
             if (undo.get(undo.size() - 5) == -1) {
                 gameBoard.getPecasEmJogo().get(pecaCapturada.getIdPeca()).inJogo();
-                String idPeca = pecaCapturada.getIdPeca();
                 pecaCapturada.setPosX(undo.get(undo.size() - 2));
                 pecaCapturada.setPosY(undo.get(undo.size() - 1));
-                getPieceInfo(Integer.parseInt(idPeca));
+                getPieceInfo(Integer.parseInt(pecaCapturada.getIdPeca()));
                 getSquareInfo(pecaCapturada.posX, pecaCapturada.posY);
             }
         }
@@ -707,10 +704,13 @@ public class GameManager {
             vezDeJogar = 10;
         }
 
+        /*
         for (int i = 8; i > 0; i--) {
             System.out.println("apagado: " + undo.get(undo.size() - i));
             undo.remove(undo.size() - i);
         }
+
+         */
 
         /*
         for (Integer i : undo) {
@@ -719,6 +719,6 @@ public class GameManager {
 
          */
 
-    }
+    } // FALTA DAR UNDO DE UMA PEÇA CAPTURADA
 
 }
