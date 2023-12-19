@@ -1,5 +1,7 @@
 package pt.ulusofona.lp2.deisichess;
 
+import java.util.List;
+
 public abstract class Peca {
     String idPeca;
     String tipoPecaString = "";
