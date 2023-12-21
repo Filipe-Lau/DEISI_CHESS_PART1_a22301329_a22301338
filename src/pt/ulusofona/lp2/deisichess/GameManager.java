@@ -2,11 +2,10 @@ package pt.ulusofona.lp2.deisichess;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
 import java.util.*;
+import java.util.List;
 
 // 10 pretas
 // 20 brancas
@@ -616,6 +615,70 @@ public class GameManager {
             return false;
         }
     }
+
+    void saveGame(File file) throws IOException{
+        Scanner leitor = new Scanner(new FileReader(file));
+        BufferedWriter escritor = new BufferedWriter(new FileWriter(file));
+
+            String linha = leitor.nextLine();
+            int count = 0;
+            int pecas = gameBoard.getNumPecasBrancas()+
+                    gameBoard.getNumPecasPretas();
+            while(linha != null) {
+                switch (count) {
+
+                    case 0:
+                        escritor.write(boardSize);
+                        count++;
+                        linha = leitor.nextLine();
+                        break;
+
+                    case 1:
+                        escritor.write(gameBoard.getNumPecasBrancas() +
+                                gameBoard.getNumPecasPretas());
+                        count++;
+                        linha = leitor.nextLine();
+                        break;
+                    default:
+                        break;
+                }
+
+                if (count >= 2 && count <= 2 + pecas) { //descricao das pecas
+                    //escreve logo as peças
+                    Map<String, Peca> pecasJogaveis = new TreeMap<>(gameBoard.getPecasEmJogo());
+                    for (String id : pecasJogaveis.keySet()) {
+                        escritor.write(pecasJogaveis.get(id).getIdPeca() + ";"
+                                + pecasJogaveis.get(id).getTipoPeca() + ";" +
+                                pecasJogaveis.get(id).getEquipaPeca() + ";" +
+                                pecasJogaveis.get(id).getNomePeca());
+                        linha = leitor.nextLine();
+                        count++;
+                    }
+                } else {
+                    for (int line = 0; line < 8; line++) {
+                        for (int coluna = 0; coluna < 8; coluna++) {
+                            String[] id = getSquareInfo(line, coluna);
+                            if (id.length == 0) {
+
+                            } else {
+                                escritor.write(id[0] + ";" + id[1] + ";" +
+                                        id[2] + ";" + id[3]);
+                            }
+                        }
+                        linha = leitor.nextLine();
+                        count++;
+                    }
+                }
+                /*estatisticas
+                //if(numJogadas % 2 != 0){
+                //escritor.write("brancas");
+                //} else {
+                //escritor.write("pretas");
+                */}
+            }
+
+    //preta
+    //20,a,b,c,d,e;10,a,b,c,d,e
 
     public ArrayList<String> getGameResults() {
         // System.out.println("GETGAMERESULTS\n");
