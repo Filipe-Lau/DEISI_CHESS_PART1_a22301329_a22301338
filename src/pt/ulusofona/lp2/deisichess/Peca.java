@@ -2,6 +2,7 @@ package pt.ulusofona.lp2.deisichess;
 
 public abstract class Peca {
     String idPeca;
+    int pontos;
     String tipoPecaString = "";
     int equipaPeca;
     String nomePeca;
@@ -36,7 +37,7 @@ public abstract class Peca {
     }
 
     public void setPontos(int pontos) {
-        //this.pontos = pontos;
+        this.pontos = pontos;
     }
 
     public String getIdPeca() {

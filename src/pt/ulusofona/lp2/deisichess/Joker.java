@@ -26,7 +26,7 @@ public class Joker extends Peca{
         return tipoPecaString;
     }
 
-    public Peca getPecaEmUso(int tipoPeca){ //NÃO ESTÁ A FAZER A MUNDANÇA
+    public Peca getPecaEmUso(int tipoPeca){
          switch (tipoPeca) {
             case 1:
                return new Rainha(idPeca, equipaPeca, nomePeca);

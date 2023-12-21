@@ -4,11 +4,24 @@ public class HomerSimpson extends Peca {
     int pontos = 2;
     String tipoPecaString = "Homer Simpson";
     int tipoPeca = 6;
+
+    int nrDaJogada = 0;
     int limiteCasas = 1;
+
+    /*
     boolean horizontal = false;
     boolean vertical = false;
     boolean diagonal = true;
-    boolean aDormir = true;
+     */
+    boolean aDormir = false;
+
+    public void setNrDaJogada(int nrDaJogada) {
+        this.nrDaJogada = nrDaJogada;
+    }
+
+    public int getNrDaJogada() {
+        return nrDaJogada;
+    }
 
     public HomerSimpson() {
 
@@ -19,10 +32,16 @@ public class HomerSimpson extends Peca {
     }
 
     public String toString() {
-        if (estado.equals("capturado")) {
+        if (getEstado().equals("capturado")) {
             return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
         }
+
+        if (aDormir) {
+            return "Doh! zzzzzz";
+        }
+
         return idPeca + " | Homer Simpson | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
+
     }
 
     public int getPontos() {
@@ -41,14 +60,15 @@ public class HomerSimpson extends Peca {
     public boolean movePeca(int x1, int y1) {
         int diffX = Math.abs(x1 - posX);
         int diffY = Math.abs(y1 - posY);
+        return diffX == limiteCasas && diffY == limiteCasas;
+    }
 
-//        if ((x1 - posX == -limiteCasas || x1 - posX == limiteCasas) && (y1 - posY == -limiteCasas || y1 - posY == limiteCasas)){
-        if (diffX == 1 && diffY == 1) {
-            setPosX(x1);
-            setPosY(y1);
-            return true;
-        }
-        return false;
+    public boolean getaDormir() {
+        return aDormir;
+    }
+
+    public void setaDormir(Boolean sono) {
+        this.aDormir = sono;
     }
 
 

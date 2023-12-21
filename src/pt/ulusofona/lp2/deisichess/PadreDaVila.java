@@ -10,7 +10,7 @@ public class PadreDaVila extends Peca {
     boolean horizontal = false;
     boolean vertical = false;
 
-    public PadreDaVila(){
+    public PadreDaVila() {
 
     }
 
@@ -19,16 +19,17 @@ public class PadreDaVila extends Peca {
     }
 
     public String toString() {
-        if (estado.equals("capturado")){
+        if (estado.equals("capturado")) {
             return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
         }
-        return idPeca + " | Padre da Vila | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";    }
+        return idPeca + " | Padre da Vila | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
+    }
 
-    public int getPontos(){
+    public int getPontos() {
         return pontos;
     }
 
-    public int getTipoPeca(){
+    public int getTipoPeca() {
         return tipoPeca;
     }
 
@@ -42,12 +43,7 @@ public class PadreDaVila extends Peca {
         int diffX = Math.abs(x1 - posX);
         int diffY = Math.abs(y1 - posY);
 
-        //if ((x1 - posX == y1 - posY || posX - x1 == posY - y1) && (x1 - posX <= 3 && x1 - posX >= -3)) /**/ {
-          if (diffX == diffY && diffX <= 3){
-            setPosX(x1);
-            setPosY(y1);
-            return true;
-        }
-        return false;
+        ////if ((x1 - posX == y1 - posY || posX - x1 == posY - y1) && (x1 - posX <= 3 && x1 - posX >= -3)) /**/ {
+        return diffX == diffY && diffX <= limiteCasas;
     }
 }
