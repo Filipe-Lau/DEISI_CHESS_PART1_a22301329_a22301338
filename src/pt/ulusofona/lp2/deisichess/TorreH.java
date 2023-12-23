@@ -19,7 +19,7 @@ public class TorreH extends Peca {
 
     public String toString() {
         if (estado.equals("capturado")) {
-            return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
+            return idPeca + " | TorreHor | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
         }
         return idPeca + " | TorreHor | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
     }

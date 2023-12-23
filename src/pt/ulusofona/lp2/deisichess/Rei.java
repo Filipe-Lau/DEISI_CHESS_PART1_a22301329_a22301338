@@ -13,7 +13,7 @@ public class Rei extends Peca{
     @Override
     public String toString() {
         if (estado.equals("capturado")){
-            return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
+            return idPeca + " | Rei | (infinito) | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
         }
         return idPeca + " | Rei | (infinito) | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
     }

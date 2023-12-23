@@ -17,7 +17,7 @@ public class Rainha extends Peca { //ATENÇÃO NO MOVE, RAINHA NÃO PODE COMER R
     @Override
      public String toString() {
         if (estado.equals("capturado")){
-            return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
+            return idPeca + " | Rainha | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
         }
         return idPeca + " | Rainha | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
     }

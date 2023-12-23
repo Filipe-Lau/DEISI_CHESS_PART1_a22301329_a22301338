@@ -39,7 +39,7 @@ public class Joker extends Peca{
 
     public String toString() { // NÃO ESTÁ A MUDAR O getTipoPecaString(), ESTÁ SEMPRE NA RAINHA
         if (estado.equals("capturado")){
-            return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
+            return idPeca + " | Joker/" + pecaEmUso.getTipoPecaString() + " | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
         }
         return idPeca + " | Joker/" + pecaEmUso.getTipoPecaString() + " | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
     }

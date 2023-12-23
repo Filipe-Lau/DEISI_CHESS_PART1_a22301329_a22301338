@@ -16,9 +16,9 @@ public class PoneiMagico extends Peca {
     @Override
     public String toString() {
         if (estado.equals("capturado")) {
-            return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
+            return idPeca + " | Ponei Mágico | " + pontos +  " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
         }
-        return idPeca + " | Ponei Magico | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
+        return idPeca + " | Ponei Mágico | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
     }
 
     public int getPontos() {

@@ -169,11 +169,11 @@ public class GameManager {
                         count++;
 
                     } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                        throw new InvalidGameInputException(numlinha, "DADOS A MENOS (Esperava: " + 4 + " Obtive: " + partes.length + ")");
+                        throw new InvalidGameInputException(numlinha, "DADOS A MENOS (Esperava: " + 4 + "; Obtive: " + partes.length + ")");
                     }
 
                     if (partes.length > 4) {
-                        throw new InvalidGameInputException(numlinha, "DADOS A MAIS (Esperava: " + 4 + " Obtive: " + partes.length + ")");
+                        throw new InvalidGameInputException(numlinha, "DADOS A MAIS (Esperava: " + 4 + "; Obtive: " + partes.length + ")");
                     }
                 }
                 if (numlinha > numpecas + 2) {
@@ -215,7 +215,7 @@ public class GameManager {
             return false;
         }
 
-        if (!validaVezDeJogar(peca)) {// VALIDAR QUEM ESTÁ A JOGAR
+        if (!validaVezDeJogar(peca)) { // VALIDAR QUEM ESTÁ A JOGAR
             contadorJogadaInvalida(peca);
             return false;
         }
@@ -228,7 +228,7 @@ public class GameManager {
             }
         }
 
-        if (!peca.movePeca(x1, y1)) {// SE O PECA ANDAR MAIS QUE O LIMITE DE CASAS QUE PODE ANDAR
+        if (!peca.movePeca(x1, y1)) { // SE O PECA ANDAR MAIS QUE O LIMITE DE CASAS QUE PODE ANDAR
             contadorJogadaInvalida(peca);
             return false;
         }
@@ -241,6 +241,7 @@ public class GameManager {
         }
 
         if (!caminhoLivre(tipoPeca, x0, y0, x1, y1)) { // Valida se nenhuma peça passa por cima de outra
+            contadorJogadaInvalida(peca);
             return false;
         }
 
@@ -294,21 +295,21 @@ public class GameManager {
     public void atualizarHomer(){
         HomerSimpson homerPreto = (HomerSimpson) obterPecaTipo(6, 10);
         if (homerPreto != null) {
-            homerPreto.setaDormir((nrDaJogada + 1) % 3 != 0); // NS SE É != 0 OU == 0
+            homerPreto.setaDormir((nrDaJogada - 1) % 3 != 0); // NS SE É != 0 OU == 0
         }
         HomerSimpson homerBranco = (HomerSimpson) obterPecaTipo(6, 20);
         if (homerBranco != null) {
-            homerBranco.setaDormir((nrDaJogada + 1) % 3 != 0); // NS SE É != 0 OU == 0
+            homerBranco.setaDormir((nrDaJogada - 1) % 3 != 0); // NS SE É != 0 OU == 0
         }
     }
     public void atualizarJoker(){
         Joker jokerPreto = (Joker) obterPecaTipo(7, 10);
         if (jokerPreto != null) {
-            jokerPreto.getPecaEmUso((nrDaJogada + 1) % 6);
+            jokerPreto.getPecaEmUso((nrDaJogada -1) % 6);
         }
         Joker jokerBranco = (Joker) obterPecaTipo(7, 20);
         if (jokerBranco != null) {
-            jokerBranco.getPecaEmUso((nrDaJogada + 1) % 6);
+            jokerBranco.getPecaEmUso((nrDaJogada - 1) % 6);
         }
     }
     public Boolean caminhoLivre(int tipoPeca, int x0, int y0, int x1, int y1) {

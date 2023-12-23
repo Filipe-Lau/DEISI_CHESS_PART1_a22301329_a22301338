@@ -33,7 +33,7 @@ public class HomerSimpson extends Peca {
 
     public String toString() {
         if (getEstado().equals("capturado")) {
-            return idPeca + " | " + tipoPeca + " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
+            return idPeca + " | Homer Simpson | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
         }
 
         if (aDormir) {
