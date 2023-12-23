@@ -210,14 +210,14 @@ public class GameManager {
         }
 
         if (!validaVezDeJogar(peca)) { // VALIDAR QUEM ESTÁ A JOGAR
-            contadorJogadaInvalida(peca);
+            //contadorJogadaInvalida(peca);
             return false;
         }
 
         if (peca.getTipoPeca() == 6) { // VALIDAR SE O HOMER NÃO JOGA ENQUANTO DORME
             HomerSimpson homer = (HomerSimpson) peca;
             if (homer.getaDormir()) {
-                contadorJogadaInvalida(homer);
+                //contadorJogadaInvalida(homer);
                 return false;
             }
         }
@@ -251,12 +251,13 @@ public class GameManager {
             // SE A PECA E PECA1 FOREM O JOKER A IMITAREM A RAINHA E TENTAREM CAPTURAR UMA À OUTRA, DÁ ERRO
 
             if ((peca.getEquipaPeca() == peca1.getEquipaPeca()) || (tipoPeca == 1 && tipoPeca1 == 1)) { // SE FOREM DA MESMA EQUIPA OU AMBAS SÃO RAINHAS
-                contadorJogadaInvalida(peca);
+                // contadorJogadaInvalida(peca);
                 return false;
             }
         }
 
         nrDaJogada++;
+        gameResult.aumentaJogadasSemComer();
 
         if (peca1 != null) { // HISTÓRICO DE JOGADA DA PEÇA CAPTURADA
 
@@ -285,7 +286,7 @@ public class GameManager {
         return true;
     }
 
-    public void atualizarHomer(){
+    public void atualizarHomer() {
         HomerSimpson homerPreto = (HomerSimpson) obterPecaTipo(6, 10);
         if (homerPreto != null) {
             homerPreto.setaDormir((nrDaJogada + 1) % 3 != 0); // NS SE É != 0 OU == 0
@@ -295,18 +296,20 @@ public class GameManager {
             homerBranco.setaDormir((nrDaJogada + 1) % 3 != 0); // NS SE É != 0 OU == 0
         }
     }
-    public void atualizarJoker(){
+
+    public void atualizarJoker() {
         Joker jokerPreto = (Joker) obterPecaTipo(7, 10);
         if (jokerPreto != null) {
-            jokerPreto.getPecaEmUso((nrDaJogada + 1 )% 6);
+            jokerPreto.getPecaEmUso((nrDaJogada + 1) % 6);
             System.out.println((nrDaJogada + 1) % 6);
             System.out.println(jokerPreto.getPecaEmUso((nrDaJogada + 1) % 6));
         }
         Joker jokerBranco = (Joker) obterPecaTipo(7, 20);
         if (jokerBranco != null) {
-            jokerBranco.getPecaEmUso((nrDaJogada + 1)% 6);
+            jokerBranco.getPecaEmUso((nrDaJogada + 1) % 6);
         }
     }
+
     public Boolean caminhoLivre(int tipoPeca, int x0, int y0, int x1, int y1) {
 
         if (tipoPeca == 2) {
@@ -441,18 +444,13 @@ public class GameManager {
             gameBoard.pecaPretaComida();
         }
 
-        if (gameResult.getHouveCaptura()) {
-            gameResult.setJogadasSemComer(0);
-        } else {
-            gameResult.setHouveCaptura(true);
-            gameResult.setJogadasSemComer(0);
-        }
+        gameResult.mudaNumCaptura(1);
+        gameResult.setJogadasSemComer(0);
+
     }
 
     public void atualizarJogadasValidas() {
-        if (gameResult.getHouveCaptura()) {
-            gameResult.aumentaJogadasSemComer();
-        }
+
         if (getCurrentTeamID() == 10) {
             gameResult.aumentaJogadaPretaValida();
         } else {
@@ -503,7 +501,7 @@ public class GameManager {
             vezDeJogar = 10;
         }
 
-        if (gameResult.getHouveCaptura()) {
+        if (gameResult.getNumCaptura()) {
             gameResult.setJogadasSemComer(0);
         } else {
             gameResult.setHouveCaptura(true);
@@ -666,7 +664,7 @@ public class GameManager {
             return true;
         }
         // EMPATE POR EXAUSTÃO
-        else if (gameResult.getHouveCaptura() && gameResult.getJogadasSemComer() >= 10) {
+        else if (gameResult.getNumCaptura() > 0 && gameResult.getJogadasSemComer() >= 10) {
             gameBoard.setResultadoJogo("EMPATE");
             return true;
         }
@@ -690,6 +688,7 @@ public class GameManager {
             jogada1.getPeca().setPosX(jogada1.getX0());
             jogada1.getPeca().setPosY(jogada1.getY0());
             jogada1.getPeca().inJogo();
+            gameResult.mudaNumCaptura(-1);
         }
 
         if (jogada != null) {
@@ -709,7 +708,7 @@ public class GameManager {
         }
     }
 
-    public List<Comparable> getHints(int x,int y){
+    public List<Comparable> getHints(int x, int y) {
         return new ArrayList<>();
     }
 

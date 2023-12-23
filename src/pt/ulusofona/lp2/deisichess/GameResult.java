@@ -1,14 +1,12 @@
 package pt.ulusofona.lp2.deisichess;
 
-import java.util.ArrayList;
-
 public class GameResult {
     int jogadaPretaValida;
     int jogadaPretaInvalida;
     int jogadaBrancaValida;
     int jogadaBrancaInvalida;
     int jogadasSemComer;
-    boolean houveCaptura;
+    int numCaptura;
 
     public GameResult() {
     }
@@ -33,8 +31,12 @@ public class GameResult {
         this.jogadasSemComer = numJogadasSemComer;
     }
 
-    public void setHouveCaptura(boolean valorCaptura) {
-        this.houveCaptura = valorCaptura;
+    public void setnumCaptura(int numCaptura) {
+        this.numCaptura = numCaptura;
+    }
+
+    public void mudaNumCaptura(int num){
+        this.numCaptura += num;
     }
 
     public void aumentaJogadaPretaValida() {
@@ -56,8 +58,8 @@ public class GameResult {
         jogadasSemComer++;
     }
 
-    public boolean getHouveCaptura(){
-        return houveCaptura;
+    public int getNumCaptura(){
+        return numCaptura;
     }
     public int getJogadaPretaValida(){
         return jogadaPretaValida;
