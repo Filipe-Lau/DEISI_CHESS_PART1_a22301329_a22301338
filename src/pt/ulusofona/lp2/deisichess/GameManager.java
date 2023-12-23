@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.util.*;
+import java.util.List;
 
 // 10 pretas
 // 20 brancas
@@ -707,7 +708,12 @@ public class GameManager {
         }
     }
 
-    void saveGame(File file) throws IOException {
+    public List<Comparable> getHints(){
+        return new ArrayList<>();
+    }
+
+    public void saveGame(File file) throws IOException {
+
         Scanner leitor = new Scanner(new FileReader(file));
         BufferedWriter escritor = new BufferedWriter(new FileWriter(file));
 
