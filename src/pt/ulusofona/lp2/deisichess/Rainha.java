@@ -45,6 +45,6 @@ public class Rainha extends Peca { //ATENÇÃO NO MOVE, RAINHA NÃO PODE COMER R
         int diffY = Math.abs(y1 - posY);
 
         return diffX <= limiteCasas && diffY <= limiteCasas;
-        //System.out.println("RAINHA QUEBROU REGRA");
+
     }
 }

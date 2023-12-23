@@ -13,7 +13,7 @@ public class HomerSimpson extends Peca {
     boolean vertical = false;
     boolean diagonal = true;
      */
-    boolean aDormir = false;
+    boolean aDormir = true;
 
     public void setNrDaJogada(int nrDaJogada) {
         this.nrDaJogada = nrDaJogada;
