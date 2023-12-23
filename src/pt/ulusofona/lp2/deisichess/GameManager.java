@@ -210,14 +210,14 @@ public class GameManager {
         }
 
         if (!validaVezDeJogar(peca)) { // VALIDAR QUEM ESTÁ A JOGAR
-            //contadorJogadaInvalida(peca);
+            contadorJogadaInvalida(peca);
             return false;
         }
 
         if (peca.getTipoPeca() == 6) { // VALIDAR SE O HOMER NÃO JOGA ENQUANTO DORME
             HomerSimpson homer = (HomerSimpson) peca;
             if (homer.getaDormir()) {
-                //contadorJogadaInvalida(homer);
+                contadorJogadaInvalida(homer);
                 return false;
             }
         }
@@ -235,7 +235,7 @@ public class GameManager {
         }
 
         if (!caminhoLivre(tipoPeca, x0, y0, x1, y1)) { // Valida se nenhuma peça passa por cima de outra
-            //contadorJogadaInvalida(peca);
+            contadorJogadaInvalida(peca);
             return false;
         }
 
@@ -251,7 +251,7 @@ public class GameManager {
             // SE A PECA E PECA1 FOREM O JOKER A IMITAREM A RAINHA E TENTAREM CAPTURAR UMA À OUTRA, DÁ ERRO
 
             if ((peca.getEquipaPeca() == peca1.getEquipaPeca()) || (tipoPeca == 1 && tipoPeca1 == 1)) { // SE FOREM DA MESMA EQUIPA OU AMBAS SÃO RAINHAS
-                // contadorJogadaInvalida(peca);
+                contadorJogadaInvalida(peca);
                 return false;
             }
         }
@@ -419,18 +419,7 @@ public class GameManager {
     }
 
     public boolean validaVezDeJogar(Peca peca) {
-        if (getCurrentTeamID() == 20 && peca.getEquipaPeca() == 10) {
-            System.out.println("VEZ DE JOGAR BRANCO MAS JOGOU PRETO");
-            gameResult.aumentaJogadaBrancaInvalida();
-            return false;
-        }
-
-        if (getCurrentTeamID() == 10 && peca.getEquipaPeca() == 20) {
-            System.out.println("VEZ DE JOGAR PRETO MAS JOGOU BRANCO");
-            gameResult.aumentaJogadaPretaInvalida();
-            return false;
-        }
-        return true;
+        return getCurrentTeamID() == peca.getEquipaPeca();
     }
 
     public void atualizarCapturas(Peca peca) {

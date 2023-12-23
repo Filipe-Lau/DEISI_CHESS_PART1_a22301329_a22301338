@@ -2,7 +2,7 @@ package pt.ulusofona.lp2.deisichess;
 
 public class PoneiMagico extends Peca {
     int pontos = 5;
-    String tipoPecaString = "Ponei Magico";
+    String tipoPecaString = "Ponei Mágico";
     int tipoPeca = 2;
 
     public PoneiMagico() {
