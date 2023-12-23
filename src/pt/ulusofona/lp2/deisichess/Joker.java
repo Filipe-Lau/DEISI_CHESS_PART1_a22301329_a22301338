@@ -32,7 +32,7 @@ public class Joker extends Peca{
             case 3 -> pecaEmUso = new PadreDaVila();
             case 4 -> pecaEmUso = new TorreH();
             case 5 -> pecaEmUso = new TorreV();
-            case 6 -> pecaEmUso = new HomerSimpson();
+            case 0 -> pecaEmUso = new HomerSimpson();
             default -> pecaEmUso;
         };
     }

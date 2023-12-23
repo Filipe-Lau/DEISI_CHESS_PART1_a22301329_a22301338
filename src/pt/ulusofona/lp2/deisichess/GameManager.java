@@ -81,8 +81,6 @@ public class GameManager {
 
                         String nome = partes[3].trim();
 
-                        //Peca peca = new Peca(id, tipo, equipa, nome);
-
                         switch (tipo) {
                             case 0:
                                 if (equipa == 20) {
@@ -152,7 +150,6 @@ public class GameManager {
                                     HomerSimpson homerPreto = new HomerSimpson(id, equipa, nome);
                                     gameBoard.getPecasEmJogo().put(id, homerPreto);
                                 }
-//                                Peca homer = new HomerSimpson(id, equipa, nome);
                                 break;
                             case 7:
                                 if (equipa == 20) {
@@ -162,18 +159,15 @@ public class GameManager {
                                     Joker jokerPreto = new Joker(id, equipa, nome);
                                     gameBoard.getPecasEmJogo().put(id, jokerPreto);
                                 }
-                                //                     break;
-//                                Peca joker = new Joker(id, equipa, nome);
                         }
-                        //gameBoard.getPecasEmJogo().put(id, peca);
                         count++;
 
                     } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                        throw new InvalidGameInputException(numlinha, "DADOS A MENOS (Esperava: " + 4 + "; Obtive: " + partes.length + ")");
+                        throw new InvalidGameInputException(numlinha, "DADOS A MENOS (Esperava: " + 4 + " ; Obtive: " + partes.length + ")");
                     }
 
                     if (partes.length > 4) {
-                        throw new InvalidGameInputException(numlinha, "DADOS A MAIS (Esperava: " + 4 + "; Obtive: " + partes.length + ")");
+                        throw new InvalidGameInputException(numlinha, "DADOS A MAIS (Esperava: " + 4 + " ; Obtive: " + partes.length + ")");
                     }
                 }
                 if (numlinha > numpecas + 2) {
@@ -241,7 +235,7 @@ public class GameManager {
         }
 
         if (!caminhoLivre(tipoPeca, x0, y0, x1, y1)) { // Valida se nenhuma peça passa por cima de outra
-            contadorJogadaInvalida(peca);
+            //contadorJogadaInvalida(peca);
             return false;
         }
 
@@ -291,25 +285,26 @@ public class GameManager {
         return true;
     }
 
-
     public void atualizarHomer(){
         HomerSimpson homerPreto = (HomerSimpson) obterPecaTipo(6, 10);
         if (homerPreto != null) {
-            homerPreto.setaDormir((nrDaJogada - 1) % 3 != 0); // NS SE É != 0 OU == 0
+            homerPreto.setaDormir((nrDaJogada + 1) % 3 != 0); // NS SE É != 0 OU == 0
         }
         HomerSimpson homerBranco = (HomerSimpson) obterPecaTipo(6, 20);
         if (homerBranco != null) {
-            homerBranco.setaDormir((nrDaJogada - 1) % 3 != 0); // NS SE É != 0 OU == 0
+            homerBranco.setaDormir((nrDaJogada + 1) % 3 != 0); // NS SE É != 0 OU == 0
         }
     }
     public void atualizarJoker(){
         Joker jokerPreto = (Joker) obterPecaTipo(7, 10);
         if (jokerPreto != null) {
-            jokerPreto.getPecaEmUso((nrDaJogada -1) % 6);
+            jokerPreto.getPecaEmUso((nrDaJogada + 1 )% 6);
+            System.out.println((nrDaJogada + 1) % 6);
+            System.out.println(jokerPreto.getPecaEmUso((nrDaJogada + 1) % 6));
         }
         Joker jokerBranco = (Joker) obterPecaTipo(7, 20);
         if (jokerBranco != null) {
-            jokerBranco.getPecaEmUso((nrDaJogada - 1) % 6);
+            jokerBranco.getPecaEmUso((nrDaJogada + 1)% 6);
         }
     }
     public Boolean caminhoLivre(int tipoPeca, int x0, int y0, int x1, int y1) {
