@@ -713,7 +713,7 @@ public class GameManager {
         }
     }
 
-    public List<Comparable> getHints(){
+    public List<Comparable> getHints(int x,int y){
         return new ArrayList<>();
     }
 
