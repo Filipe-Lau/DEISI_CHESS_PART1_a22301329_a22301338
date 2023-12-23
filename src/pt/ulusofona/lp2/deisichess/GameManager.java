@@ -211,16 +211,16 @@ public class GameManager {
         Peca peca = obterPecaCoor(x0, y0);
         Peca peca1 = obterPecaCoor(x1, y1);
 
-        if (peca == null) {
+        if (peca == null) { // CASO TENTE ANDAR COM NENHUMA PEÇA
             return false;
         }
 
-        if (!validaVezDeJogar(peca)) {
-            contadorJogadaInvalida(peca);// VALIDAR QUEM ESTÁ A JOGAR
+        if (!validaVezDeJogar(peca)) {// VALIDAR QUEM ESTÁ A JOGAR
+            contadorJogadaInvalida(peca);
             return false;
         }
 
-        if (peca.getTipoPeca() == 6) {
+        if (peca.getTipoPeca() == 6) { // VALIDAR SE O HOMER NÃO JOGA ENQUANTO DORME
             HomerSimpson homer = (HomerSimpson) peca;
             if (homer.getaDormir()) {
                 contadorJogadaInvalida(homer);
@@ -228,9 +228,8 @@ public class GameManager {
             }
         }
 
-        if (!peca.movePeca(x1, y1)) {
+        if (!peca.movePeca(x1, y1)) {// SE O PECA ANDAR MAIS QUE O LIMITE DE CASAS QUE PODE ANDAR
             contadorJogadaInvalida(peca);
-            System.out.println("RAINHA QUEBROU REGRA"); // SE O PECA ANDAR MAIS QUE O LIMITE DE CASAS QUE PODE ANDAR
             return false;
         }
 
@@ -241,8 +240,7 @@ public class GameManager {
             tipoPeca = joker.pecaEmUso.getTipoPeca();
         }
 
-        if (!caminhoLivre(tipoPeca, x0, y0, x1, y1)) { // TESTAR O CAVALO
-            System.out.println("ERRO RAINHA DIAGONAL");
+        if (!caminhoLivre(tipoPeca, x0, y0, x1, y1)) { // Valida se nenhuma peça passa por cima de outra
             return false;
         }
 
@@ -250,15 +248,12 @@ public class GameManager {
 
             int tipoPeca1 = peca1.getTipoPeca();
 
-            if (tipoPeca == 7) {
-                Joker joker = (Joker) peca;
-                tipoPeca = joker.pecaEmUso.getTipoPeca();
-            }
-
             if (tipoPeca1 == 7) {
                 Joker joker = (Joker) peca1;
                 tipoPeca1 = joker.pecaEmUso.getTipoPeca();
             }
+
+            // SE A PECA E PECA1 FOREM O JOKER A IMITAREM A RAINHA E TENTAREM CAPTURAR UMA À OUTRA, DÁ ERRO
 
             if ((peca.getEquipaPeca() == peca1.getEquipaPeca()) || (tipoPeca == 1 && tipoPeca1 == 1)) { // SE FOREM DA MESMA EQUIPA OU AMBAS SÃO RAINHAS
                 contadorJogadaInvalida(peca);
@@ -268,13 +263,14 @@ public class GameManager {
 
         nrDaJogada++;
 
-        if (peca1 != null) {
+        if (peca1 != null) { // HISTÓRICO DE JOGADA DA PEÇA CAPTURADA
+
             atualizarCapturas(peca);
 
             HistoricoJogada pecaCapturada = new HistoricoJogada(peca1, peca1.getPosX(), peca1.getPosY(), -1, -1);
             historico.getJogadasFeitas().put(-nrDaJogada, pecaCapturada);
 
-            peca1.setPosX(-1);
+            peca1.setPosX(-1); // TIRAR A PEÇA CAPTURADA DO TABULEIRO
             peca1.setPosY(-1);
             peca1.notInJogo();
         }
@@ -288,6 +284,14 @@ public class GameManager {
         atualizarJogadasValidas(); // INCREMENTA AS JOGADAS VALIDAS DAS EQUIPAS
         atualizarVezDeJogar(); // PRETA JOGA, A VEZ DE JOGAR MUDA PARA AS BRANCAS E VICE VERSA
 
+        atualizarHomer(); // ATUALIZAR O HOMER DAS RONDAS
+        atualizarJoker(); // ATUALIZAR O JOKER DAS RONDAS
+
+        return true;
+    }
+
+
+    public void atualizarHomer(){
         HomerSimpson homerPreto = (HomerSimpson) obterPecaTipo(6, 10);
         if (homerPreto != null) {
             homerPreto.setaDormir((nrDaJogada + 1) % 3 != 0); // NS SE É != 0 OU == 0
@@ -296,19 +300,17 @@ public class GameManager {
         if (homerBranco != null) {
             homerBranco.setaDormir((nrDaJogada + 1) % 3 != 0); // NS SE É != 0 OU == 0
         }
-
+    }
+    public void atualizarJoker(){
         Joker jokerPreto = (Joker) obterPecaTipo(7, 10);
         if (jokerPreto != null) {
-            jokerPreto.getPecaEmUso(nrDaJogada + 1 % 3);
+            jokerPreto.getPecaEmUso((nrDaJogada + 1) % 6);
         }
         Joker jokerBranco = (Joker) obterPecaTipo(7, 20);
         if (jokerBranco != null) {
-            jokerBranco.getPecaEmUso(nrDaJogada + 1 % 3);
+            jokerBranco.getPecaEmUso((nrDaJogada + 1) % 6);
         }
-
-        return true;
     }
-
     public Boolean caminhoLivre(int tipoPeca, int x0, int y0, int x1, int y1) {
 
         if (tipoPeca == 2) {
@@ -700,6 +702,9 @@ public class GameManager {
         }
 
         nrDaJogada--;
+
+        atualizarHomer(); // ATUALIZAR O HOMER DAS RONDAS
+        atualizarJoker(); // ATUALIZAR O JOKER DAS RONDAS
 
         if (vezDeJogar == 10) {
             vezDeJogar = 20;
