@@ -289,11 +289,11 @@ public class GameManager {
     public void atualizarHomer() {
         HomerSimpson homerPreto = (HomerSimpson) obterPecaTipo(6, 10);
         if (homerPreto != null) {
-            homerPreto.setaDormir((nrDaJogada + 1) % 3 != 0); // NS SE É != 0 OU == 0
+            homerPreto.setaDormir((nrDaJogada - 1) % 3 == 0); // NS SE É != 0 OU == 0
         }
         HomerSimpson homerBranco = (HomerSimpson) obterPecaTipo(6, 20);
         if (homerBranco != null) {
-            homerBranco.setaDormir((nrDaJogada + 1) % 3 != 0); // NS SE É != 0 OU == 0
+            homerBranco.setaDormir((nrDaJogada - 1) % 3 == 0); // NS SE É != 0 OU == 0
         }
     }
 
