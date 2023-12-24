@@ -9,18 +9,12 @@ import java.util.List;
 // 10 pretas
 // 20 brancas
 
-/*
-DÚVIDAS:
-PODE VIR UM JOGO SEM PEÇAS PRETAS (VITÓRIA DAS BRANCAS)?
-*/
 public class GameManager {
     int boardSize;
     int vezDeJogar = 10;
     Tabuleiro gameBoard = new Tabuleiro();
     GameResult gameResult = new GameResult();
-    //HashMap<Integer,HistoricoJogada> historicoJogadas = new HashMap<>();
     HistoricoJogada historico = new HistoricoJogada();
-    //ArrayList<Integer> undo = new ArrayList<>();
     Peca pecaCapturada;
     int nrDaJogada = 0;
 
@@ -32,169 +26,171 @@ public class GameManager {
     }
 
     public void loadGame(File file) throws InvalidGameInputException, IOException {
-        // HASHMAP PARA GUARDAR AS PEÇAS
         // System.out.println("LOADGAME\n");
-        try {
-            int count = 2;
-            int numlinha = 0;
-            int x;
-            int y = 0;
-            int numpecas = 0;
-            String[] partes;
-            gameResult.setJogadaPretaValida(0);
-            gameResult.setJogadaPretaInvalida(0);
-            gameResult.setJogadaBrancaValida(0);
-            gameResult.setJogadaBrancaInvalida(0);
-            gameResult.setJogadasSemComer(0);
-            vezDeJogar = 10;
-            gameBoard.pecasEmJogo = new HashMap<>();
-            historico.jogadasFeitas = new HashMap<>();
-            gameBoard.setNumPecasBrancas(0); // fazer set
-            gameBoard.setNumPecasPretas(0); // fazer set
-            gameBoard.setCapturadasPorPretas(0);
-            gameBoard.setCapturadasPorBrancas(0);
 
-            // LEITURA DE FICHEIROS
-            BufferedReader reader;
-            reader = new BufferedReader(new FileReader(file));
-            String line = reader.readLine();
-
-            // CICLO DE LEITURA
-            while (line != null) {
-                numlinha++;
-                if (numlinha == 1) {
-                    this.boardSize = Integer.parseInt(line); // ESTÁ COMENTADO PARA TESTAR A FUNÇÃO
-                } else if (numlinha == 2) {
-                    numpecas = Integer.parseInt(line);
-                }
-                if (numlinha >= 3 && count < numpecas + 2) {
-
-                    partes = line.split(":");
-
-                    try {
-
-                        String id = partes[0];
-
-                        int tipo = Integer.parseInt(partes[1]);
-
-                        int equipa = Integer.parseInt(partes[2].trim());
-
-                        String nome = partes[3].trim();
-
-                        switch (tipo) {
-                            case 0:
-                                if (equipa == 20) {
-                                    Peca reiBranco = new Rei(id, equipa, nome);
-                                    gameBoard.getPecasEmJogo().put(id, reiBranco);
-                                } else {
-                                    Peca reiPreto = new Rei(id, equipa, nome);
-                                    gameBoard.getPecasEmJogo().put(id, reiPreto);
-                                }
-                                //Peca rei = new Rei(id, equipa, nome);
-                                break;
-                            case 1:
-                                if (equipa == 20) {
-                                    Peca rainhaBranco = new Rainha(id, equipa, nome);
-                                    gameBoard.getPecasEmJogo().put(id, rainhaBranco);
-                                } else {
-                                    Peca rainhaPreto = new Rainha(id, equipa, nome);
-                                    gameBoard.getPecasEmJogo().put(id, rainhaPreto);
-                                }
-//                                Peca rainha = new Rainha(id, equipa, nome);
-                                break;
-                            case 2:
-                                if (equipa == 20) {
-                                    Peca poneiMagicoBranco = new PoneiMagico(id, equipa, nome);
-                                    gameBoard.getPecasEmJogo().put(id, poneiMagicoBranco);
-                                } else {
-                                    Peca poneiMagicoPreto = new PoneiMagico(id, equipa, nome);
-                                    gameBoard.getPecasEmJogo().put(id, poneiMagicoPreto);
-                                }
-//                                Peca poneiMagico = new PoneiMagico(id, equipa, nome);
-                                break;
-                            case 3:
-                                if (equipa == 20) {
-                                    Peca padreBranco = new PadreDaVila(id, equipa, nome);
-                                    gameBoard.getPecasEmJogo().put(id, padreBranco);
-                                } else {
-                                    Peca padrePreto = new PadreDaVila(id, equipa, nome);
-                                    gameBoard.getPecasEmJogo().put(id, padrePreto);
-                                }// padre da vila
-//                                Peca padre = new PadreDaVila(id, equipa, nome);
-                                break;
-                            case 4:
-                                if (equipa == 20) {
-                                    Peca torreHBranco = new TorreH(id, equipa, nome);
-                                    gameBoard.getPecasEmJogo().put(id, torreHBranco);
-                                } else {
-                                    Peca torreHPreto = new TorreH(id, equipa, nome);
-                                    gameBoard.getPecasEmJogo().put(id, torreHPreto);
-                                }// th
-//                                Peca torreH = new TorreH(id, equipa, nome);
-                                break;
-                            case 5:
-                                if (equipa == 20) {
-                                    Peca torreVBranco = new TorreV(id, equipa, nome);
-                                    gameBoard.getPecasEmJogo().put(id, torreVBranco);
-                                } else {
-                                    Peca torreVPreto = new TorreV(id, equipa, nome);
-                                    gameBoard.getPecasEmJogo().put(id, torreVPreto);
-                                }//tv
-//                                Peca torreV = new TorreV(id, equipa, nome);
-                                break;
-                            case 6:
-                                if (equipa == 20) {
-                                    HomerSimpson homerBranco = new HomerSimpson(id, equipa, nome);
-                                    gameBoard.getPecasEmJogo().put(id, homerBranco);
-                                } else {
-                                    HomerSimpson homerPreto = new HomerSimpson(id, equipa, nome);
-                                    gameBoard.getPecasEmJogo().put(id, homerPreto);
-                                }
-                                break;
-                            case 7:
-                                if (equipa == 20) {
-                                    Joker jokerBranco = new Joker(id, equipa, nome);
-                                    gameBoard.getPecasEmJogo().put(id, jokerBranco);
-                                } else {
-                                    Joker jokerPreto = new Joker(id, equipa, nome);
-                                    gameBoard.getPecasEmJogo().put(id, jokerPreto);
-                                }
-                        }
-                        count++;
-
-                    } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-                        throw new InvalidGameInputException(numlinha, "DADOS A MENOS (Esperava: " + 4 + " ; Obtive: " + partes.length + ")");
-                    }
-
-                    if (partes.length > 4) {
-                        throw new InvalidGameInputException(numlinha, "DADOS A MAIS (Esperava: " + 4 + " ; Obtive: " + partes.length + ")");
-                    }
-                }
-                if (numlinha > numpecas + 2) {
-                    partes = line.split(":", boardSize);
-                    x = 0;
-
-                    for (String id : partes) {
-                        if (!Objects.equals(id, "0")) {
-                            gameBoard.getPecasEmJogo().get(id).setPosX(x);
-                            gameBoard.getPecasEmJogo().get(id).setPosY(y);
-                            gameBoard.getPecasEmJogo().get(id).inJogo();
-                            if (gameBoard.getPecasEmJogo().get(id).getEquipaPeca() == 10) {
-                                gameBoard.aumentaNumPecasPretas();
-                            } else {
-                                gameBoard.aumentaNumPecasBrancas();
-                            }
-                        }
-                        x++;
-                    }
-                    y++;
-                }
-                line = reader.readLine();
-            }
-            reader.close();
-        } catch (FileNotFoundException e) {
-            return;
+        if (file == null) {
+            throw new InvalidGameInputException(0, "Ficheiro não existente");
         }
+
+        int count = 2;
+        int numlinha = 0;
+        int x;
+        int y = 0;
+        int numpecas = 0;
+        String[] partes;
+        gameResult.setJogadaPretaValida(0);
+        gameResult.setJogadaPretaInvalida(0);
+        gameResult.setJogadaBrancaValida(0);
+        gameResult.setJogadaBrancaInvalida(0);
+        gameResult.setJogadasSemComer(0);
+        vezDeJogar = 10;
+        gameBoard.pecasEmJogo = new HashMap<>();
+        historico.jogadasFeitas = new HashMap<>();
+        gameBoard.setNumPecasBrancas(0);
+        gameBoard.setNumPecasPretas(0);
+        gameBoard.setCapturadasPorPretas(0);
+        gameBoard.setCapturadasPorBrancas(0);
+
+        // LEITURA DE FICHEIROS
+        BufferedReader reader;
+        reader = new BufferedReader(new FileReader(file));
+        String line = reader.readLine();
+
+        // CICLO DE LEITURA
+        while (line != null) {
+            numlinha++;
+            if (numlinha == 1) {
+                this.boardSize = Integer.parseInt(line); // ESTÁ COMENTADO PARA TESTAR A FUNÇÃO
+            } else if (numlinha == 2) {
+                numpecas = Integer.parseInt(line);
+            }
+            if (numlinha >= 3 && count < numpecas + 2) {
+
+                partes = line.split(":");
+
+                try {
+
+                    String id = partes[0];
+
+                    int tipo = Integer.parseInt(partes[1]);
+
+                    int equipa = Integer.parseInt(partes[2].trim());
+
+                    String nome = partes[3].trim();
+
+                    switch (tipo) {
+                        case 0:
+                            if (equipa == 20) {
+                                Peca reiBranco = new Rei(id, equipa, nome);
+                                gameBoard.getPecasEmJogo().put(id, reiBranco);
+                            } else {
+                                Peca reiPreto = new Rei(id, equipa, nome);
+                                gameBoard.getPecasEmJogo().put(id, reiPreto);
+                            }
+                            //Peca rei = new Rei(id, equipa, nome);
+                            break;
+                        case 1:
+                            if (equipa == 20) {
+                                Peca rainhaBranco = new Rainha(id, equipa, nome);
+                                gameBoard.getPecasEmJogo().put(id, rainhaBranco);
+                            } else {
+                                Peca rainhaPreto = new Rainha(id, equipa, nome);
+                                gameBoard.getPecasEmJogo().put(id, rainhaPreto);
+                            }
+//                                Peca rainha = new Rainha(id, equipa, nome);
+                            break;
+                        case 2:
+                            if (equipa == 20) {
+                                Peca poneiMagicoBranco = new PoneiMagico(id, equipa, nome);
+                                gameBoard.getPecasEmJogo().put(id, poneiMagicoBranco);
+                            } else {
+                                Peca poneiMagicoPreto = new PoneiMagico(id, equipa, nome);
+                                gameBoard.getPecasEmJogo().put(id, poneiMagicoPreto);
+                            }
+//                                Peca poneiMagico = new PoneiMagico(id, equipa, nome);
+                            break;
+                        case 3:
+                            if (equipa == 20) {
+                                Peca padreBranco = new PadreDaVila(id, equipa, nome);
+                                gameBoard.getPecasEmJogo().put(id, padreBranco);
+                            } else {
+                                Peca padrePreto = new PadreDaVila(id, equipa, nome);
+                                gameBoard.getPecasEmJogo().put(id, padrePreto);
+                            }// padre da vila
+//                                Peca padre = new PadreDaVila(id, equipa, nome);
+                            break;
+                        case 4:
+                            if (equipa == 20) {
+                                Peca torreHBranco = new TorreH(id, equipa, nome);
+                                gameBoard.getPecasEmJogo().put(id, torreHBranco);
+                            } else {
+                                Peca torreHPreto = new TorreH(id, equipa, nome);
+                                gameBoard.getPecasEmJogo().put(id, torreHPreto);
+                            }// th
+//                                Peca torreH = new TorreH(id, equipa, nome);
+                            break;
+                        case 5:
+                            if (equipa == 20) {
+                                Peca torreVBranco = new TorreV(id, equipa, nome);
+                                gameBoard.getPecasEmJogo().put(id, torreVBranco);
+                            } else {
+                                Peca torreVPreto = new TorreV(id, equipa, nome);
+                                gameBoard.getPecasEmJogo().put(id, torreVPreto);
+                            }//tv
+//                                Peca torreV = new TorreV(id, equipa, nome);
+                            break;
+                        case 6:
+                            if (equipa == 20) {
+                                HomerSimpson homerBranco = new HomerSimpson(id, equipa, nome);
+                                gameBoard.getPecasEmJogo().put(id, homerBranco);
+                            } else {
+                                HomerSimpson homerPreto = new HomerSimpson(id, equipa, nome);
+                                gameBoard.getPecasEmJogo().put(id, homerPreto);
+                            }
+                            break;
+                        case 7:
+                            if (equipa == 20) {
+                                Joker jokerBranco = new Joker(id, equipa, nome);
+                                gameBoard.getPecasEmJogo().put(id, jokerBranco);
+                            } else {
+                                Joker jokerPreto = new Joker(id, equipa, nome);
+                                gameBoard.getPecasEmJogo().put(id, jokerPreto);
+                            }
+                    }
+                    count++;
+
+                } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                    throw new InvalidGameInputException(numlinha, "DADOS A MENOS (Esperava: " + 4 + " ; Obtive: " + partes.length + ")");
+                }
+
+                if (partes.length > 4) {
+                    throw new InvalidGameInputException(numlinha, "DADOS A MAIS (Esperava: " + 4 + " ; Obtive: " + partes.length + ")");
+                }
+            }
+            if (numlinha > numpecas + 2) {
+
+                partes = line.split(":", boardSize);
+
+                x = 0;
+
+                for (String id : partes) {
+                    if (!Objects.equals(id, "0")) {
+                        gameBoard.getPecasEmJogo().get(id).setPosX(x);
+                        gameBoard.getPecasEmJogo().get(id).setPosY(y);
+                        gameBoard.getPecasEmJogo().get(id).inJogo();
+                        if (gameBoard.getPecasEmJogo().get(id).getEquipaPeca() == 10) {
+                            gameBoard.aumentaNumPecasPretas();
+                        } else {
+                            gameBoard.aumentaNumPecasBrancas();
+                        }
+                    }
+                    x++;
+                }
+                y++;
+            }
+            line = reader.readLine();
+        }
+        reader.close();
     }
 
     public int getBoardSize() {
@@ -206,12 +202,12 @@ public class GameManager {
         Peca peca = obterPecaCoor(x0, y0);
         Peca peca1 = obterPecaCoor(x1, y1);
 
-        if (x0 < 0 || y0 < 0 || x1 < 0 || y1 < 0){
+        if (x0 < 0 || y0 < 0 || x1 < 0 || y1 < 0) {
             contadorJogadaInvalida();
             return false;
         }
 
-        if (x0 > boardSize - 1 || y0 > boardSize - 1 || x1 > boardSize - 1 || y1 > boardSize - 1){
+        if (x0 > boardSize - 1 || y0 > boardSize - 1 || x1 > boardSize - 1 || y1 > boardSize - 1) {
             contadorJogadaInvalida();
             return false;
         }
@@ -435,11 +431,9 @@ public class GameManager {
 
     public void atualizarCapturas(Peca peca) {
         if (peca.getEquipaPeca() == 10) { // PECA PRETA COME
-            //gameResult.aumentaJogadaPretaValida();
             gameBoard.capturaPorPretas();
             gameBoard.pecaBrancaComida();
         } else {
-            //gameResult.aumentaJogadaBrancaValida();
             gameBoard.capturaPorBrancas();
             gameBoard.pecaPretaComida();
         }
@@ -461,10 +455,8 @@ public class GameManager {
     public void atualizarVezDeJogar() {
 
         if (getCurrentTeamID() == 10) {
-            //gameResult.aumentaJogadaPretaValida();
             vezDeJogar = 20;
         } else {
-            //gameResult.aumentaJogadaBrancaValida();
             vezDeJogar = 10;
         }
     }
