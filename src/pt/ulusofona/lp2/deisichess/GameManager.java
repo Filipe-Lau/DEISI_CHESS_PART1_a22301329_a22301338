@@ -700,10 +700,6 @@ public class GameManager {
         }
     }
 
-    public List<Comparable> getHints(int x, int y) {
-        return new ArrayList<>();
-    }
-
     public void saveGame(File file) throws IOException {
 
         Scanner leitor = new Scanner(new FileReader(file));
@@ -767,6 +763,41 @@ public class GameManager {
         }
     }
 
+
+    List<Hint> getHints(int x, int y) {
+        List<Hint> pistas = new ArrayList<>();
+        Peca peca = new Rei();
+        for (int line = 0; line < getBoardSize(); line++) {
+            for (int column = 0; column < getBoardSize(); column++) {
+                String[]infoSitio = getSquareInfo(x,y);
+                if(infoSitio.length != 0 && move(x,y,line,column)){
+                    switch (Integer.parseInt(infoSitio[3])){
+                        case 0:
+                            peca = new Rei();
+                        case 1:
+                            peca = new Rainha();
+                        case 2:
+                            peca = new PoneiMagico();
+                        case 3:
+                            peca = new PadreDaVila();
+                        case 4:
+                            peca = new TorreH();
+                        case 5:
+                            peca = new TorreV();
+                        case 6:
+                            peca = new HomerSimpson();
+                        case 7:
+                            peca = new Joker();
+                    }
+                    pistas.add(new Hint("(" + line + "," + column + ")",peca.getPontos()));
+                }
+
+            }
+        }
+
+        Collections.sort(pistas);
+        return pistas;
+    }
     public ArrayList<String> getGameResults() {
         // System.out.println("GETGAMERESULTS\n");
 

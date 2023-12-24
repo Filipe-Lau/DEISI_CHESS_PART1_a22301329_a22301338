@@ -1,10 +1,14 @@
 package pt.ulusofona.lp2.deisichess;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
-/*
+
 public class TestGameManager {
+    /*
 
     @Test
     public void testaGameOver() {
@@ -22,8 +26,8 @@ public class TestGameManager {
         gameManager.gameBoard.pecasEmJogo.put("1", pecaBranca1);
         gameManager.gameBoard.pecasEmJogo.put("2", pecaBranca2);
         gameManager.gameBoard.numPecasBrancas = 2;
-     */
-    /*
+
+
         boolean vitoriaBrancas = gameManager.gameOver();
 
         if (vitoriaBrancas) {
@@ -124,5 +128,38 @@ public class TestGameManager {
             System.out.println("TESTE FALHOU");
         }
     }
+
+     */
+    @Test
+    public void testMoveRei() throws IOException, InvalidGameInputException {
+
+        GameManager gameManager = new GameManager();
+        File file = new File("test-files/testesMove/moveRei");
+        gameManager.loadGame(file);
+
+        //preta rei
+        Assertions.assertTrue(gameManager.move(0, 0, 0, 1));
+        String[] quas= gameManager.getSquareInfo(0,1);
+        Assertions.assertEquals(5,quas.length);
+        //branca rei
+        Assertions.assertTrue(gameManager.move(0, 7, 0, 6));
+
+        Assertions.assertTrue(gameManager.move(0, 1, 0, 2));
+        Assertions.assertTrue(gameManager.move(0, 6, 0, 5));
+
+        quas= gameManager.getSquareInfo(0,1);
+        Assertions.assertEquals(0,quas.length);
+        quas= gameManager.getSquareInfo(0,2);
+        Assertions.assertEquals(5,quas.length);
+        quas= gameManager.getSquareInfo(0,6);
+        Assertions.assertEquals(0,quas.length);
+
+        Assertions.assertFalse(gameManager.move(0, 2, 2, 2));
+        Assertions.assertFalse(gameManager.move(0, 5, 5, 5));
+
+        Assertions.assertFalse(gameManager.move(0, 2, 1, 2));
+        Assertions.assertFalse(gameManager.move(0, 5, 0, 5));
+
+
+    }
 }
-*/

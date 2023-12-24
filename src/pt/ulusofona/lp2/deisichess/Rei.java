@@ -1,6 +1,9 @@
 package pt.ulusofona.lp2.deisichess;
 
-public class Rei extends Peca{
+import java.util.ArrayList;
+import java.util.List;
+
+public class Rei extends Peca {
     int pontos = 1000;
     String tipoPecaString = "Rei";
     int tipoPeca = 0;
@@ -42,5 +45,19 @@ public class Rei extends Peca{
 
         return (diffX >= -1 && diffX <= 1) && (diffY >= -1 && diffY <= 1);
     }
+
+    /*List<Comparable> jogadasLegais(int x1, int y1) {
+        List<Comparable> jogadas = new ArrayList<>();
+
+        if ((x1 - posX >= -1 && x1 - posX <= 1) && (y1 - posY >= -1 && y1 - posY <= 1)){
+
+        }
+
+
+
+        return jogadas;
+    }
+     */
+
 }
 
