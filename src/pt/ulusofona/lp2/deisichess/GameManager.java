@@ -192,7 +192,8 @@ public class GameManager {
                 line = reader.readLine();
             }
             reader.close();
-        } catch (IOException e) {
+        } catch (FileNotFoundException e) {
+            return;
         }
     }
 
@@ -210,7 +211,7 @@ public class GameManager {
             return false;
         }
 
-        if (x0 > boardSize || y0 > boardSize || x1 > boardSize || y1 > boardSize){
+        if (x0 > boardSize - 1 || y0 > boardSize - 1 || x1 > boardSize - 1 || y1 > boardSize - 1){
             contadorJogadaInvalida(peca);
             return false;
         }
