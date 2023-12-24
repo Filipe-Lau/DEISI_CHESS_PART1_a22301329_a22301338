@@ -207,12 +207,12 @@ public class GameManager {
         Peca peca1 = obterPecaCoor(x1, y1);
 
         if (x0 < 0 || y0 < 0 || x1 < 0 || y1 < 0){
-            contadorJogadaInvalida(peca);
+            contadorJogadaInvalida();
             return false;
         }
 
         if (x0 > boardSize - 1 || y0 > boardSize - 1 || x1 > boardSize - 1 || y1 > boardSize - 1){
-            contadorJogadaInvalida(peca);
+            contadorJogadaInvalida();
             return false;
         }
 
@@ -221,20 +221,20 @@ public class GameManager {
         }
 
         if (!validaVezDeJogar(peca)) { // VALIDAR QUEM ESTÁ A JOGAR
-            contadorJogadaInvalida(peca);
+            contadorJogadaInvalida();
             return false;
         }
 
         if (peca.getTipoPeca() == 6) { // VALIDAR SE O HOMER NÃO JOGA ENQUANTO DORME
             HomerSimpson homer = (HomerSimpson) peca;
             if (homer.getaDormir()) {
-                contadorJogadaInvalida(homer);
+                contadorJogadaInvalida();
                 return false;
             }
         }
 
         if (!peca.movePeca(x1, y1)) { // SE O PECA ANDAR MAIS QUE O LIMITE DE CASAS QUE PODE ANDAR
-            contadorJogadaInvalida(peca);
+            contadorJogadaInvalida();
             return false;
         }
 
@@ -246,7 +246,7 @@ public class GameManager {
         }
 
         if (!caminhoLivre(tipoPeca, x0, y0, x1, y1)) { // Valida se nenhuma peça passa por cima de outra
-            contadorJogadaInvalida(peca);
+            contadorJogadaInvalida();
             return false;
         }
 
@@ -262,7 +262,7 @@ public class GameManager {
             // SE A PECA E PECA1 FOREM O JOKER A IMITAREM A RAINHA E TENTAREM CAPTURAR UMA À OUTRA, DÁ ERRO
 
             if ((peca.getEquipaPeca() == peca1.getEquipaPeca()) || (tipoPeca == 1 && tipoPeca1 == 1)) { // SE FOREM DA MESMA EQUIPA OU AMBAS SÃO RAINHAS
-                contadorJogadaInvalida(peca);
+                contadorJogadaInvalida();
                 return false;
             }
         }
@@ -312,8 +312,8 @@ public class GameManager {
         Joker jokerPreto = (Joker) obterPecaTipo(7, 10);
         if (jokerPreto != null) {
             jokerPreto.getPecaEmUso((nrDaJogada + 1) % 6);
-            System.out.println((nrDaJogada + 1) % 6);
-            System.out.println(jokerPreto.getPecaEmUso((nrDaJogada + 1) % 6));
+            //System.out.println((nrDaJogada + 1) % 6);
+            //System.out.println(jokerPreto.getPecaEmUso((nrDaJogada + 1) % 6));
         }
         Joker jokerBranco = (Joker) obterPecaTipo(7, 20);
         if (jokerBranco != null) {
@@ -510,8 +510,8 @@ public class GameManager {
     }
 
      */
-    public void contadorJogadaInvalida(Peca peca) {
-        if (peca.getEquipaPeca() == 20) {
+    public void contadorJogadaInvalida() {
+        if (vezDeJogar == 20) {
             gameResult.aumentaJogadaBrancaInvalida();
         } else {
             gameResult.aumentaJogadaPretaInvalida();
