@@ -205,6 +205,16 @@ public class GameManager {
         Peca peca = obterPecaCoor(x0, y0);
         Peca peca1 = obterPecaCoor(x1, y1);
 
+        if (x0 < 0 || y0 < 0 || x1 < 0 || y1 < 0){
+            contadorJogadaInvalida(peca);
+            return false;
+        }
+
+        if (x0 > boardSize || y0 > boardSize || x1 > boardSize || y1 > boardSize){
+            contadorJogadaInvalida(peca);
+            return false;
+        }
+
         if (peca == null) { // CASO TENTE ANDAR COM NENHUMA PEÇA
             return false;
         }
