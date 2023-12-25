@@ -774,22 +774,29 @@ public class GameManager {
                     switch (Integer.parseInt(infoSitio[3])){
                         case 0:
                             peca = new Rei();
+                            break;
                         case 1:
                             peca = new Rainha();
+                            break;
                         case 2:
                             peca = new PoneiMagico();
+                            break;
                         case 3:
                             peca = new PadreDaVila();
+                            break;
                         case 4:
                             peca = new TorreH();
+                            break;
                         case 5:
                             peca = new TorreV();
+                            break;
                         case 6:
                             peca = new HomerSimpson();
+                            break;
                         case 7:
                             peca = new Joker();
                     }
-                    pistas.add(new Hint("(" + line + "," + column + ")",peca.getPontos()));
+                    pistas.add(new Hint("(" + line + "," + column + ") -> ",peca.getPontos()));
                 }
 
             }
