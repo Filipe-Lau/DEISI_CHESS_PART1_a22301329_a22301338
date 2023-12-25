@@ -1,6 +1,6 @@
 4
 6
-1:0:10:Chefe
+5654gdcsd1:0:10:Chefe
 2:0:10:Selvagem
 3:0:10:Grande Artista
 4:0:20:O Maior

@@ -1,5 +1,7 @@
 package pt.ulusofona.lp2.deisichess;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
@@ -762,9 +764,10 @@ public class GameManager {
         }
     }
 
-    public List<Hint> getHints(int x, int y) {
+    public List<Comparable> getHints(int x, int y) {
 
-        List<Hint> pistas = new ArrayList<>();
+        /*
+        List<Comparable> pistas = new ArrayList<>();
 
         Peca peca = obterPecaCoor(x, y);
 
@@ -794,6 +797,10 @@ public class GameManager {
         }
         Collections.sort(pistas);
         return pistas;
+
+         */
+
+        return new ArrayList<>();
     }
 
     public ArrayList<String> getGameResults() {
