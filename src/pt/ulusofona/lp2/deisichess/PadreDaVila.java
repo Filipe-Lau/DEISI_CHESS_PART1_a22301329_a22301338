@@ -43,7 +43,6 @@ public class PadreDaVila extends Peca {
         int diffX = Math.abs(x1 - posX);
         int diffY = Math.abs(y1 - posY);
 
-        ////if ((x1 - posX == y1 - posY || posX - x1 == posY - y1) && (x1 - posX <= 3 && x1 - posX >= -3)) /**/ {
         return diffX == diffY && diffX <= limiteCasas;
     }
 }

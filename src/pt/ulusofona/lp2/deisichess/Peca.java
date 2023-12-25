@@ -18,7 +18,6 @@ public abstract class Peca {
         this.equipaPeca = equipaPeca;
         this.nomePeca = nomePeca;
     }
-
     abstract int getPontos();
     abstract int getTipoPeca();
     abstract String getTipoPecaString();

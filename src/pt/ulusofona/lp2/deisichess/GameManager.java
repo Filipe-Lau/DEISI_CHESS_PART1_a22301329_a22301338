@@ -197,40 +197,31 @@ public class GameManager {
         return boardSize;
     }
 
-    public boolean move(int x0, int y0, int x1, int y1) { // NÃO CONSIGO ACEDER AS PEÇAS QUE ESTAM GUARDADAS NO HASHMAP
+    public boolean moveValidar(int x0, int y0, int x1, int y1) { // OS ERROS DEVEM SER DO SAVE GAME POIS ESTAMOS A DAR RESET AO MOVIMENTOS INVALIDOS QUANDO FAZEMOS LOAD GAME
 
         Peca peca = obterPecaCoor(x0, y0);
         Peca peca1 = obterPecaCoor(x1, y1);
 
         if (x0 < 0 || y0 < 0 || x1 < 0 || y1 < 0) {
-            contadorJogadaInvalida();
             return false;
         }
 
         if (x0 > boardSize - 1 || y0 > boardSize - 1 || x1 > boardSize - 1 || y1 > boardSize - 1) {
-            contadorJogadaInvalida();
-            return false;
-        }
-
-        if (peca == null) { // CASO TENTE ANDAR COM NENHUMA PEÇA
             return false;
         }
 
         if (!validaVezDeJogar(peca)) { // VALIDAR QUEM ESTÁ A JOGAR
-            contadorJogadaInvalida();
             return false;
         }
 
         if (peca.getTipoPeca() == 6) { // VALIDAR SE O HOMER NÃO JOGA ENQUANTO DORME
             HomerSimpson homer = (HomerSimpson) peca;
             if (homer.getaDormir()) {
-                contadorJogadaInvalida();
                 return false;
             }
         }
 
         if (!peca.movePeca(x1, y1)) { // SE O PECA ANDAR MAIS QUE O LIMITE DE CASAS QUE PODE ANDAR
-            contadorJogadaInvalida();
             return false;
         }
 
@@ -242,7 +233,6 @@ public class GameManager {
         }
 
         if (!caminhoLivre(tipoPeca, x0, y0, x1, y1)) { // Valida se nenhuma peça passa por cima de outra
-            contadorJogadaInvalida();
             return false;
         }
 
@@ -255,12 +245,23 @@ public class GameManager {
                 tipoPeca1 = joker.pecaEmUso.getTipoPeca();
             }
 
-            // SE A PECA E PECA1 FOREM O JOKER A IMITAREM A RAINHA E TENTAREM CAPTURAR UMA À OUTRA, DÁ ERRO
+            return (peca.getEquipaPeca() != peca1.getEquipaPeca()) && (tipoPeca != 1 || tipoPeca1 != 1);
+        }
+        return true;
+    }
 
-            if ((peca.getEquipaPeca() == peca1.getEquipaPeca()) || (tipoPeca == 1 && tipoPeca1 == 1)) { // SE FOREM DA MESMA EQUIPA OU AMBAS SÃO RAINHAS
-                contadorJogadaInvalida();
-                return false;
-            }
+    public boolean move(int x0, int y0, int x1, int y1) { // OS ERROS DEVEM SER DO SAVE GAME POIS ESTAMOS A DAR RESET AO MOVIMENTOS INVALIDOS QUANDO FAZEMOS LOAD GAME
+
+        Peca peca = obterPecaCoor(x0, y0);
+        Peca peca1 = obterPecaCoor(x1, y1);
+
+        if (peca == null) { // CASO TENTE ANDAR COM NENHUMA PEÇA
+            return false;
+        }
+
+        if (!moveValidar(x0, y0, x1, y1)) {
+            contadorJogadaInvalida();
+            return false;
         }
 
         nrDaJogada++;
@@ -296,11 +297,11 @@ public class GameManager {
     public void atualizarHomer() {
         HomerSimpson homerPreto = (HomerSimpson) obterPecaTipo(6, 10);
         if (homerPreto != null) {
-            homerPreto.setaDormir(nrDaJogada % 3 == 0); // NS SE É != 0 OU == 0
+            homerPreto.setaDormir(nrDaJogada % 3 == 0);
         }
         HomerSimpson homerBranco = (HomerSimpson) obterPecaTipo(6, 20);
         if (homerBranco != null) {
-            homerBranco.setaDormir(nrDaJogada % 3 == 0); // NS SE É != 0 OU == 0
+            homerBranco.setaDormir(nrDaJogada % 3 == 0);
         }
     }
 
@@ -308,8 +309,6 @@ public class GameManager {
         Joker jokerPreto = (Joker) obterPecaTipo(7, 10);
         if (jokerPreto != null) {
             jokerPreto.getPecaEmUso((nrDaJogada + 1) % 6);
-            //System.out.println((nrDaJogada + 1) % 6);
-            //System.out.println(jokerPreto.getPecaEmUso((nrDaJogada + 1) % 6));
         }
         Joker jokerBranco = (Joker) obterPecaTipo(7, 20);
         if (jokerBranco != null) {
@@ -763,48 +762,40 @@ public class GameManager {
         }
     }
 
+    public List<Hint> getHints(int x, int y) {
 
-    List<Hint> getHints(int x, int y) {
         List<Hint> pistas = new ArrayList<>();
-        Peca peca = new Rei();
-        for (int line = 0; line < getBoardSize(); line++) {
-            for (int column = 0; column < getBoardSize(); column++) {
-                String[]infoSitio = getSquareInfo(x,y);
-                if(infoSitio.length != 0 && move(x,y,line,column)){
-                    switch (Integer.parseInt(infoSitio[3])){
-                        case 0:
-                            peca = new Rei();
-                            break;
-                        case 1:
-                            peca = new Rainha();
-                            break;
-                        case 2:
-                            peca = new PoneiMagico();
-                            break;
-                        case 3:
-                            peca = new PadreDaVila();
-                            break;
-                        case 4:
-                            peca = new TorreH();
-                            break;
-                        case 5:
-                            peca = new TorreV();
-                            break;
-                        case 6:
-                            peca = new HomerSimpson();
-                            break;
-                        case 7:
-                            peca = new Joker();
-                    }
-                    pistas.add(new Hint("(" + line + "," + column + ") -> ",peca.getPontos()));
-                }
 
-            }
+        Peca peca = obterPecaCoor(x, y);
+
+        if (peca == null) {
+            return pistas;
         }
 
+        if (peca.getEquipaPeca() != vezDeJogar){
+            return pistas;
+        }
+
+        for (int column = 0; column < getBoardSize(); column++) {
+            for (int line = 0; line < getBoardSize(); line++) {
+
+                Peca peca1 = obterPecaCoor(column, line);
+
+                int pontos = 0;
+
+                if (peca1 != null) {
+                    pontos = peca1.getPontos();
+                }
+
+                if (moveValidar(x, y, column, line)) {
+                    pistas.add(new Hint( column + "," + line, pontos));
+                }
+            }
+        }
         Collections.sort(pistas);
         return pistas;
     }
+
     public ArrayList<String> getGameResults() {
         // System.out.println("GETGAMERESULTS\n");
 

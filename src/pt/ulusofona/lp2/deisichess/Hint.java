@@ -1,11 +1,14 @@
 package pt.ulusofona.lp2.deisichess;
 
-public class Hint implements Comparable <Hint>{
-
+public class Hint implements Comparable <Hint> {
     String coords;
     int pontuacao;
 
-    public Hint(String coords,int pontuacao) {
+
+    public Hint() {
+    }
+
+    public Hint(String coords, int pontuacao) {
         this.coords = coords;
         this.pontuacao = pontuacao;
 
@@ -18,5 +21,10 @@ public class Hint implements Comparable <Hint>{
 
     public int getPontuacao(){
         return pontuacao;
+    }
+
+    @Override
+    public String toString() {
+        return "(" + coords + ")" + " -> " + pontuacao;
     }
 }
