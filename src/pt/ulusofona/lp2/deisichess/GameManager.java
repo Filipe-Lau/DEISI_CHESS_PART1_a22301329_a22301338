@@ -31,7 +31,8 @@ public class GameManager {
         // System.out.println("LOADGAME\n");
 
         if (file == null) {
-            throw new InvalidGameInputException(0, "Ficheiro não existente");
+            throw new IOException();
+            //throw new InvalidGameInputException(0, "Ficheiro não existente");
         }
 
         int count = 2;
@@ -764,48 +765,42 @@ public class GameManager {
         }
     }
 
-    public List<Comparable> getHints(int x, int y) {
+    public List<Hint> getHints(int x, int y) { // FALTA O COMPARABLE
 
-        /*
-        List<Comparable> pistas = new ArrayList<>();
+        List<Hint> pistas = new ArrayList<>();
 
         Peca peca = obterPecaCoor(x, y);
 
         if (peca == null) {
-            return pistas;
+            return null;
         }
 
         if (peca.getEquipaPeca() != vezDeJogar){
-            return pistas;
+            return null;
         }
 
         for (int column = 0; column < getBoardSize(); column++) {
             for (int line = 0; line < getBoardSize(); line++) {
 
-                Peca peca1 = obterPecaCoor(column, line);
+                Peca peca1 = obterPecaCoor(column, line); // PROCURARA PEÇA1 PELAS COORDENADAS
 
                 int pontos = 0;
 
                 if (peca1 != null) {
-                    pontos = peca1.getPontos();
+                    pontos = peca1.getPontos(); // OBTER OS PONTOS DAS PEÇAS QUE ESTEJAM NO CAMINHO DA PEÇA
                 }
 
                 if (moveValidar(x, y, column, line)) {
-                    pistas.add(new Hint( column + "," + line, pontos));
+                    pistas.add(new Hint(column + "," + line , pontos));
                 }
             }
         }
         Collections.sort(pistas);
         return pistas;
-
-         */
-
-        return new ArrayList<>();
     }
 
     public ArrayList<String> getGameResults() {
         // System.out.println("GETGAMERESULTS\n");
-
         ArrayList<String> resultadosJogo = new ArrayList<>();
 
         resultadosJogo.add("JOGO DE CRAZY CHESS");

@@ -39,9 +39,7 @@ public class PoneiMagico extends Peca {
         int diffX = Math.abs(x1 - posX);
         int diffY = Math.abs(y1 - posY);
 
-        //if ((x1 - posX == 2 && y1 - posY == 2) || (x1 - posX == -2 && y1 - posY == 2) || (x1 - posX == 2 && y1 - posY == -2) || (x1 - posX == -2 && y1 - posY == -2)){
         return diffX == 2 && diffY == 2;
-        //}
     }
 
 }
