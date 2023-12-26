@@ -205,6 +205,10 @@ public class GameManager {
         Peca peca = obterPecaCoor(x0, y0);
         Peca peca1 = obterPecaCoor(x1, y1);
 
+        if (peca == null) {
+            return false;
+        }
+
         if (x0 < 0 || y0 < 0 || x1 < 0 || y1 < 0) {
             return false;
         }
@@ -765,9 +769,10 @@ public class GameManager {
         }
     }
 
-    public List<Hint> getHints(int x, int y) { // FALTA O COMPARABLE
+    public List<Comparable> getHints(int x, int y) { // FALTA O COMPARABLE
 
-        List<Hint> pistas = new ArrayList<>();
+        /*
+        List<Comparable> pistas = new ArrayList<>();
 
         Peca peca = obterPecaCoor(x, y);
 
@@ -791,12 +796,16 @@ public class GameManager {
                 }
 
                 if (moveValidar(x, y, column, line)) {
-                    pistas.add(new Hint(column + "," + line , pontos));
+                    pistas.add(new Hint(column + "," + line , pontos).toString());
                 }
             }
         }
         Collections.sort(pistas);
         return pistas;
+    }
+
+         */
+        return new ArrayList<>();
     }
 
     public ArrayList<String> getGameResults() {

@@ -4,7 +4,10 @@ public class Hint implements Comparable <Hint> {
     String coords;
     int pontuacao;
 
-
+    @Override
+    public int compareTo(Hint pista) {
+        return Integer.compare(pista.getPontuacao(), this.pontuacao);
+    }
     public Hint() {
     }
 
@@ -12,11 +15,6 @@ public class Hint implements Comparable <Hint> {
         this.coords = coords;
         this.pontuacao = pontuacao;
 
-    }
-
-    @Override
-    public int compareTo(Hint pista) {
-        return Integer.compare(pista.getPontuacao(), this.pontuacao);
     }
 
     public int getPontuacao(){
