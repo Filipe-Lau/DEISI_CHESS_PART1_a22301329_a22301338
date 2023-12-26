@@ -209,6 +209,10 @@ public class GameManager {
             return false;
         }
 
+        if (x0 == x1 && y0 == y1){
+            return false;
+        }
+
         if (x0 < 0 || y0 < 0 || x1 < 0 || y1 < 0) {
             return false;
         }
@@ -239,6 +243,20 @@ public class GameManager {
             tipoPeca = joker.pecaEmUso.getTipoPeca();
         }
 
+        /*
+        if (tipoPeca == 7) {
+            Joker joker = (Joker) peca;
+            tipoPeca = joker.pecaEmUso.getTipoPeca();
+
+            Peca peca2 = joker.getPecaEmUso(6);
+            HomerSimpson homerSimpson = (HomerSimpson) peca2;
+
+            if (homerSimpson.getaDormir()) {
+                return false;
+            }
+        }
+
+         */
         if (!caminhoLivre(tipoPeca, x0, y0, x1, y1)) { // Valida se nenhuma peça passa por cima de outra
             return false;
         }
@@ -254,6 +272,7 @@ public class GameManager {
 
             return (peca.getEquipaPeca() != peca1.getEquipaPeca()) && (tipoPeca != 1 || tipoPeca1 != 1);
         }
+
         return true;
     }
 
@@ -262,12 +281,12 @@ public class GameManager {
         Peca peca = obterPecaCoor(x0, y0);
         Peca peca1 = obterPecaCoor(x1, y1);
 
-        if (peca == null) { // CASO TENTE ANDAR COM NENHUMA PEÇA
-            return false;
-        }
+        // CASO TENTE ANDAR COM NENHUMA PEÇA
 
-        if (!moveValidar(x0, y0, x1, y1)) {
+        if (!moveValidar(x0, y0, x1, y1) || peca == null) {
             contadorJogadaInvalida();
+            System.out.println("JOGADAS PRETAS INVALIDAS: " + gameResult.getJogadaPretaInvalida());
+            System.out.println("JOGADAS BRANCAS INVALIDAS: " + gameResult.getJogadaBrancaInvalida());
             return false;
         }
 
@@ -771,7 +790,7 @@ public class GameManager {
 
     public List<Comparable> getHints(int x, int y) { // FALTA O COMPARABLE
 
-        /*
+/*
         List<Comparable> pistas = new ArrayList<>();
 
         Peca peca = obterPecaCoor(x, y);
@@ -800,11 +819,13 @@ public class GameManager {
                 }
             }
         }
-        Collections.sort(pistas);
+        //Collections.sort(pistas);
         return pistas;
     }
 
-         */
+
+ */
+
         return new ArrayList<>();
     }
 

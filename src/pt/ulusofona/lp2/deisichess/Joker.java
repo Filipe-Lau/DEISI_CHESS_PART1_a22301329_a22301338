@@ -45,10 +45,9 @@ public class Joker extends Peca{
     }
 
     public boolean movePeca(int x1,int y1){
-
         pecaEmUso.setPosX(getPosX());
         pecaEmUso.setPosY(getPosY());
-        System.out.println(pecaEmUso.getTipoPeca());
+        //System.out.println(pecaEmUso.getTipoPeca());
         return pecaEmUso.movePeca(x1,y1);
         /*
         switch (pecaEmUso.getTipoPecaString()){
