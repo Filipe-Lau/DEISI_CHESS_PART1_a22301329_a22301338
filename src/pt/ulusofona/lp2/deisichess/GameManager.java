@@ -292,6 +292,7 @@ public class GameManager {
 
         nrDaJogada++;
         gameResult.aumentaJogadasSemComer();
+        System.out.println(gameResult.getJogadasSemComer());
 
         if (peca1 != null) { // HISTÓRICO DE JOGADA DA PEÇA CAPTURADA
 
@@ -463,7 +464,7 @@ public class GameManager {
             gameBoard.pecaPretaComida();
         }
 
-        gameResult.mudaNumCaptura(1);
+        gameResult.mudaNumCaptura(1); // FLAG PARA SABER SE JÁ HOUVE CAPTURA
         gameResult.setJogadasSemComer(0);
 
     }
@@ -655,21 +656,24 @@ public class GameManager {
         Peca reiPreto = obterPecaTipo(0, 10);
         Peca reiBranco = obterPecaTipo(0, 20);
 
-        // CASO DE EMPATE
-        if (gameBoard.getNumPecasBrancas() == 1 && gameBoard.getNumPecasPretas() == 1) {
-            gameBoard.setResultadoJogo("EMPATE");
-            return true;
-        }
         // VITÓRIA DAS BRANCAS (REI PRETO CAPTURADO)
         if (reiPreto.getEstado().equals("capturado")) {
             gameBoard.setResultadoJogo("VENCERAM AS BRANCAS");
             return true;
         }
+
         // VITÓRIA DAS PRETAS (REI BRANCO CAPTURADO)
         if (reiBranco.getEstado().equals("capturado")) {
             gameBoard.setResultadoJogo("VENCERAM AS PRETAS");
             return true;
         }
+
+        // CASO DE EMPATE
+        if (gameBoard.getNumPecasBrancas() == 1 && gameBoard.getNumPecasPretas() == 1) {
+            gameBoard.setResultadoJogo("EMPATE");
+            return true;
+        }
+
         // VITÓRIA PARA AS BRANCAS (COMERAM AS PRETAS TODAS)
         else if (gameBoard.getNumPecasBrancas() > 0 && gameBoard.getNumPecasPretas() == 0) {
             gameBoard.setResultadoJogo("VENCERAM AS BRANCAS");
@@ -705,7 +709,7 @@ public class GameManager {
             jogada1.getPeca().setPosX(jogada1.getX0());
             jogada1.getPeca().setPosY(jogada1.getY0());
             jogada1.getPeca().inJogo();
-            gameResult.mudaNumCaptura(-1);
+            gameResult.mudaNumCaptura(-1); // FLAG PARA SABER SE JÁ HOUVE CAPTURA
         }
 
         if (jogada != null) {
@@ -788,46 +792,33 @@ public class GameManager {
         }
     }
 
-    public List<Comparable> getHints(int x, int y) { // FALTA O COMPARABLE
-
-/*
-        List<Comparable> pistas = new ArrayList<>();
-
+    public List<Hint> getHints(int x, int y) { // FALTA O COMPARABLE
+        List<Hint> pistas = new ArrayList<>();
         Peca peca = obterPecaCoor(x, y);
-
         if (peca == null) {
             return null;
         }
-
         if (peca.getEquipaPeca() != vezDeJogar){
             return null;
         }
-
         for (int column = 0; column < getBoardSize(); column++) {
             for (int line = 0; line < getBoardSize(); line++) {
-
                 Peca peca1 = obterPecaCoor(column, line); // PROCURARA PEÇA1 PELAS COORDENADAS
-
                 int pontos = 0;
-
                 if (peca1 != null) {
                     pontos = peca1.getPontos(); // OBTER OS PONTOS DAS PEÇAS QUE ESTEJAM NO CAMINHO DA PEÇA
                 }
-
                 if (moveValidar(x, y, column, line)) {
-                    pistas.add(new Hint(column + "," + line , pontos).toString());
+                    pistas.add(new Hint(column + "," + line , pontos));
                 }
             }
         }
-        //Collections.sort(pistas);
+        Collections.sort(pistas);
         return pistas;
     }
 
-
- */
-
-        return new ArrayList<>();
-    }
+//        return new ArrayList<>();
+  //  }
 
     public ArrayList<String> getGameResults() {
         // System.out.println("GETGAMERESULTS\n");
