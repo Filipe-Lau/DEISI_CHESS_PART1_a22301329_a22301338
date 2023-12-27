@@ -655,6 +655,8 @@ public class GameManager {
         Peca reiPreto = obterPecaTipo(0, 10);
         Peca reiBranco = obterPecaTipo(0, 20);
 
+
+        /*
         // VITÓRIA DAS BRANCAS (REI PRETO CAPTURADO)
         if (reiPreto.getEstado().equals("capturado")) {
             gameBoard.setResultadoJogo("VENCERAM AS BRANCAS");
@@ -667,9 +669,23 @@ public class GameManager {
             return true;
         }
 
+         */
+
         // CASO DE EMPATE
         if (gameBoard.getNumPecasBrancas() == 1 && gameBoard.getNumPecasPretas() == 1) {
             gameBoard.setResultadoJogo("EMPATE");
+            return true;
+        }
+
+        // VITÓRIA DAS BRANCAS (REI PRETO CAPTURADO)
+        if (reiPreto.getEstado().equals("capturado")) {
+            gameBoard.setResultadoJogo("VENCERAM AS BRANCAS");
+            return true;
+        }
+
+        // VITÓRIA DAS PRETAS (REI BRANCO CAPTURADO)
+        if (reiBranco.getEstado().equals("capturado")) {
+            gameBoard.setResultadoJogo("VENCERAM AS PRETAS");
             return true;
         }
 
