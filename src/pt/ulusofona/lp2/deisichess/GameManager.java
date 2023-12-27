@@ -292,7 +292,6 @@ public class GameManager {
 
         nrDaJogada++;
         gameResult.aumentaJogadasSemComer();
-        System.out.println(gameResult.getJogadasSemComer());
 
         if (peca1 != null) { // HISTÓRICO DE JOGADA DA PEÇA CAPTURADA
 
@@ -792,8 +791,8 @@ public class GameManager {
         }
     }
 
-    public List<Hint> getHints(int x, int y) { // FALTA O COMPARABLE
-        List<Hint> pistas = new ArrayList<>();
+    public List<Comparable> getHints(int x, int y) { // FALTA O COMPARABLE
+        List<Comparable> pistas = new ArrayList<>();
         Peca peca = obterPecaCoor(x, y);
         if (peca == null) {
             return null;

@@ -6,6 +6,7 @@ public class Hint implements Comparable <Hint> {
 
     @Override
     public int compareTo(Hint pista) {
+        //System.out.println("RESULTADO DA COMPARAÇÃO: " + Integer.compare(pista.getPontuacao(), this.pontuacao) + "\n" + " PISTA PONTOS: " + pista.getPontuacao() + " THIS.PONTOS: " + this.pontuacao);
         return Integer.compare(pista.getPontuacao(), this.pontuacao);
     }
     public Hint() {
