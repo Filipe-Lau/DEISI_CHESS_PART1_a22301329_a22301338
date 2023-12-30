@@ -639,15 +639,22 @@ public class GameManager {
             writer.write(peca.getIdPeca() + ":" + peca.getTipoPeca() + ":" + peca.getEquipaPeca() +
                     ":" + peca.getNomePeca() + "\n");
         }
+// nao ordena as peças como deve de ser
 
-        for (int coluna = 0; coluna < 8; coluna++) {
-            for (int line = 0; line < 8; line++) {
+
+        for (int line = 0; line < getBoardSize(); line++) {
+            for (int coluna = 0; coluna < getBoardSize(); coluna++) {
                 String[] id = getSquareInfo(line, coluna);
                 if (id.length == 0) {
-
+                    if(line == getBoardSize() - 1){
+                        writer.write("0");
+                    }
+                    writer.write("0:");
                 } else {
-                    writer.write(id[0] + ":" + id[1] + ":" +
-                            id[2] + ":" + id[3] + "\n");
+                    if(line == getBoardSize() - 1){
+                        writer.write(id[0]);
+                    }
+                        writer.write(id[0] + ":");
                 }
             }
         }
