@@ -644,16 +644,16 @@ public class GameManager {
 
         for (int line = 0; line < getBoardSize(); line++) {
             for (int column= 0; column < getBoardSize(); column++) {
-                Peca peca = obterPecaCoor(line,column);
+                Peca peca = obterPecaCoor(column,line);
                 if(peca != null) {
                     if(column == getBoardSize() - 1) {
                         writer.write(peca.getIdPeca() + "\n");
                     }
                     else {
-                            writer.write(peca.getIdPeca() + ":");
-                        }
-
+                        writer.write(peca.getIdPeca() + ":");
                     }
+
+                }
                 else {
                     if(column == getBoardSize() - 1) {
                         writer.write("0\n");
@@ -662,12 +662,11 @@ public class GameManager {
                         writer.write("0:");
                     }
                 }
-
-                }
-
             }
-        writer.close();
+
         }
+        writer.close();
+    }
 
 
     /*estatisticas
