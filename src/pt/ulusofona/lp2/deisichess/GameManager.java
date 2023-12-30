@@ -175,6 +175,9 @@ public class GameManager {
     public int getBoardSize() {
         return boardSize;
     }
+    public int getVezDeJogar(){
+        return vezDeJogar;
+    }
     public boolean moveValidar(int x0, int y0, int x1, int y1) { // OS ERROS DEVEM SER DO SAVE GAME POIS ESTAMOS A DAR RESET AO MOVIMENTOS INVALIDOS QUANDO FAZEMOS LOAD GAME
         Peca peca = obterPecaCoor(x0, y0);
         Peca peca1 = obterPecaCoor(x1, y1);
@@ -663,8 +666,14 @@ public class GameManager {
                     }
                 }
             }
-
         }
+        writer.write(getVezDeJogar() + "\n");
+        //pretos
+        writer.write(gameBoard.getCapturadasPorPretas() + ";" + gameResult.getJogadaPretaValida() +
+                ";" + gameResult.getJogadaPretaInvalida() + "\n");
+        //brancos
+        writer.write(gameBoard.getCapturadasPorBrancas() + ";" + gameResult.getJogadaBrancaValida() +
+                ";" + gameResult.getJogadaBrancaInvalida() + "\n");
         writer.close();
     }
 
