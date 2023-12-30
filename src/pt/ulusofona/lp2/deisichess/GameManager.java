@@ -643,23 +643,33 @@ public class GameManager {
 
 
         for (int line = 0; line < getBoardSize(); line++) {
-            for (int coluna = 0; coluna < getBoardSize(); coluna++) {
-                String[] id = getSquareInfo(line, coluna);
-                if (id.length == 0) {
-                    if(line == getBoardSize() - 1){
-                        writer.write("0");
+            for (int column= 0; column < getBoardSize(); column++) {
+                Peca peca = obterPecaCoor(line,column);
+                if(peca != null) {
+                    if(column == getBoardSize() - 1) {
+                        writer.write(peca.getIdPeca() + "\n");
                     }
-                    writer.write("0:");
-                } else {
-                    if(line == getBoardSize() - 1){
-                        writer.write(id[0]);
+                    else {
+                            writer.write(peca.getIdPeca() + ":");
+                        }
+
                     }
-                        writer.write(id[0] + ":");
+                else {
+                    if(column == getBoardSize() - 1) {
+                        writer.write("0\n");
+                    }
+                    else {
+                        writer.write("0:");
+                    }
                 }
+
+                }
+
             }
-        }
         writer.close();
-    }
+        }
+
+
     /*estatisticas
     //if(numJogadas % 2 != 0){
     //escritor.write("brancas");
