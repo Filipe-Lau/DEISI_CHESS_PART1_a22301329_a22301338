@@ -8,6 +8,7 @@ import java.util.List;
 
 // 10 pretas
 // 20 brancas
+
 public class GameManager {
     protected int boardSize;
     protected int vezDeJogar = 10;

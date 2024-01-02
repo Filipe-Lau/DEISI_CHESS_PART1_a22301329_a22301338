@@ -1,6 +1,7 @@
 package pt.ulusofona.lp2.deisichess;
 
 public class HomerSimpson extends Peca {
+
     protected final int pontos = 2;
     protected String tipoPecaString = "Homer Simpson";
     protected final int tipoPeca = 6;
@@ -17,7 +18,6 @@ public class HomerSimpson extends Peca {
     }
 
     protected HomerSimpson() {
-
     }
 
     protected HomerSimpson(String idPeca, int equipaPeca, String nomePeca) {
@@ -63,6 +63,5 @@ public class HomerSimpson extends Peca {
     protected void setaDormir(Boolean sono) {
         this.aDormir = sono;
     }
-
 
 }

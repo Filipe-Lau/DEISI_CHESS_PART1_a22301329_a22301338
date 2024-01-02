@@ -15,7 +15,7 @@ public abstract class Peca {
     protected int posY = -1;
     protected String estado = "capturado";
 
-    public Peca() {
+    protected Peca() {
     }
 
     protected Peca(String idPeca,int equipaPeca, String nomePeca) {
@@ -51,6 +51,7 @@ public abstract class Peca {
     protected void incrementaNrJogadasValidas(){
         nrJogadasValidas++;
     }
+
     protected int getNrJogadasInvalidas() {
         return nrJogadasInvalidas;
     }
@@ -66,9 +67,11 @@ public abstract class Peca {
     protected int getNumCapturas(){
         return numCapturas;
     }
+
     protected void incrementaPontosObtidos(int pontosCapturados){
         this.pontosObtidos += pontosCapturados;
     }
+
     protected int getPontosObtidos() {
         return pontosObtidos;
     }
