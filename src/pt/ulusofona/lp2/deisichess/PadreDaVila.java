@@ -6,16 +6,13 @@ public class PadreDaVila extends Peca {
     String tipoPecaString = "Padre da Vila";
     int tipoPeca = 3;
     int limiteCasas = 3;
-    boolean diagonal = true;
-    boolean horizontal = false;
-    boolean vertical = false;
 
     public PadreDaVila() {
 
     }
 
     public PadreDaVila(String idPeca, int equipaPeca, String nomePeca) {
-        super(idPeca, equipaPeca, nomePeca,"Padre da Vila");
+        super(idPeca, equipaPeca, nomePeca);
     }
 
     public String toString() {

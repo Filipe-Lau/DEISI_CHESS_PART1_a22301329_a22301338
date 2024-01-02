@@ -22,7 +22,7 @@ public class Rei extends Peca {
     }
 
     public Rei(String idPeca, int equipaPeca, String nomePeca) {
-        super(idPeca, equipaPeca, nomePeca,"Rei");
+        super(idPeca, equipaPeca, nomePeca);
     }
 
     public int getPontos(){

@@ -6,9 +6,6 @@ public class Rainha extends Peca { //ATENÇÃO NO MOVE, RAINHA NÃO PODE COMER R
     String tipoPecaString = "Rainha";
     int tipoPeca = 1;
     int limiteCasas = 5;
-    boolean diagonal = true;
-    boolean vertical = true;
-    boolean horizontal = true;
 
     public Rainha(){
 
@@ -23,7 +20,7 @@ public class Rainha extends Peca { //ATENÇÃO NO MOVE, RAINHA NÃO PODE COMER R
     }
 
     public Rainha(String idPeca, int equipaPeca, String nomePeca) {
-        super(idPeca,equipaPeca, nomePeca,"Rainha");
+        super(idPeca,equipaPeca, nomePeca);
     }
 
     public int getPontos(){

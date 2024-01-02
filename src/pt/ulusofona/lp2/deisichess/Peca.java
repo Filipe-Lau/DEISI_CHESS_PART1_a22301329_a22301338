@@ -17,7 +17,7 @@ public abstract class Peca {
     public Peca() {
     }
 
-    public Peca(String idPeca,int equipaPeca, String nomePeca, String tipoPecaString) {
+    public Peca(String idPeca,int equipaPeca, String nomePeca) {
         this.idPeca = idPeca;
         this.equipaPeca = equipaPeca;
         this.nomePeca = nomePeca;

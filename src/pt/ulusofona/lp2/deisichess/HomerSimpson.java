@@ -8,11 +8,6 @@ public class HomerSimpson extends Peca {
     int nrDaJogada = 0;
     int limiteCasas = 1;
 
-    /*
-    boolean horizontal = false;
-    boolean vertical = false;
-    boolean diagonal = true;
-     */
     boolean aDormir = true;
 
     public void setNrDaJogada(int nrDaJogada) {
@@ -28,7 +23,7 @@ public class HomerSimpson extends Peca {
     }
 
     public HomerSimpson(String idPeca, int equipaPeca, String nomePeca) {
-        super(idPeca, equipaPeca, nomePeca,"Homer Simpson");
+        super(idPeca, equipaPeca, nomePeca);
     }
 
     public String toString() {

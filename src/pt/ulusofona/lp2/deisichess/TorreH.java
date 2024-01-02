@@ -5,16 +5,13 @@ public class TorreH extends Peca {
     String tipoPecaString = "TorreHor";
     int tipoPeca = 4;
     int limiteCasas = 0; //0 quer dizer que nao tem limite
-    boolean horizontal = true;
-    boolean vertical = false;
-    boolean diagonal = false;
 
     public TorreH() {
 
     }
 
     public TorreH(String idPeca, int equipaPeca, String nomePeca) {
-        super(idPeca, equipaPeca, nomePeca,"TorreHor");
+        super(idPeca, equipaPeca, nomePeca);
     }
 
     public String toString() {

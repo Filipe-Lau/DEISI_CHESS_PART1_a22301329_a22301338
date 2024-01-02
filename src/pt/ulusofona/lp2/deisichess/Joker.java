@@ -3,6 +3,7 @@ package pt.ulusofona.lp2.deisichess;
 import java.util.Objects;
 
 public class Joker extends Peca{
+
     protected int pontos = 4; // NÃO PODE SER FINAL NEM PRIVATE POIS É PRECISO ACEDER NA PARTE FUNCIONAL
     protected String tipoPecaString = "Joker/Rainha";
     protected int tipoPeca = 7; // FINAL PORQUE O TIPO PEÇA NUNCA MUDA ????
@@ -13,7 +14,7 @@ public class Joker extends Peca{
     }
 
     public Joker(String idPeca, int equipaPeca, String nomePeca) {
-        super(idPeca,equipaPeca, nomePeca,"Joker");
+        super(idPeca,equipaPeca, nomePeca);
     }
 
     public int getPontos(){
