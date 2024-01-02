@@ -16,14 +16,14 @@ public class GameManager {
     HistoricoJogada historico = new HistoricoJogada();
     int nrDaJogada = 0;
 
-    private GameManager() {
+    public GameManager() {
     }
 
-    private Map<String, String> customizeBoard() {
+    public Map<String, String> customizeBoard() {
         return new HashMap<>();
     }
 
-    private void loadGame(File file) throws InvalidGameInputException, IOException {
+    public void loadGame(File file) throws InvalidGameInputException, IOException {
         // System.out.println("LOADGAME\n");
         if (file == null) {
             throw new IOException();
@@ -151,23 +151,23 @@ public class GameManager {
         reader.close();
     }
 
-    private void setVezDeJogar(int turnoAtual) {
+    public void setVezDeJogar(int turnoAtual) {
         vezDeJogar = turnoAtual;
     }
 
-    private int getBoardSize() {
+    public int getBoardSize() {
         return boardSize;
     }
 
-    private int getNrDaJogada() {
+    public int getNrDaJogada() {
         return nrDaJogada;
     }
 
-    private int getCurrentTeamID() {
+    public int getCurrentTeamID() {
         return vezDeJogar;
     }
 
-    private boolean moveValidar(int x0, int y0, int x1, int y1) { // VALIDA A JOGADA
+    public boolean moveValidar(int x0, int y0, int x1, int y1) { // VALIDA A JOGADA
         Peca peca = obterPecaCoor(x0, y0);
         Peca peca1 = obterPecaCoor(x1, y1);
 
@@ -225,7 +225,7 @@ public class GameManager {
         return true;
     }
 
-    private boolean move(int x0, int y0, int x1, int y1) {
+    public boolean move(int x0, int y0, int x1, int y1) {
         Peca peca = obterPecaCoor(x0, y0);
         Peca peca1 = obterPecaCoor(x1, y1);
 
@@ -269,7 +269,7 @@ public class GameManager {
         return true;
     }
 
-    private void atualizarHomer() {
+    public void atualizarHomer() {
         HomerSimpson homerPreto = (HomerSimpson) obterPecaTipo(6, 10);
         if (homerPreto != null) {
             homerPreto.setaDormir(nrDaJogada % 3 == 0); // DEPOIS DE CADA JOGADA ATUALIZAMOS O HOMER
@@ -280,7 +280,7 @@ public class GameManager {
         }
     }
 
-    private void atualizarJoker() {
+    public void atualizarJoker() {
         Joker jokerPreto = (Joker) obterPecaTipo(7, 10);
         if (jokerPreto != null) {
             jokerPreto.getPecaEmUso((nrDaJogada + 1) % 6); // DEPOIS DE CADA JOGADA ATUALIZAMOS O JOKER
@@ -291,7 +291,7 @@ public class GameManager {
         }
     }
 
-    private Boolean caminhoLivre(int tipoPeca, int x0, int y0, int x1, int y1) {
+    public Boolean caminhoLivre(int tipoPeca, int x0, int y0, int x1, int y1) {
         if (tipoPeca == 2) {
             boolean v0, v1, v2, v3, h0, h1, h2, h3;
             /*
@@ -367,7 +367,7 @@ public class GameManager {
         return true;
     }
 
-    private Peca obterPecaTipo(int tipoPeca, int equipa) {
+    public Peca obterPecaTipo(int tipoPeca, int equipa) {
         for (Peca peca : gameBoard.getPecasEmJogo().values()) {
             if (peca.getTipoPeca() == tipoPeca && peca.getEquipaPeca() == equipa) {
                 return peca;
@@ -376,7 +376,7 @@ public class GameManager {
         return null;
     }
 
-    private Peca obterPecaCoor(int x1, int y1) {
+    public Peca obterPecaCoor(int x1, int y1) {
         for (Peca peca : gameBoard.getPecasEmJogo().values()) {
             if (peca.getPosX() == x1 && peca.getPosY() == y1) {
                 return peca;
@@ -385,11 +385,11 @@ public class GameManager {
         return null;
     }
 
-    private boolean validaVezDeJogar(Peca peca) {
+    public boolean validaVezDeJogar(Peca peca) {
         return getCurrentTeamID() == peca.getEquipaPeca();
     }
 
-    private void atualizarCapturas(Peca peca) {
+    public void atualizarCapturas(Peca peca) {
         if (peca.getEquipaPeca() == 10) { // PECA PRETA COME
             gameBoard.capturaPorPretas();
             gameBoard.pecaBrancaComida();
@@ -401,7 +401,7 @@ public class GameManager {
         gameResult.setJogadasSemComer(0); // RESET DAS JOGADSAS SEM COMER
     }
 
-    private void atualizarJogadasValidas() {
+    public void atualizarJogadasValidas() {
         if (getCurrentTeamID() == 10) {
             gameResult.aumentaJogadaPretaValida();
         } else {
@@ -409,7 +409,7 @@ public class GameManager {
         }
     }
 
-    private void atualizarVezDeJogar() {
+    public void atualizarVezDeJogar() {
         if (getCurrentTeamID() == 10) {
             setVezDeJogar(20);
         } else {
@@ -417,7 +417,7 @@ public class GameManager {
         }
     }
 
-    private void contadorJogadaInvalida() {
+    public void contadorJogadaInvalida() {
         if (getCurrentTeamID() == 20) {
             gameResult.aumentaJogadaBrancaInvalida();
         } else {
@@ -425,7 +425,7 @@ public class GameManager {
         }
     }
 
-    private String[] getSquareInfo(int x, int y) {
+    public String[] getSquareInfo(int x, int y) {
         //  System.out.println("SQUAREINFO\n");
         String[] squareInfo = new String[5];
         if (x < 0 || x >= boardSize || y < 0 || y >= boardSize) {
@@ -501,7 +501,7 @@ public class GameManager {
         return new String[0]; // squareinfo vazio
     }
 
-    private String[] getPieceInfo(int ID) {
+    public String[] getPieceInfo(int ID) {
         // System.out.println("PIECEINFO\n");
         String[] pieceInfo = new String[7];
         for (Peca peca : gameBoard.getPecasEmJogo().values()) {
@@ -523,7 +523,7 @@ public class GameManager {
         return pieceInfo;
     }
 
-    private String getPieceInfoAsString(int ID) {
+    public String getPieceInfoAsString(int ID) {
         // System.out.println("PIECEINFOASSTRING\n");
         String info = "";
         for (Peca peca : gameBoard.getPecasEmJogo().values()) {
@@ -534,7 +534,7 @@ public class GameManager {
         return info;
     }
 
-    private boolean gameOver() {
+    public boolean gameOver() {
         Peca reiPreto = obterPecaTipo(0, 10);
         Peca reiBranco = obterPecaTipo(0, 20);
 
@@ -575,7 +575,7 @@ public class GameManager {
         }
     }
 
-    private ArrayList<String> getGameResults() {
+    public ArrayList<String> getGameResults() {
         // System.out.println("GETGAMERESULTS\n");
         ArrayList<String> resultadosJogo = new ArrayList<>();
         resultadosJogo.add("JOGO DE CRAZY CHESS");
@@ -592,7 +592,7 @@ public class GameManager {
         return resultadosJogo;
     }
 
-    private void undo() {
+    public void undo() {
 
         if (nrDaJogada == 0) { // NÃO DÁ PARA FAZER MAIS UNDO
             return;
@@ -625,7 +625,7 @@ public class GameManager {
         }
     }
 
-    private void saveGame(File file) throws IOException {
+    public void saveGame(File file) throws IOException {
 
         BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 
@@ -672,7 +672,7 @@ public class GameManager {
         writer.close();
     }
 
-    private List<Comparable> getHints(int x, int y) {
+    public List<Comparable> getHints(int x, int y) {
 
         List<Comparable> pistas = new ArrayList<>();
 
@@ -705,7 +705,7 @@ public class GameManager {
         return pistas;
     }
 
-    private JPanel getAuthorsPanel() {
+    public JPanel getAuthorsPanel() {
         ImageIcon image = new ImageIcon("pecaPreta2.png");
         JLabel label = new JLabel();
         label.setIcon(image);

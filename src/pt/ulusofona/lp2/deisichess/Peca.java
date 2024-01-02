@@ -1,18 +1,18 @@
 package pt.ulusofona.lp2.deisichess;
 
 public abstract class Peca {
-    String idPeca;
+    protected String idPeca;
     protected int pontosObtidos = 0;
     protected int numCapturas = 0;
     protected int nrJogadasValidas = 0;
     protected int nrJogadasInvalidas = 0;
 
-    protected  int pontos;
-    protected   String tipoPecaString = "";
-    protected   int equipaPeca;
-    protected  String nomePeca;
+    protected int pontos;
+    protected String tipoPecaString = "";
+    protected int equipaPeca;
+    protected String nomePeca;
     protected int posX = -1;
-    protected  int posY = -1;
+    protected int posY = -1;
     protected String estado = "capturado";
 
     public Peca() {

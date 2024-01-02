@@ -3,8 +3,9 @@ package pt.ulusofona.lp2.deisichess;
 public class PoneiMagico extends Peca {
 
     protected final int pontos = 5;
-    protected String tipoPecaString = "Ponei Mágico";
+    protected final String tipoPecaString = "Ponei Mágico";
     protected final int tipoPeca = 2;
+    protected final int limiteCasas = 2;
 
     protected PoneiMagico() {
 
@@ -40,7 +41,7 @@ public class PoneiMagico extends Peca {
         int diffX = Math.abs(x1 - posX);
         int diffY = Math.abs(y1 - posY);
 
-        return diffX == 2 && diffY == 2;
+        return diffX == limiteCasas && diffY == limiteCasas;
     }
 
 }

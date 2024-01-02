@@ -3,9 +3,9 @@ package pt.ulusofona.lp2.deisichess;
 public class Rainha extends Peca { //ATENÇÃO NO MOVE, RAINHA NÃO PODE COMER RAINHA!!!
 
     protected final int pontos = 8;
-    protected String tipoPecaString = "Rainha";
+    protected final String tipoPecaString = "Rainha";
     protected final int tipoPeca = 1;
-    protected int limiteCasas = 5;
+    protected final int limiteCasas = 5;
 
     protected Rainha(){
 

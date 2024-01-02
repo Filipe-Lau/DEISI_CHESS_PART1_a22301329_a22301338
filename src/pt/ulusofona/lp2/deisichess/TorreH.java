@@ -2,9 +2,8 @@ package pt.ulusofona.lp2.deisichess;
 
 public class TorreH extends Peca {
     protected final int pontos = 3;
-    protected String tipoPecaString = "TorreHor";
+    protected final String tipoPecaString = "TorreHor";
     protected final int tipoPeca = 4;
-    protected int limiteCasas = 0; //0 quer dizer que nao tem limite
 
     protected TorreH() {
 

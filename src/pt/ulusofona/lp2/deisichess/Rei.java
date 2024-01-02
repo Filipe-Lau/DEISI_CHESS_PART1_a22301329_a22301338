@@ -5,9 +5,9 @@ import java.util.List;
 
 public class Rei extends Peca {
     protected final int pontos = 1000;
-    protected String tipoPecaString = "Rei";
+    protected final String tipoPecaString = "Rei";
     protected final int tipoPeca = 0;
-    protected int limiteCasas = 1;
+    protected final int limiteCasas = 1;
 
     protected Rei(){
 
@@ -42,7 +42,7 @@ public class Rei extends Peca {
         int diffX = Math.abs(x1 - posX);
         int diffY = Math.abs(y1 - posY);
 
-        return (diffX >= -1 && diffX <= 1) && (diffY >= -1 && diffY <= 1);
+        return (diffX >= -limiteCasas && diffX <= limiteCasas) && (diffY >= -limiteCasas && diffY <= limiteCasas);
     }
 
 }
