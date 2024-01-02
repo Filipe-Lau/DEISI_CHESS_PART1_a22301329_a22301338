@@ -14,7 +14,6 @@ public class GameManager {
     Tabuleiro gameBoard = new Tabuleiro();
     GameResult gameResult = new GameResult();
     HistoricoJogada historico = new HistoricoJogada();
-    Peca pecaCapturada;
     int nrDaJogada = 0;
 
     public GameManager() {
