@@ -40,7 +40,7 @@ fun pecasMaisBaralhadas(gameManager: GameManager): ArrayList<String> {
             .toCollection(ArrayList())
 }
 fun tiposCapturados(gameManager: GameManager): ArrayList<String> {
-    return gameManager.gameBoard.getPecasEmJogo().values.filter {it.getEstado() == "capturado"}
-            .map {it.getTipoPecaString()}
+    return gameManager.gameBoard.getPecasEmJogo().values.filter {it.getEstado().equals("capturado")}
+            .map {it.getTipoPecaString()}.distinct().sorted()
             .toCollection(ArrayList())
 }
