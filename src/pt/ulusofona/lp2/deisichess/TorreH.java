@@ -14,7 +14,7 @@ public class TorreH extends Peca {
     }
 
     public TorreH(String idPeca, int equipaPeca, String nomePeca) {
-        super(idPeca, equipaPeca, nomePeca);
+        super(idPeca, equipaPeca, nomePeca,"TorreHor");
     }
 
     public String toString() {
@@ -39,9 +39,6 @@ public class TorreH extends Peca {
 
     @Override
     boolean movePeca(int x1, int y1) {
-        // if (y1 == posY && x1 != posX && x1 >= -1 && x1 <= 7)/* de 0 a 7, 8 casas possiveis?*/ {
         return y1 == posY && x1 <= 7;
-
-        // Retorna falso se o movimento não for válido.
     }
 }

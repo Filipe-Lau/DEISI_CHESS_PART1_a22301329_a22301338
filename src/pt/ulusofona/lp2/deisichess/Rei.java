@@ -22,7 +22,7 @@ public class Rei extends Peca {
     }
 
     public Rei(String idPeca, int equipaPeca, String nomePeca) {
-        super(idPeca, equipaPeca, nomePeca);
+        super(idPeca, equipaPeca, nomePeca,"Rei");
     }
 
     public int getPontos(){
@@ -33,7 +33,6 @@ public class Rei extends Peca {
         return tipoPeca;
     }
 
-    //@Override
     String getTipoPecaString() {
         return tipoPecaString;
     }
@@ -45,19 +44,6 @@ public class Rei extends Peca {
 
         return (diffX >= -1 && diffX <= 1) && (diffY >= -1 && diffY <= 1);
     }
-
-    /*List<Comparable> jogadasLegais(int x1, int y1) {
-        List<Comparable> jogadas = new ArrayList<>();
-
-        if ((x1 - posX >= -1 && x1 - posX <= 1) && (y1 - posY >= -1 && y1 - posY <= 1)){
-
-        }
-
-
-
-        return jogadas;
-    }
-     */
 
 }
 

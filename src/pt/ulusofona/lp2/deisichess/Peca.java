@@ -2,6 +2,10 @@ package pt.ulusofona.lp2.deisichess;
 
 public abstract class Peca {
     String idPeca;
+    int pontosObtidos = 0;
+    int numCapturas = 0;
+    int nrJogadasValidas = 0;
+    int nrJogadasInvalidas = 0;
     int pontos;
     String tipoPecaString = "";
     int equipaPeca;
@@ -13,7 +17,7 @@ public abstract class Peca {
     public Peca() {
     }
 
-    public Peca(String idPeca,int equipaPeca, String nomePeca) {
+    public Peca(String idPeca,int equipaPeca, String nomePeca, String tipoPecaString) {
         this.idPeca = idPeca;
         this.equipaPeca = equipaPeca;
         this.nomePeca = nomePeca;
@@ -37,6 +41,39 @@ public abstract class Peca {
 
     public void setPontos(int pontos) {
         this.pontos = pontos;
+    }
+
+    public int getNrJogadasValidas() {
+        return nrJogadasValidas;
+    }
+
+    public void incrementaNrJogadasValidas(){
+        nrJogadasValidas++;
+    }
+    public int getNrJogadasInvalidas() {
+        return nrJogadasInvalidas;
+    }
+
+    public void incrementaNrJogadasInvalidas(){
+        nrJogadasInvalidas++;
+    }
+
+    public void incrementaNumCapturasPeca(){
+        numCapturas++;
+    }
+
+    public int getNumCapturas(){
+        return numCapturas;
+    }
+    public void incrementaPontosObtidos(int pontosCapturados){
+        this.pontosObtidos += pontosCapturados;
+    }
+    public int getPontosObtidos() {
+        return pontosObtidos;
+    }
+
+    public void setPontosObtidos(int pontosObtidos) {
+        this.pontosObtidos = pontosObtidos;
     }
 
     public String getIdPeca() {

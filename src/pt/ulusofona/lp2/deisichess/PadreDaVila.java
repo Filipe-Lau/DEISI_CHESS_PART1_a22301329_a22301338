@@ -15,7 +15,7 @@ public class PadreDaVila extends Peca {
     }
 
     public PadreDaVila(String idPeca, int equipaPeca, String nomePeca) {
-        super(idPeca, equipaPeca, nomePeca);
+        super(idPeca, equipaPeca, nomePeca,"Padre da Vila");
     }
 
     public String toString() {

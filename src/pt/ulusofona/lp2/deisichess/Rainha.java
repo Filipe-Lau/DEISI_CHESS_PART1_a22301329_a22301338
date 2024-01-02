@@ -23,7 +23,7 @@ public class Rainha extends Peca { //ATENÇÃO NO MOVE, RAINHA NÃO PODE COMER R
     }
 
     public Rainha(String idPeca, int equipaPeca, String nomePeca) {
-        super(idPeca,equipaPeca, nomePeca);
+        super(idPeca,equipaPeca, nomePeca,"Rainha");
     }
 
     public int getPontos(){

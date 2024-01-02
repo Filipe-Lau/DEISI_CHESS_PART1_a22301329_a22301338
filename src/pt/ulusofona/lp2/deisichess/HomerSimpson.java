@@ -28,7 +28,7 @@ public class HomerSimpson extends Peca {
     }
 
     public HomerSimpson(String idPeca, int equipaPeca, String nomePeca) {
-        super(idPeca, equipaPeca, nomePeca);
+        super(idPeca, equipaPeca, nomePeca,"Homer Simpson");
     }
 
     public String toString() {

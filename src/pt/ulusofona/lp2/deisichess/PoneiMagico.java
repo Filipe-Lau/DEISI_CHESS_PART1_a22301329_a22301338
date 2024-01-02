@@ -10,7 +10,7 @@ public class PoneiMagico extends Peca {
     }
 
     public PoneiMagico(String idPeca, int equipaPeca, String nomePeca) {
-        super(idPeca, equipaPeca, nomePeca);
+        super(idPeca, equipaPeca, nomePeca,"Ponei Mágico");
     }
 
     @Override
