@@ -226,7 +226,7 @@ public class GameManager {
                 tipoPeca1 = joker.pecaEmUso.getTipoPeca();
             }
             // VALIDA SE NÃO ESTOU A ATACAR UMA PEÇA DA MESMA EQUIPA E SE NÃO ESTOU A ATACAR UMA RAINHA COM UMA RAINHA
-            return peca.getEquipaPeca() != peca1.getEquipaPeca() && tipoPeca != 1 || tipoPeca1 != 1;
+            return (peca.getEquipaPeca() != peca1.getEquipaPeca()) && (tipoPeca != 1 || tipoPeca1 != 1);
         }
         return true;
     }
