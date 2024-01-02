@@ -6,6 +6,7 @@ public abstract class Peca {
     protected int numCapturas = 0;
     protected int nrJogadasValidas = 0;
     protected int nrJogadasInvalidas = 0;
+
     protected  int pontos;
     protected   String tipoPecaString = "";
     protected   int equipaPeca;

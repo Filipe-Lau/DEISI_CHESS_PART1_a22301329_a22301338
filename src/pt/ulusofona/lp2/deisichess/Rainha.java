@@ -2,12 +2,12 @@ package pt.ulusofona.lp2.deisichess;
 
 public class Rainha extends Peca { //ATENÇÃO NO MOVE, RAINHA NÃO PODE COMER RAINHA!!!
 
-    int pontos = 8;
-    String tipoPecaString = "Rainha";
-    int tipoPeca = 1;
-    int limiteCasas = 5;
+    protected final int pontos = 8;
+    protected String tipoPecaString = "Rainha";
+    protected final int tipoPeca = 1;
+    protected int limiteCasas = 5;
 
-    public Rainha(){
+    protected Rainha(){
 
     }
 
@@ -19,15 +19,15 @@ public class Rainha extends Peca { //ATENÇÃO NO MOVE, RAINHA NÃO PODE COMER R
         return idPeca + " | Rainha | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
     }
 
-    public Rainha(String idPeca, int equipaPeca, String nomePeca) {
+    protected Rainha(String idPeca, int equipaPeca, String nomePeca) {
         super(idPeca,equipaPeca, nomePeca);
     }
 
-    public int getPontos(){
+    protected int getPontos(){
         return pontos;
     }
 
-    public int getTipoPeca(){
+    protected int getTipoPeca(){
         return tipoPeca;
     }
 
@@ -37,7 +37,7 @@ public class Rainha extends Peca { //ATENÇÃO NO MOVE, RAINHA NÃO PODE COMER R
     }
 
     @Override
-    boolean movePeca(int x1, int y1) {
+    protected boolean movePeca(int x1, int y1) {
         int diffX = Math.abs(x1 - posX);
         int diffY = Math.abs(y1 - posY);
 

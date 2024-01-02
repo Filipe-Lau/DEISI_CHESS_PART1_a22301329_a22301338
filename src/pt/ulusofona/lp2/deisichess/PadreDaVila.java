@@ -2,16 +2,16 @@ package pt.ulusofona.lp2.deisichess;
 
 public class PadreDaVila extends Peca {
 
-    int pontos = 3;
-    String tipoPecaString = "Padre da Vila";
-    int tipoPeca = 3;
-    int limiteCasas = 3;
+    protected final int pontos = 3;
+    protected String tipoPecaString = "Padre da Vila";
+    protected final int tipoPeca = 3;
+    protected int limiteCasas = 3;
 
-    public PadreDaVila() {
+    protected PadreDaVila() {
 
     }
 
-    public PadreDaVila(String idPeca, int equipaPeca, String nomePeca) {
+    protected PadreDaVila(String idPeca, int equipaPeca, String nomePeca) {
         super(idPeca, equipaPeca, nomePeca);
     }
 
@@ -22,11 +22,11 @@ public class PadreDaVila extends Peca {
         return idPeca + " | Padre da Vila | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
     }
 
-    public int getPontos() {
+    protected int getPontos() {
         return pontos;
     }
 
-    public int getTipoPeca() {
+    protected int getTipoPeca() {
         return tipoPeca;
     }
 
@@ -36,7 +36,7 @@ public class PadreDaVila extends Peca {
     }
 
     @Override
-    boolean movePeca(int x1, int y1) {
+    protected boolean movePeca(int x1, int y1) {
         int diffX = Math.abs(x1 - posX);
         int diffY = Math.abs(y1 - posY);
 

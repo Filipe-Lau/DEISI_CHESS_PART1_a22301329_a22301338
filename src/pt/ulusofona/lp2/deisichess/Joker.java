@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Joker extends Peca{
 
-    protected int pontos = 4; // NÃO PODE SER FINAL NEM PRIVATE POIS É PRECISO ACEDER NA PARTE FUNCIONAL
+    protected final int pontos = 4; // NÃO PODE SER FINAL NEM PRIVATE POIS É PRECISO ACEDER NA PARTE FUNCIONAL
     protected String tipoPecaString = "Joker/Rainha";
     protected final int tipoPeca = 7; // FINAL PORQUE O TIPO PEÇA NUNCA MUDA ????
     protected Peca pecaEmUso = new Rainha();

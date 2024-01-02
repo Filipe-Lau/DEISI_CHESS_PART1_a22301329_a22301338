@@ -1,16 +1,16 @@
 package pt.ulusofona.lp2.deisichess;
 
 public class TorreH extends Peca {
-    int pontos = 3;
-    String tipoPecaString = "TorreHor";
-    int tipoPeca = 4;
-    int limiteCasas = 0; //0 quer dizer que nao tem limite
+    protected final int pontos = 3;
+    protected String tipoPecaString = "TorreHor";
+    protected final int tipoPeca = 4;
+    protected int limiteCasas = 0; //0 quer dizer que nao tem limite
 
-    public TorreH() {
+    protected TorreH() {
 
     }
 
-    public TorreH(String idPeca, int equipaPeca, String nomePeca) {
+    protected TorreH(String idPeca, int equipaPeca, String nomePeca) {
         super(idPeca, equipaPeca, nomePeca);
     }
 
@@ -21,21 +21,21 @@ public class TorreH extends Peca {
         return idPeca + " | TorreHor | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
     }
 
-    public int getPontos() {
+    protected int getPontos() {
         return pontos;
     }
 
-    public int getTipoPeca() {
+    protected int getTipoPeca() {
         return tipoPeca;
     }
 
     @Override
-    String getTipoPecaString() {
+    protected String getTipoPecaString() {
         return tipoPecaString;
     }
 
     @Override
-    boolean movePeca(int x1, int y1) {
+    protected boolean movePeca(int x1, int y1) {
         return y1 == posY && x1 <= 7;
     }
 }

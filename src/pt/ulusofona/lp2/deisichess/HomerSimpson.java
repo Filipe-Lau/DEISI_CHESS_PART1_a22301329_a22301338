@@ -1,28 +1,26 @@
 package pt.ulusofona.lp2.deisichess;
 
 public class HomerSimpson extends Peca {
-    int pontos = 2;
-    String tipoPecaString = "Homer Simpson";
-    int tipoPeca = 6;
+    protected final int pontos = 2;
+    protected String tipoPecaString = "Homer Simpson";
+    protected final int tipoPeca = 6;
+    protected int nrDaJogada = 0;
+    protected int limiteCasas = 1;
+    protected boolean aDormir = true;
 
-    int nrDaJogada = 0;
-    int limiteCasas = 1;
-
-    boolean aDormir = true;
-
-    public void setNrDaJogada(int nrDaJogada) {
+    protected void setNrDaJogada(int nrDaJogada) {
         this.nrDaJogada = nrDaJogada;
     }
 
-    public int getNrDaJogada() {
+    protected int getNrDaJogada() {
         return nrDaJogada;
     }
 
-    public HomerSimpson() {
+    protected HomerSimpson() {
 
     }
 
-    public HomerSimpson(String idPeca, int equipaPeca, String nomePeca) {
+    protected HomerSimpson(String idPeca, int equipaPeca, String nomePeca) {
         super(idPeca, equipaPeca, nomePeca);
     }
 
@@ -39,11 +37,11 @@ public class HomerSimpson extends Peca {
 
     }
 
-    public int getPontos() {
+    protected int getPontos() {
         return pontos;
     }
 
-    public int getTipoPeca() {
+    protected int getTipoPeca() {
         return tipoPeca;
     }
 
@@ -52,17 +50,17 @@ public class HomerSimpson extends Peca {
         return tipoPecaString;
     }
 
-    public boolean movePeca(int x1, int y1) {
+    protected boolean movePeca(int x1, int y1) {
         int diffX = Math.abs(x1 - posX);
         int diffY = Math.abs(y1 - posY);
         return diffX == limiteCasas && diffY == limiteCasas;
     }
 
-    public boolean getaDormir() {
+    protected boolean getaDormir() {
         return aDormir;
     }
 
-    public void setaDormir(Boolean sono) {
+    protected void setaDormir(Boolean sono) {
         this.aDormir = sono;
     }
 

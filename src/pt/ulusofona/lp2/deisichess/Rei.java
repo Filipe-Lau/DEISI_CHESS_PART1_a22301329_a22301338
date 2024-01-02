@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Rei extends Peca {
-    int pontos = 1000;
-    String tipoPecaString = "Rei";
-    int tipoPeca = 0;
-    int limiteCasas = 1;
+    protected final int pontos = 1000;
+    protected String tipoPecaString = "Rei";
+    protected final int tipoPeca = 0;
+    protected int limiteCasas = 1;
 
-    public Rei(){
+    protected Rei(){
 
     }
 
@@ -21,15 +21,15 @@ public class Rei extends Peca {
         return idPeca + " | Rei | (infinito) | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
     }
 
-    public Rei(String idPeca, int equipaPeca, String nomePeca) {
+    protected Rei(String idPeca, int equipaPeca, String nomePeca) {
         super(idPeca, equipaPeca, nomePeca);
     }
 
-    public int getPontos(){
+    protected int getPontos(){
         return pontos;
     }
 
-    public int getTipoPeca(){
+    protected int getTipoPeca(){
         return tipoPeca;
     }
 
@@ -38,7 +38,7 @@ public class Rei extends Peca {
     }
 
     @Override
-    boolean movePeca(int x1, int y1) {
+    protected boolean movePeca(int x1, int y1) {
         int diffX = Math.abs(x1 - posX);
         int diffY = Math.abs(y1 - posY);
 

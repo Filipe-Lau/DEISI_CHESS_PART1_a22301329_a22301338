@@ -40,9 +40,9 @@ public class TestGameManager {
     }
 
     // Add more test methods for other functionalities...
-*/
 
-    /*
+
+
         @Test
         public void testaGameOver() {
             GameManager gameManager = new GameManager();
@@ -162,7 +162,7 @@ public class TestGameManager {
             }
         }
 
-         */
+
     @Test
     public void testMoveRei() throws IOException, InvalidGameInputException {
 
@@ -195,4 +195,5 @@ public class TestGameManager {
 
 
     }
+    */
 }

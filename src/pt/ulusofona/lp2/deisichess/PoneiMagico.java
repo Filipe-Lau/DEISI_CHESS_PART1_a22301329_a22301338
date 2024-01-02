@@ -1,15 +1,16 @@
 package pt.ulusofona.lp2.deisichess;
 
 public class PoneiMagico extends Peca {
-    int pontos = 5;
-    String tipoPecaString = "Ponei Mágico";
-    int tipoPeca = 2;
 
-    public PoneiMagico() {
+    protected final int pontos = 5;
+    protected String tipoPecaString = "Ponei Mágico";
+    protected final int tipoPeca = 2;
+
+    protected PoneiMagico() {
 
     }
 
-    public PoneiMagico(String idPeca, int equipaPeca, String nomePeca) {
+    protected PoneiMagico(String idPeca, int equipaPeca, String nomePeca) {
         super(idPeca, equipaPeca, nomePeca);
     }
 
@@ -21,11 +22,11 @@ public class PoneiMagico extends Peca {
         return idPeca + " | Ponei Mágico | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
     }
 
-    public int getPontos() {
+    protected int getPontos() {
         return pontos;
     }
 
-    public int getTipoPeca() {
+    protected int getTipoPeca() {
         return tipoPeca;
     }
 
@@ -35,7 +36,7 @@ public class PoneiMagico extends Peca {
     }
 
     @Override
-    boolean movePeca(int x1, int y1) {
+    protected boolean movePeca(int x1, int y1) {
         int diffX = Math.abs(x1 - posX);
         int diffY = Math.abs(y1 - posY);
 
