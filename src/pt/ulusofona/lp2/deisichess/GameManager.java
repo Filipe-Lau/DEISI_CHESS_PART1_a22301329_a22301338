@@ -9,8 +9,8 @@ import java.util.List;
 // 10 pretas
 // 20 brancas
 public class GameManager {
-    int boardSize;
-    int vezDeJogar = 10;
+    protected int boardSize;
+    protected int vezDeJogar = 10;
     Tabuleiro gameBoard = new Tabuleiro();
     GameResult gameResult = new GameResult();
     HistoricoJogada historico = new HistoricoJogada();
@@ -125,7 +125,6 @@ public class GameManager {
                     x++;
                 }
                 y++;
-
 
                 // LEITURA DE UM FICHEIRO GUARDADO
                 if (numlinha == boardSize + numpecas + 2) {

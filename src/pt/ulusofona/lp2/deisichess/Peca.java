@@ -2,22 +2,22 @@ package pt.ulusofona.lp2.deisichess;
 
 public abstract class Peca {
     String idPeca;
-    int pontosObtidos = 0;
-    int numCapturas = 0;
-    int nrJogadasValidas = 0;
-    int nrJogadasInvalidas = 0;
-    int pontos;
-    String tipoPecaString = "";
-    int equipaPeca;
-    String nomePeca;
-    int posX = -1;
-    int posY = -1;
-    String estado = "capturado";
+    protected int pontosObtidos = 0;
+    protected int numCapturas = 0;
+    protected int nrJogadasValidas = 0;
+    protected int nrJogadasInvalidas = 0;
+    protected  int pontos;
+    protected   String tipoPecaString = "";
+    protected   int equipaPeca;
+    protected  String nomePeca;
+    protected int posX = -1;
+    protected  int posY = -1;
+    protected String estado = "capturado";
 
     public Peca() {
     }
 
-    public Peca(String idPeca,int equipaPeca, String nomePeca) {
+    protected Peca(String idPeca,int equipaPeca, String nomePeca) {
         this.idPeca = idPeca;
         this.equipaPeca = equipaPeca;
         this.nomePeca = nomePeca;
@@ -27,84 +27,84 @@ public abstract class Peca {
     abstract String getTipoPecaString();
     abstract boolean movePeca(int x1,int y1);
     abstract public String toString();
-    public void setPosX(int posX) {
+    protected void setPosX(int posX) {
         this.posX = posX;
     }
 
-    public void setPosY(int posY) {
+    protected void setPosY(int posY) {
         this.posY = posY;
     }
 
-    public void setEstado(String estado) {
+    protected void setEstado(String estado) {
         this.estado = estado;
     }
 
-    public void setPontos(int pontos) {
+    protected void setPontos(int pontos) {
         this.pontos = pontos;
     }
 
-    public int getNrJogadasValidas() {
+    protected int getNrJogadasValidas() {
         return nrJogadasValidas;
     }
 
-    public void incrementaNrJogadasValidas(){
+    protected void incrementaNrJogadasValidas(){
         nrJogadasValidas++;
     }
-    public int getNrJogadasInvalidas() {
+    protected int getNrJogadasInvalidas() {
         return nrJogadasInvalidas;
     }
 
-    public void incrementaNrJogadasInvalidas(){
+    protected void incrementaNrJogadasInvalidas(){
         nrJogadasInvalidas++;
     }
 
-    public void incrementaNumCapturasPeca(){
+    protected void incrementaNumCapturasPeca(){
         numCapturas++;
     }
 
-    public int getNumCapturas(){
+    protected int getNumCapturas(){
         return numCapturas;
     }
-    public void incrementaPontosObtidos(int pontosCapturados){
+    protected void incrementaPontosObtidos(int pontosCapturados){
         this.pontosObtidos += pontosCapturados;
     }
-    public int getPontosObtidos() {
+    protected int getPontosObtidos() {
         return pontosObtidos;
     }
 
-    public void setPontosObtidos(int pontosObtidos) {
+    protected void setPontosObtidos(int pontosObtidos) {
         this.pontosObtidos = pontosObtidos;
     }
 
-    public String getIdPeca() {
+    protected String getIdPeca() {
         return idPeca;
     }
 
-    public int getEquipaPeca() {
+    protected int getEquipaPeca() {
         return equipaPeca;
     }
 
-    public String getNomePeca() {
+    protected String getNomePeca() {
         return nomePeca;
     }
 
-    public int getPosX() {
+    protected int getPosX() {
         return posX;
     }
 
-    public int getPosY() {
+    protected int getPosY() {
         return posY;
     }
 
-    public String getEstado() {
+    protected String getEstado() {
         return estado;
     }
 
-    public void notInJogo(){
+    protected void notInJogo(){
         estado = "capturado";
     }
 
-    public void inJogo(){
+    protected void inJogo(){
         estado = "em jogo";
     }
 
