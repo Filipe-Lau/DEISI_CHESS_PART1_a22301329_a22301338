@@ -11,6 +11,9 @@ public class Hint implements Comparable <Hint> {
     }
     public Hint() {
     }
+    public Hint(String coords){
+        this.coords = coords;
+    }
 
     public Hint(String coords, int pontuacao) {
         this.coords = coords;

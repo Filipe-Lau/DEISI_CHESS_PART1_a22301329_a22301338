@@ -5,6 +5,8 @@ public class GameResult {
     int jogadaPretaInvalida;
     int jogadaBrancaValida;
     int jogadaBrancaInvalida;
+    int jogadaAmarelaValida;
+    int jogadaAmarelaInvalida;
     int jogadasSemComer;
     int numCaptura;
 
@@ -76,4 +78,15 @@ public class GameResult {
     public int getJogadasSemComer(){
         return jogadasSemComer;
     }
+    public void setJogadaAmarelaValida(int jogadaAmarelaValida){
+        this.jogadaAmarelaValida = jogadaAmarelaValida;
+    }
+    public void setGetJogadaAmarelaInvalida(int jogadaAmarelaInvalida){this.jogadaBrancaInvalida = jogadaAmarelaInvalida;}
+    public int getJogadaAmarelaValida(){
+        return jogadaAmarelaValida;
+    }
+    public int getJogadaAmarelaInvalida(){return jogadaAmarelaInvalida;}
+    public void aumentaJogadaAmarelaInvalida(){jogadaAmarelaInvalida++;}
+    public void aumentaJogadaAmarelaValida(){jogadaAmarelaValida++;}
+
 }

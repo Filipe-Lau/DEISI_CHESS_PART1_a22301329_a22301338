@@ -41,14 +41,18 @@ public class GameManager {
         gameResult.setJogadaPretaInvalida(0);
         gameResult.setJogadaBrancaValida(0);
         gameResult.setJogadaBrancaInvalida(0);
+        gameResult.setJogadaAmarelaValida(0);
+        gameResult.setGetJogadaAmarelaInvalida(0);
         gameResult.setJogadasSemComer(0);
         setVezDeJogar(10);
         gameBoard.pecasEmJogo = new HashMap<>();
         historico.jogadasFeitas = new HashMap<>();
         gameBoard.setNumPecasBrancas(0);
         gameBoard.setNumPecasPretas(0);
+        gameBoard.setNumPecasAmarelas(0);
         gameBoard.setCapturadasPorPretas(0);
         gameBoard.setCapturadasPorBrancas(0);
+        gameBoard.setCapturadasPorAmarelas(0);
         // LEITURA DE FICHEIROS
         BufferedReader reader;
         reader = new BufferedReader(new FileReader(file));
@@ -68,6 +72,10 @@ public class GameManager {
                     int tipo = Integer.parseInt(partes[1]);
                     int equipa = Integer.parseInt(partes[2].trim());
                     String nome = partes[3].trim();
+                    if (equipa != 10 && equipa != 20 && equipa != 30) {
+                        throw new InvalidTeamException("Equipa Invalida da peca ", nome);
+                    }
+
                     switch (tipo) {
                         case 0:
                             Peca rei = new Rei(id, equipa, nome);
@@ -100,9 +108,13 @@ public class GameManager {
                         case 7:
                             Joker joker = new Joker(id, equipa, nome);
                             gameBoard.getPecasEmJogo().put(id, joker);
+                            break;
+                        case 10:
+                            JohnMcClane johnMcClane = new JohnMcClane(id, equipa, nome);
+                            gameBoard.getPecasEmJogo().put(id, johnMcClane);
                     }
                     count++;
-                } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+                } catch (NumberFormatException | ArrayIndexOutOfBoundsException | InvalidTeamException e) {
                     throw new InvalidGameInputException(numlinha, "DADOS A MENOS (Esperava: " + 4 + " ; Obtive: " + partes.length + ")");
                 }
                 if (partes.length > 4) {
@@ -119,8 +131,10 @@ public class GameManager {
                         gameBoard.getPecasEmJogo().get(id).inJogo();
                         if (gameBoard.getPecasEmJogo().get(id).getEquipaPeca() == 10) {
                             gameBoard.aumentaNumPecasPretas();
-                        } else {
+                        } else if (gameBoard.getPecasEmJogo().get(id).getEquipaPeca() == 20) {
                             gameBoard.aumentaNumPecasBrancas();
+                        } else {
+                            gameBoard.aumentaNumPecasAmarelas();
                         }
                     }
                     x++;
@@ -132,24 +146,61 @@ public class GameManager {
                     String turnoAtual = reader.readLine();
                     if (turnoAtual != null && !turnoAtual.isEmpty()) {
                         setVezDeJogar(Integer.parseInt(turnoAtual));
-
                         gameResult.setJogadasSemComer(Integer.parseInt(reader.readLine()));
                         gameResult.setnumCaptura(Integer.parseInt(reader.readLine()));
 
-                        gameBoard.setCapturadasPorPretas(Integer.parseInt(reader.readLine()));
-                        gameResult.setJogadaPretaValida(Integer.parseInt(reader.readLine()));
-                        gameResult.setJogadaPretaInvalida(Integer.parseInt(reader.readLine()));
-
-                        gameBoard.setCapturadasPorBrancas(Integer.parseInt(reader.readLine()));
-                        gameResult.setJogadaBrancaValida(Integer.parseInt(reader.readLine()));
-                        gameResult.setJogadaBrancaInvalida(Integer.parseInt(reader.readLine()));
+                        if (haPretas()) {
+                            gameBoard.setCapturadasPorPretas(Integer.parseInt(reader.readLine()));
+                            gameResult.setJogadaPretaValida(Integer.parseInt(reader.readLine()));
+                            gameResult.setJogadaPretaInvalida(Integer.parseInt(reader.readLine()));
+                        }
+                        if (haAmarelas()) {
+                            gameBoard.setCapturadasPorAmarelas(Integer.parseInt(reader.readLine()));
+                            gameResult.setJogadaAmarelaValida(Integer.parseInt(reader.readLine()));
+                            gameResult.setGetJogadaAmarelaInvalida(Integer.parseInt(reader.readLine()));
+                        }
+                        if (haBrancas()) {
+                            gameBoard.setCapturadasPorBrancas(Integer.parseInt(reader.readLine()));
+                            gameResult.setJogadaBrancaValida(Integer.parseInt(reader.readLine()));
+                            gameResult.setJogadaBrancaInvalida(Integer.parseInt(reader.readLine()));
+                        }
                     }
                 }
             }
 
             line = reader.readLine();
         }
+        if (!haPretas()) {
+            setVezDeJogar(30);
+        }
         reader.close();
+    }
+
+    public boolean haPretas() {
+        for (Peca peca : gameBoard.getPecasEmJogo().values()) {
+            if (peca.getEquipaPeca() == 10) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean haBrancas() {
+        for (Peca peca : gameBoard.getPecasEmJogo().values()) {
+            if (peca.getEquipaPeca() == 20) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean haAmarelas() {
+        for (Peca peca : gameBoard.getPecasEmJogo().values()) {
+            if (peca.getEquipaPeca() == 30) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void setVezDeJogar(int turnoAtual) {
@@ -209,6 +260,9 @@ public class GameManager {
             Joker joker = (Joker) peca;
             tipoPeca = joker.pecaEmUso.getTipoPeca();
         }
+        if(tipoPeca == 10) {
+            return false;
+        }
 
         if (!caminhoLivre(tipoPeca, x0, y0, x1, y1)) { // VALIDAR SE A PEÇA NÃO PASSA POR CIMA DE OUTRAS PEÇAS
             return false;
@@ -219,6 +273,12 @@ public class GameManager {
             if (tipoPeca1 == 7) {
                 Joker joker = (Joker) peca1;
                 tipoPeca1 = joker.pecaEmUso.getTipoPeca();
+            }
+            if(tipoPeca1 == 10){
+                JohnMcClane johnMcClane = (JohnMcClane) peca1;
+                if(johnMcClane.getTentativasComer() < 4){
+                    return false;
+                }
             }
             // VALIDA SE NÃO ESTOU A ATACAR UMA PEÇA DA MESMA EQUIPA E SE NÃO ESTOU A ATACAR UMA RAINHA COM UMA RAINHA
             return (peca.getEquipaPeca() != peca1.getEquipaPeca()) && (tipoPeca != 1 || tipoPeca1 != 1);
@@ -662,16 +722,27 @@ public class GameManager {
         writer.write(getCurrentTeamID() + "\n");
         writer.write(gameResult.getJogadasSemComer() + "\n");
         writer.write(gameResult.getNumCaptura() + "\n");
-        // PECAS PRETAS
-        writer.write(gameBoard.getCapturadasPorPretas() + "\n");
-        writer.write(gameResult.getJogadaPretaValida() + "\n");
-        writer.write(gameResult.getJogadaPretaInvalida() + "\n");
-        // PECAS BRANCAS
-        writer.write(gameBoard.getCapturadasPorBrancas() + "\n");
-        writer.write(gameResult.getJogadaBrancaValida() + "\n");
-        writer.write(gameResult.getJogadaBrancaInvalida() + "\n");
-        writer.close();
+        if (haPretas()) {
+            // PECAS PRETAS
+            writer.write(gameBoard.getCapturadasPorPretas() + "\n");
+            writer.write(gameResult.getJogadaPretaValida() + "\n");
+            writer.write(gameResult.getJogadaPretaInvalida() + "\n");
+        }
+        if (haAmarelas()) {
+            writer.write(gameBoard.getCapturadasPorAmarelas() + "\n");
+            writer.write(gameResult.getJogadaAmarelaValida() + "\n");
+            writer.write(gameResult.getJogadaAmarelaInvalida() + "\n");
+            writer.close();
+        }
+        if (haBrancas()) {
+            // PECAS BRANCAS
+            writer.write(gameBoard.getCapturadasPorBrancas() + "\n");
+            writer.write(gameResult.getJogadaBrancaValida() + "\n");
+            writer.write(gameResult.getJogadaBrancaInvalida() + "\n");
+            writer.close();
+        }
     }
+
 
     public List<Comparable> getHints(int x, int y) {
 
@@ -687,6 +758,9 @@ public class GameManager {
             return null;
         }
 
+        if (peca.getTipoPeca() == 10) {
+            pistas.add("Sou o JohnMcClane. Yippee ki yay. Sou duro de roer, mas não me sei mover");
+        }
         for (int column = 0; column < getBoardSize(); column++) { // x
             for (int line = 0; line < getBoardSize(); line++) { // y
 
