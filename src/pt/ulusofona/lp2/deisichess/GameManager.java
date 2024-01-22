@@ -29,7 +29,7 @@ public class GameManager {
     String nome;
     String id;
     int tipo;
-    public void loadGame(File file) throws InvalidGameInputException, IOException {
+    public void loadGame(File file) throws InvalidGameInputException, IOException, InvalidTeamException {
         // System.out.println("LOADGAME\n");
         if (file == null) {
             throw new IOException();
@@ -72,19 +72,14 @@ public class GameManager {
             }
             if (numlinha >= 3 && count < numpecas + 2) {
                 partes = line.split(":");
-                try {
-                    try {
                         id = partes[0];
                         tipo = Integer.parseInt(partes[1]);
-                        equipa = Integer.parseInt(partes[2].trim());
                         nome = partes[3].trim();
-
-                        if (equipa != 10 && equipa != 20 && equipa != 30) {
-                            throw new InvalidTeamException("Equipa Invalida da peca ", nome);
-                        }
-                    }catch (InvalidTeamException e){
-                        throw new InvalidTeamException("Equipa Invalida da peca ", nome);
+                        equipa = Integer.parseInt(partes[2].trim());
+                    if(equipa != 10 && equipa != 20 && equipa != 30){
+                        throw new InvalidTeamException("Nome da peca com a equipa errada : ", nome);
                     }
+
 
                     switch (tipo) {
                         case 0:
@@ -124,7 +119,7 @@ public class GameManager {
                             gameBoard.getPecasEmJogo().put(id, johnMcClane);
                     }
                     count++;
-                } catch (NumberFormatException | ArrayIndexOutOfBoundsException | InvalidTeamException e) {
+                 if(partes.length < 4){
                     throw new InvalidGameInputException(numlinha, "DADOS A MENOS (Esperava: " + 4 + " ; Obtive: " + partes.length + ")");
                 }
                 if (partes.length > 4) {
