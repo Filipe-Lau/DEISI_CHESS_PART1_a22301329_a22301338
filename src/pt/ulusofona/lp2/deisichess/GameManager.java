@@ -76,10 +76,10 @@ public class GameManager {
                         tipo = Integer.parseInt(partes[1]);
                         nome = partes[3].trim();
                         equipa = Integer.parseInt(partes[2].trim());
+
                     if(equipa != 10 && equipa != 20 && equipa != 30){
                         throw new InvalidTeamException("Nome da peca com a equipa errada : ", nome);
                     }
-
 
                     switch (tipo) {
                         case 0:

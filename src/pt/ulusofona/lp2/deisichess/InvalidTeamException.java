@@ -1,6 +1,6 @@
 package pt.ulusofona.lp2.deisichess;
 
-public class InvalidTeamException extends Throwable {
+public class InvalidTeamException extends Exception {
 
     String nomePeca;
     String texto;
