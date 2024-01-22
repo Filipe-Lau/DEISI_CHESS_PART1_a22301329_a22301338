@@ -3,6 +3,7 @@ package pt.ulusofona.lp2.deisichess;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
+import java.nio.channels.ScatteringByteChannel;
 import java.util.*;
 import java.util.List;
 
@@ -24,6 +25,10 @@ public class GameManager {
         return new HashMap<>();
     }
 
+    int equipa;
+    String nome;
+    String id;
+    int tipo;
     public void loadGame(File file) throws InvalidGameInputException, IOException {
         // System.out.println("LOADGAME\n");
         if (file == null) {
@@ -68,11 +73,16 @@ public class GameManager {
             if (numlinha >= 3 && count < numpecas + 2) {
                 partes = line.split(":");
                 try {
-                    String id = partes[0];
-                    int tipo = Integer.parseInt(partes[1]);
-                    int equipa = Integer.parseInt(partes[2].trim());
-                    String nome = partes[3].trim();
-                    if (equipa != 10 && equipa != 20 && equipa != 30) {
+                    try {
+                        id = partes[0];
+                        tipo = Integer.parseInt(partes[1]);
+                        equipa = Integer.parseInt(partes[2].trim());
+                        nome = partes[3].trim();
+
+                        if (equipa != 10 && equipa != 20 && equipa != 30) {
+                            throw new InvalidTeamException("Equipa Invalida da peca ", nome);
+                        }
+                    }catch (InvalidTeamException e){
                         throw new InvalidTeamException("Equipa Invalida da peca ", nome);
                     }
 

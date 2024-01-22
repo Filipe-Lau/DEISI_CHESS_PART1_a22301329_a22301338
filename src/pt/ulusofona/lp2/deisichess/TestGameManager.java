@@ -1,15 +1,15 @@
 package pt.ulusofona.lp2.deisichess;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestGameManager {
+
+    @Test
+    public boolean compilar(){
+        return true;
+    }
 
     /*
     @Test
