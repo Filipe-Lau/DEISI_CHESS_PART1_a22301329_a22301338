@@ -339,6 +339,10 @@ public class GameManager {
         if (homerBranco != null) {
             homerBranco.setaDormir(nrDaJogada % 3 == 0); // DEPOIS DE CADA JOGADA ATUALIZAMOS O HOMER
         }
+        HomerSimpson homerAmarelo = (HomerSimpson) obterPecaTipo(6,30);
+        if(homerAmarelo != null)  {
+            homerAmarelo.setaDormir(nrDaJogada % 3 == 0);
+        }
     }
 
     public void atualizarJoker() {
@@ -350,6 +354,8 @@ public class GameManager {
         if (jokerBranco != null) {
             jokerBranco.getPecaEmUso((nrDaJogada + 1) % 6); // DEPOIS DE CADA JOGADA ATUALIZAMOS O JOKER
         }
+        Joker jokerAmarelo = (Joker) obterPecaTipo(7,30);
+        jokerAmarelo.getPecaEmUso((nrDaJogada+1) % 6);
     }
 
     public Boolean caminhoLivre(int tipoPeca, int x0, int y0, int x1, int y1) {
@@ -451,13 +457,32 @@ public class GameManager {
     }
 
     public void atualizarCapturas(Peca peca) {
-        if (peca.getEquipaPeca() == 10) { // PECA PRETA COME
-            gameBoard.capturaPorPretas();
-            gameBoard.pecaBrancaComida();
+        if(haPretas() && haBrancas()) {
+            if (peca.getEquipaPeca() == 10) { // PECA PRETA COME
+                gameBoard.capturaPorPretas();
+                gameBoard.pecaBrancaComida();
+            } else {
+                gameBoard.capturaPorBrancas();
+                gameBoard.pecaPretaComida();
+            }
+        } else if(haPretas() && haAmarelas()){
+            if(peca.getEquipaPeca() == 10){
+                gameBoard.capturaPorPretas();
+                gameBoard.pecaAmarelaComida();
+            } else {
+                gameBoard.capturaPorAmarelas();
+                gameBoard.pecaPretaComida();
+            }
         } else {
-            gameBoard.capturaPorBrancas();
-            gameBoard.pecaPretaComida();
+            if(peca.getEquipaPeca() == 30){
+                gameBoard.capturaPorAmarelas();
+                gameBoard.pecaBrancaComida();
+            } else {
+                gameBoard.capturaPorBrancas();
+                gameBoard.pecaAmarelaComida();
+            }
         }
+
         gameResult.mudaNumCaptura(1); // CONTADOR DE CAPTURAS
         gameResult.setJogadasSemComer(0); // RESET DAS JOGADSAS SEM COMER
     }
@@ -465,28 +490,46 @@ public class GameManager {
     public void atualizarJogadasValidas() {
         if (getCurrentTeamID() == 10) {
             gameResult.aumentaJogadaPretaValida();
-        } else {
+        } else if (getCurrentTeamID() == 20){
             gameResult.aumentaJogadaBrancaValida();
+        } else {
+            gameResult.aumentaJogadaAmarelaValida();
         }
     }
 
     public void atualizarVezDeJogar() {
-        if (getCurrentTeamID() == 10) {
-            setVezDeJogar(20);
+        if(haPretas() && haBrancas()) {
+            if (getCurrentTeamID() == 10) {
+                setVezDeJogar(20);
+            } else {
+                setVezDeJogar(10);
+            }
+        } else if (haPretas() && haAmarelas()){
+            if (getCurrentTeamID() == 10) {
+                setVezDeJogar(30);
+            } else {
+                setVezDeJogar(10);
+            }
         } else {
-            setVezDeJogar(10);
+            if(getCurrentTeamID() == 20){
+                setVezDeJogar(30);
+            } else {
+                setVezDeJogar(20);
+            }
         }
     }
 
     public void contadorJogadaInvalida() {
         if (getCurrentTeamID() == 20) {
             gameResult.aumentaJogadaBrancaInvalida();
-        } else {
+        } else if (getCurrentTeamID() == 10){
             gameResult.aumentaJogadaPretaInvalida();
+        } else {
+            gameResult.aumentaJogadaAmarelaInvalida();
         }
     }
 
-    public String[] getSquareInfo(int x, int y) {
+    public String[] getSquareInfo(int x, int y) { //falta as imagens
         //  System.out.println("SQUAREINFO\n");
         String[] squareInfo = new String[5];
         if (x < 0 || x >= boardSize || y < 0 || y >= boardSize) {
@@ -502,8 +545,10 @@ public class GameManager {
                     case 0: // REI
                         if (peca.getEquipaPeca() == 20) {
                             squareInfo[4] = "rei_white.png";
-                        } else {
+                        } else if (peca.getEquipaPeca() == 10) {
                             squareInfo[4] = "rei_black.png";
+                        } else {
+                            squareInfo[4] = "rei_";
                         }
                         break;
                     case 1: //RAINHA
@@ -554,6 +599,8 @@ public class GameManager {
                         } else {
                             squareInfo[4] = "joker_black.png";
                         }
+                    case 10:
+
                         break;
                 }
                 return squareInfo; // squareinfo preenchido
@@ -642,14 +689,24 @@ public class GameManager {
         resultadosJogo.add("JOGO DE CRAZY CHESS");
         resultadosJogo.add("Resultado: " + gameBoard.getResultadoJogo());
         resultadosJogo.add("---");
-        resultadosJogo.add("Equipa das Pretas");
-        resultadosJogo.add(gameBoard.getCapturadasPorPretas() + "");
-        resultadosJogo.add(gameResult.getJogadaPretaValida() + ""); // NUMERO DE JOGADAS
-        resultadosJogo.add(gameResult.getJogadaPretaInvalida() + ""); // NUMERO DE TENTATIVAS INVALIDAS
-        resultadosJogo.add("Equipa das Brancas");
-        resultadosJogo.add(gameBoard.getCapturadasPorBrancas() + "");
-        resultadosJogo.add(gameResult.getJogadaBrancaValida() + ""); // NUMERO DE JOGADAS
-        resultadosJogo.add(gameResult.getJogadaBrancaInvalida() + ""); // NUMERO DE TENTATIVAS INVALIDAS
+        if(haPretas()) {
+            resultadosJogo.add("Equipa das Pretas");
+            resultadosJogo.add(gameBoard.getCapturadasPorPretas() + "");
+            resultadosJogo.add(gameResult.getJogadaPretaValida() + ""); // NUMERO DE JOGADAS
+            resultadosJogo.add(gameResult.getJogadaPretaInvalida() + ""); // NUMERO DE TENTATIVAS INVALIDAS
+        }
+        if(haAmarelas()){
+            resultadosJogo.add("Equipa das Amarelas");
+            resultadosJogo.add(gameBoard.getCapturadasPorAmarelas()+ "");
+            resultadosJogo.add(gameResult.getJogadaAmarelaValida()+ "");
+            resultadosJogo.add(gameResult.getJogadaAmarelaInvalida()+ "");
+        }
+        if(haBrancas()) {
+            resultadosJogo.add("Equipa das Brancas");
+            resultadosJogo.add(gameBoard.getCapturadasPorBrancas() + "");
+            resultadosJogo.add(gameResult.getJogadaBrancaValida() + ""); // NUMERO DE JOGADAS
+            resultadosJogo.add(gameResult.getJogadaBrancaInvalida() + ""); // NUMERO DE TENTATIVAS INVALIDAS
+        }
         return resultadosJogo;
     }
 
@@ -679,11 +736,26 @@ public class GameManager {
         atualizarHomer(); // ATUALIZAR O HOMER DAS RONDAS
         atualizarJoker(); // ATUALIZAR O JOKER DAS RONDAS
 
-        if (getCurrentTeamID() == 10) {
-            setVezDeJogar(20);
-        } else {
-            setVezDeJogar(10);
+        if(haPretas() && haBrancas()){
+            if (getCurrentTeamID() == 10) {
+                setVezDeJogar(20);
+            } else {
+                setVezDeJogar(10);
+            }
+        } else if(haPretas() && haAmarelas()){
+            if(getCurrentTeamID() == 10){
+                setVezDeJogar(30);
+            } else {
+                setVezDeJogar(10);
+            }
+        } else if(haAmarelas() && haBrancas()){
+            if(getCurrentTeamID() == 30){
+                setVezDeJogar(20);
+            } else {
+                setVezDeJogar(30);
+            }
         }
+
     }
 
     public void saveGame(File file) throws IOException {
