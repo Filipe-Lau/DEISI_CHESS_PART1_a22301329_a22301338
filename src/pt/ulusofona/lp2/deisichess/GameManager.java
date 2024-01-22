@@ -548,59 +548,79 @@ public class GameManager {
                         } else if (peca.getEquipaPeca() == 10) {
                             squareInfo[4] = "rei_black.png";
                         } else {
-                            squareInfo[4] = "rei_";
+                            squareInfo[4] = "amarelo.png";
                         }
                         break;
                     case 1: //RAINHA
                         if (peca.getEquipaPeca() == 20) {
                             squareInfo[4] = "rainha_white.png";
-                        } else {
+                        } else if (peca.getEquipaPeca() == 10){
                             squareInfo[4] = "rainha_black.png";
+                        } else {
+                            squareInfo[4] = "amarelo.png";
                         }
                         break;
                     case 2:// PONEI MAGICO
                         if (peca.getEquipaPeca() == 20) {
                             squareInfo[4] = "ponei_magico_white.png";
-                        } else {
+                        } else if (peca.getEquipaPeca() == 10){
                             squareInfo[4] = "ponei_magico_black.png";
+                        } else {
+                            squareInfo[4] = "amarelo.png";
                         }
                         break;
                     case 3:// PADRE DA VILA
                         if (peca.getEquipaPeca() == 20) {
                             squareInfo[4] = "padre_vila_white.png";
-                        } else {
+                        } else if(peca.getEquipaPeca() == 10) {
                             squareInfo[4] = "padre_vila_black.png";
+                        } else {
+                            squareInfo[4] = "amarelo.png";
                         }
                         break;
                     case 4:// TORRE HORIZONTAL
                         if (peca.getEquipaPeca() == 20) {
                             squareInfo[4] = "torre_h_white.png";
-                        } else {
+                        } else if(peca.getEquipaPeca() == 10){
                             squareInfo[4] = "torre_h_black.png";
-                        }
+                        } else {
+                        squareInfo[4] = "amarelo.png";
+                    }
                         break;
                     case 5:// TORRE VERTICAL
                         if (peca.getEquipaPeca() == 20) {
                             squareInfo[4] = "torre_v_white.png";
-                        } else {
+                        } else if(peca.getEquipaPeca() == 10){
                             squareInfo[4] = "torre_v_black.png";
+                        } else {
+                            squareInfo[4] = "amarelo.png";
                         }
                         break;
                     case 6:// HOMER SIMPSON
                         if (peca.getEquipaPeca() == 20) {
                             squareInfo[4] = "homer_white.png";
-                        } else {
+                        } else if (peca.getEquipaPeca() == 10){
                             squareInfo[4] = "homer_black.png";
+                        } else {
+                            squareInfo[4] = "amarelo.png";
                         }
                         break;
                     case 7:// JOKER
                         if (peca.getEquipaPeca() == 20) {
                             squareInfo[4] = "joker_white.png";
-                        } else {
+                        } else if (peca.getEquipaPeca() == 10){
                             squareInfo[4] = "joker_black.png";
+                        } else {
+                            squareInfo[4] = "amarelo.png";
                         }
                     case 10:
-
+                        if (peca.getEquipaPeca() == 20) {
+                            squareInfo[4] = "joker_white.png";
+                        } else if (peca.getEquipaPeca() == 10){
+                            squareInfo[4] = "joker_black.png";
+                        } else {
+                            squareInfo[4] = "amarelo.png";
+                        }
                         break;
                 }
                 return squareInfo; // squareinfo preenchido
@@ -643,44 +663,127 @@ public class GameManager {
     }
 
     public boolean gameOver() {
-        Peca reiPreto = obterPecaTipo(0, 10);
-        Peca reiBranco = obterPecaTipo(0, 20);
 
-        // CASO DE EMPATE
-        if (gameBoard.getNumPecasBrancas() == 1 && gameBoard.getNumPecasPretas() == 1) {
-            gameBoard.setResultadoJogo("EMPATE");
-            return true;
-        }
-        // VITÓRIA DAS BRANCAS (REI PRETO CAPTURADO)
-        if (reiPreto.getEstado().equals("capturado")) {
-            gameBoard.setResultadoJogo("VENCERAM AS BRANCAS");
-            return true;
-        }
-        // VITÓRIA DAS PRETAS (REI BRANCO CAPTURADO)
-        if (reiBranco.getEstado().equals("capturado")) {
-            gameBoard.setResultadoJogo("VENCERAM AS PRETAS");
-            return true;
-        }
-        // VITÓRIA PARA AS BRANCAS (COMERAM AS PRETAS TODAS)
-        else if (gameBoard.getNumPecasBrancas() > 0 && gameBoard.getNumPecasPretas() == 0) {
-            gameBoard.setResultadoJogo("VENCERAM AS BRANCAS");
+        if(haPretas() && haBrancas()) {
 
-            return true;
+            Peca reiPreto = obterPecaTipo(0, 10);
+            Peca reiBranco = obterPecaTipo(0, 20);
+
+            // CASO DE EMPATE
+            if (gameBoard.getNumPecasBrancas() == 1 && gameBoard.getNumPecasPretas() == 1) {
+                gameBoard.setResultadoJogo("EMPATE");
+                return true;
+            }
+            // VITÓRIA DAS BRANCAS (REI PRETO CAPTURADO)
+            if (reiPreto.getEstado().equals("capturado")) {
+                gameBoard.setResultadoJogo("VENCERAM AS BRANCAS");
+                return true;
+            }
+            // VITÓRIA DAS PRETAS (REI BRANCO CAPTURADO)
+            if (reiBranco.getEstado().equals("capturado")) {
+                gameBoard.setResultadoJogo("VENCERAM AS PRETAS");
+                return true;
+            }
+            // VITÓRIA PARA AS BRANCAS (COMERAM AS PRETAS TODAS)
+            else if (gameBoard.getNumPecasBrancas() > 0 && gameBoard.getNumPecasPretas() == 0) {
+                gameBoard.setResultadoJogo("VENCERAM AS BRANCAS");
+
+                return true;
+            }
+            // VITÓRIA PARA AS PRETAS (COMERAM AS BRANCAS TODAS)
+            else if (gameBoard.getNumPecasBrancas() == 0 && gameBoard.getNumPecasPretas() > 0) {
+                gameBoard.setResultadoJogo("VENCERAM AS PRETAS");
+                return true;
+            }
+            // EMPATE POR EXAUSTÃO
+            else if (gameResult.getNumCaptura() > 0 && gameResult.getJogadasSemComer() >= 10) {
+                gameBoard.setResultadoJogo("EMPATE");
+                return true;
+            }
+            // JOGO A DECORRER
+            else {
+                return false;
+            }
+        } else if(haPretas() && haAmarelas()){
+            Peca reiPreto = obterPecaTipo(0, 10);
+            Peca reiAmarelo = obterPecaTipo(0, 30);
+
+            // CASO DE EMPATE
+            if (gameBoard.getNumPecasAmarelas() == 1 && gameBoard.getNumPecasPretas() == 1) {
+                gameBoard.setResultadoJogo("EMPATE");
+                return true;
+            }
+            // VITÓRIA DAS BRANCAS (REI PRETO CAPTURADO)
+            if (reiPreto.getEstado().equals("capturado")) {
+                gameBoard.setResultadoJogo("VENCERAM AS BRANCAS");
+                return true;
+            }
+            // VITÓRIA DAS PRETAS (REI BRANCO CAPTURADO)
+            if (reiAmarelo.getEstado().equals("capturado")) {
+                gameBoard.setResultadoJogo("VENCERAM AS PRETAS");
+                return true;
+            }
+            // VITÓRIA PARA AS BRANCAS (COMERAM AS PRETAS TODAS)
+            else if (gameBoard.getNumPecasAmarelas() > 0 && gameBoard.getNumPecasPretas() == 0) {
+                gameBoard.setResultadoJogo("VENCERAM AS BRANCAS");
+
+                return true;
+            }
+            // VITÓRIA PARA AS PRETAS (COMERAM AS BRANCAS TODAS)
+            else if (gameBoard.getNumPecasAmarelas() == 0 && gameBoard.getNumPecasPretas() > 0) {
+                gameBoard.setResultadoJogo("VENCERAM AS PRETAS");
+                return true;
+            }
+            // EMPATE POR EXAUSTÃO
+            else if (gameResult.getNumCaptura() > 0 && gameResult.getJogadasSemComer() >= 10) {
+                gameBoard.setResultadoJogo("EMPATE");
+                return true;
+            }
+            // JOGO A DECORRER
+            else {
+                return false;
+            }
+        } else if (haAmarelas() && haBrancas()){
+            Peca reiAmarelo = obterPecaTipo(0, 30);
+            Peca reiBranco = obterPecaTipo(0, 20);
+
+            // CASO DE EMPATE
+            if (gameBoard.getNumPecasBrancas() == 1 && gameBoard.getNumPecasAmarelas() == 1) {
+                gameBoard.setResultadoJogo("EMPATE");
+                return true;
+            }
+            // VITÓRIA DAS BRANCAS (REI PRETO CAPTURADO)
+            if (reiAmarelo.getEstado().equals("capturado")) {
+                gameBoard.setResultadoJogo("VENCERAM AS BRANCAS");
+                return true;
+            }
+            // VITÓRIA DAS PRETAS (REI BRANCO CAPTURADO)
+            if (reiBranco.getEstado().equals("capturado")) {
+                gameBoard.setResultadoJogo("VENCERAM AS PRETAS");
+                return true;
+            }
+            // VITÓRIA PARA AS BRANCAS (COMERAM AS PRETAS TODAS)
+            else if (gameBoard.getNumPecasBrancas() > 0 && gameBoard.getNumPecasAmarelas() == 0) {
+                gameBoard.setResultadoJogo("VENCERAM AS BRANCAS");
+
+                return true;
+            }
+            // VITÓRIA PARA AS PRETAS (COMERAM AS BRANCAS TODAS)
+            else if (gameBoard.getNumPecasBrancas() == 0 && gameBoard.getNumPecasAmarelas() > 0) {
+                gameBoard.setResultadoJogo("VENCERAM AS PRETAS");
+                return true;
+            }
+            // EMPATE POR EXAUSTÃO
+            else if (gameResult.getNumCaptura() > 0 && gameResult.getJogadasSemComer() >= 10) {
+                gameBoard.setResultadoJogo("EMPATE");
+                return true;
+            }
+            // JOGO A DECORRER
+            else {
+                return false;
+            }
         }
-        // VITÓRIA PARA AS PRETAS (COMERAM AS BRANCAS TODAS)
-        else if (gameBoard.getNumPecasBrancas() == 0 && gameBoard.getNumPecasPretas() > 0) {
-            gameBoard.setResultadoJogo("VENCERAM AS PRETAS");
-            return true;
-        }
-        // EMPATE POR EXAUSTÃO
-        else if (gameResult.getNumCaptura() > 0 && gameResult.getJogadasSemComer() >= 10) {
-            gameBoard.setResultadoJogo("EMPATE");
-            return true;
-        }
-        // JOGO A DECORRER
-        else {
-            return false;
-        }
+        return false;
     }
 
     public ArrayList<String> getGameResults() {
