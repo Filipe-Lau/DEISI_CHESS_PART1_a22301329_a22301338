@@ -44,6 +44,9 @@ public class JohnMcClane extends Peca{
 
     @Override
     public String toString() {
+        if(getEstado().equals("capturado")){
+            return idPeca + " | John McClane | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (n/a)";
+        }
         return idPeca + " | John McClane | " + pontos + " | " + equipaPeca + " | " + nomePeca + " @ (" + posX + ", " + posY + ")";
     }
 }
