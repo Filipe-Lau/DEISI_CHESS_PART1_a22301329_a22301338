@@ -283,8 +283,6 @@ public class GameManager {
                 JohnMcClane johnMcClane = (JohnMcClane) peca1;
                 if(johnMcClane.getTentativasComer() < 4){
                     johnMcClane.aumentaTentativasComer();
-                    return false;
-
                 }
             }
             // VALIDA SE NÃO ESTOU A ATACAR UMA PEÇA DA MESMA EQUIPA E SE NÃO ESTOU A ATACAR UMA RAINHA COM UMA RAINHA
@@ -311,16 +309,19 @@ public class GameManager {
         if (peca1 != null) {// ATAQUE
 
             if(peca1.getTipoPeca() == 10){
-                int xTemp = peca.getPosX();
-                int yTemp = peca.getPosY();
+                JohnMcClane johnMcClane = (JohnMcClane) peca1;
+                if(johnMcClane.getTentativasComer() < 4) {
+                    int xTemp = peca.getPosX();
+                    int yTemp = peca.getPosY();
 
-                peca.setPosX(peca1.getPosX());
-                peca.setPosY(peca1.getPosY());
+                    peca.setPosX(peca1.getPosX());
+                    peca.setPosY(peca1.getPosY());
 
-                peca1.setPosX(xTemp);
-                peca1.setPosY(yTemp);
+                    peca1.setPosX(xTemp);
+                    peca1.setPosY(yTemp);
+                    return true;
 
-                return true;
+                }
             }
 
             atualizarCapturas(peca);
@@ -738,7 +739,7 @@ public class GameManager {
             }
             // VITÓRIA DAS BRANCAS (REI PRETO CAPTURADO)
             if (reiPreto.getEstado().equals("capturado")) {
-                gameBoard.setResultadoJogo("VENCERAM AS BRANCAS");
+                gameBoard.setResultadoJogo("VENCERAM AS AMARELAS");
                 return true;
             }
             // VITÓRIA DAS PRETAS (REI BRANCO CAPTURADO)
@@ -748,7 +749,7 @@ public class GameManager {
             }
             // VITÓRIA PARA AS BRANCAS (COMERAM AS PRETAS TODAS)
             else if (gameBoard.getNumPecasAmarelas() > 0 && gameBoard.getNumPecasPretas() == 0) {
-                gameBoard.setResultadoJogo("VENCERAM AS BRANCAS");
+                gameBoard.setResultadoJogo("VENCERAM AS AMARELAS");
 
                 return true;
             }
@@ -782,7 +783,7 @@ public class GameManager {
             }
             // VITÓRIA DAS PRETAS (REI BRANCO CAPTURADO)
             if (reiBranco.getEstado().equals("capturado")) {
-                gameBoard.setResultadoJogo("VENCERAM AS PRETAS");
+                gameBoard.setResultadoJogo("VENCERAM AS AMARELAS");
                 return true;
             }
             // VITÓRIA PARA AS BRANCAS (COMERAM AS PRETAS TODAS)
@@ -793,7 +794,7 @@ public class GameManager {
             }
             // VITÓRIA PARA AS PRETAS (COMERAM AS BRANCAS TODAS)
             else if (gameBoard.getNumPecasBrancas() == 0 && gameBoard.getNumPecasAmarelas() > 0) {
-                gameBoard.setResultadoJogo("VENCERAM AS PRETAS");
+                gameBoard.setResultadoJogo("VENCERAM AS AMARELAS");
                 return true;
             }
             // EMPATE POR EXAUSTÃO
