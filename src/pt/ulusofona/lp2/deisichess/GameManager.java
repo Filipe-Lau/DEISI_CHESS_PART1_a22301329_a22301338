@@ -47,7 +47,7 @@ public class GameManager {
         gameResult.setJogadaBrancaValida(0);
         gameResult.setJogadaBrancaInvalida(0);
         gameResult.setJogadaAmarelaValida(0);
-        gameResult.setGetJogadaAmarelaInvalida(0);
+        gameResult.setJogadaAmarelaInvalida(0);
         gameResult.setJogadasSemComer(0);
         setVezDeJogar(10);
         gameBoard.pecasEmJogo = new HashMap<>();
@@ -162,7 +162,7 @@ public class GameManager {
                         if (haAmarelas()) {
                             gameBoard.setCapturadasPorAmarelas(Integer.parseInt(reader.readLine()));
                             gameResult.setJogadaAmarelaValida(Integer.parseInt(reader.readLine()));
-                            gameResult.setGetJogadaAmarelaInvalida(Integer.parseInt(reader.readLine()));
+                            gameResult.setJogadaAmarelaInvalida(Integer.parseInt(reader.readLine()));
                         }
                         if (haBrancas()) {
                             gameBoard.setCapturadasPorBrancas(Integer.parseInt(reader.readLine()));
@@ -281,7 +281,6 @@ public class GameManager {
                 if(johnMcClane.getTentativasComer() < 4){
                     johnMcClane.aumentaTentativasComer();
                 }
-                return true;
             }
             // VALIDA SE NÃO ESTOU A ATACAR UMA PEÇA DA MESMA EQUIPA E SE NÃO ESTOU A ATACAR UMA RAINHA COM UMA RAINHA
             return (peca.getEquipaPeca() != peca1.getEquipaPeca()) && (tipoPeca != 1 || tipoPeca1 != 1);

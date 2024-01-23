@@ -81,7 +81,7 @@ public class GameResult {
     public void setJogadaAmarelaValida(int jogadaAmarelaValida){
         this.jogadaAmarelaValida = jogadaAmarelaValida;
     }
-    public void setGetJogadaAmarelaInvalida(int jogadaAmarelaInvalida){this.jogadaBrancaInvalida = jogadaAmarelaInvalida;}
+    public void setJogadaAmarelaInvalida(int jogadaAmarelaInvalida){this.jogadaAmarelaInvalida = jogadaAmarelaInvalida;}
     public int getJogadaAmarelaValida(){
         return jogadaAmarelaValida;
     }
