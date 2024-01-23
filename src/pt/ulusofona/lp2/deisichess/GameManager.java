@@ -319,13 +319,22 @@ public class GameManager {
 
                     peca1.setPosX(xTemp);
                     peca1.setPosY(yTemp);
+
+                    HistoricoJogada pecaAJogar = new HistoricoJogada(peca, x0, y0, x1, y1);
+                    historico.getJogadasFeitas().put(nrDaJogada, pecaAJogar);
+
+                    peca.incrementaNrJogadasValidas(); // INCREMENTA O NUMERO DE JOGADAS VALIDAS DA PECA
+                    atualizarJogadasValidas(); // INCREMENTA AS JOGADAS VALIDAS DAS EQUIPAS
+                    atualizarVezDeJogar(); // PRETA JOGA, A VEZ DE JOGAR MUDA PARA AS BRANCAS E VICE VERSA
+                    atualizarHomer(); // ATUALIZAR O HOMER DAS RONDAS
+                    atualizarJoker(); // ATUALIZAR O JOKER DAS RONDAS
+
                     return true;
 
                 }
             }
 
             atualizarCapturas(peca);
-
             HistoricoJogada pecaCapturada = new HistoricoJogada(peca1, peca1.getPosX(), peca1.getPosY(), -1, -1);
             historico.getJogadasFeitas().put(-nrDaJogada, pecaCapturada);
 
