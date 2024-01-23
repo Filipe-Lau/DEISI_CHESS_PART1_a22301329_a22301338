@@ -360,7 +360,10 @@ public class GameManager {
             jokerBranco.getPecaEmUso((nrDaJogada + 1) % 6); // DEPOIS DE CADA JOGADA ATUALIZAMOS O JOKER
         }
         Joker jokerAmarelo = (Joker) obterPecaTipo(7,30);
-        jokerAmarelo.getPecaEmUso((nrDaJogada+1) % 6);
+        if(jokerAmarelo != null) {
+            jokerAmarelo.getPecaEmUso((nrDaJogada+1) % 6);
+        }
+
     }
 
     public Boolean caminhoLivre(int tipoPeca, int x0, int y0, int x1, int y1) {

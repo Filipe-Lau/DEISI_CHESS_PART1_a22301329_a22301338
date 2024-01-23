@@ -2,10 +2,10 @@ package pt.ulusofona.lp2.deisichess;
 
 public class JohnMcClane extends Peca{
 
-    protected final int pontos = 100; //mandar mail ao stor
+    protected final int pontos = 20;
     protected final String tipoPecaString = "John McClane";
     int tentativasComer = 0;
-    protected final int tipoPeca = 1;
+    protected final int tipoPeca = 10;
 
 
     public JohnMcClane() {
