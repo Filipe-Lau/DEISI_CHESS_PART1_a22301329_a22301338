@@ -317,7 +317,7 @@ public class GameManager {
                     peca1.setPosX(xTemp);
                     peca1.setPosY(yTemp);
 
-                    /*HistoricoJogada pecaAJogar = new HistoricoJogada(peca, x0, y0, x1, y1); //algo mal aqui ver amanhã
+                    HistoricoJogada pecaAJogar = new HistoricoJogada(peca, x0, y0, x1, y1); //algo mal aqui ver amanhã
                     historico.getJogadasFeitas().put(nrDaJogada, pecaAJogar);
 
                     peca.incrementaNrJogadasValidas(); // INCREMENTA O NUMERO DE JOGADAS VALIDAS DA PECA
@@ -325,7 +325,8 @@ public class GameManager {
                     atualizarVezDeJogar(); // PRETA JOGA, A VEZ DE JOGAR MUDA PARA AS BRANCAS E VICE VERSA
                     atualizarHomer(); // ATUALIZAR O HOMER DAS RONDAS
                     atualizarJoker(); // ATUALIZAR O JOKER DAS RONDAS
-*/
+
+                    return true;
 
                 }
             }
