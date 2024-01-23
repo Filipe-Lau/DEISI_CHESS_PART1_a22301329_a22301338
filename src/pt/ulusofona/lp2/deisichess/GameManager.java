@@ -265,9 +265,6 @@ public class GameManager {
             Joker joker = (Joker) peca;
             tipoPeca = joker.pecaEmUso.getTipoPeca();
         }
-        //if(tipoPeca == 10) {
-          //  return false;
-        //}
 
         if (!caminhoLivre(tipoPeca, x0, y0, x1, y1)) { // VALIDAR SE A PEÇA NÃO PASSA POR CIMA DE OUTRAS PEÇAS
             return false;
@@ -320,7 +317,7 @@ public class GameManager {
                     peca1.setPosX(xTemp);
                     peca1.setPosY(yTemp);
 
-                    HistoricoJogada pecaAJogar = new HistoricoJogada(peca, x0, y0, x1, y1);
+                    /*HistoricoJogada pecaAJogar = new HistoricoJogada(peca, x0, y0, x1, y1); //algo mal aqui ver amanhã
                     historico.getJogadasFeitas().put(nrDaJogada, pecaAJogar);
 
                     peca.incrementaNrJogadasValidas(); // INCREMENTA O NUMERO DE JOGADAS VALIDAS DA PECA
@@ -328,8 +325,7 @@ public class GameManager {
                     atualizarVezDeJogar(); // PRETA JOGA, A VEZ DE JOGAR MUDA PARA AS BRANCAS E VICE VERSA
                     atualizarHomer(); // ATUALIZAR O HOMER DAS RONDAS
                     atualizarJoker(); // ATUALIZAR O JOKER DAS RONDAS
-
-                    return true;
+*/
 
                 }
             }
