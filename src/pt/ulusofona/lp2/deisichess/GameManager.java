@@ -265,9 +265,9 @@ public class GameManager {
             Joker joker = (Joker) peca;
             tipoPeca = joker.pecaEmUso.getTipoPeca();
         }
-        if(tipoPeca == 10) {
-            return false;
-        }
+        //if(tipoPeca == 10) {
+          //  return false;
+        //}
 
         if (!caminhoLivre(tipoPeca, x0, y0, x1, y1)) { // VALIDAR SE A PEÇA NÃO PASSA POR CIMA DE OUTRAS PEÇAS
             return false;
