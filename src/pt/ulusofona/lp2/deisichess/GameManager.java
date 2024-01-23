@@ -967,7 +967,7 @@ public class GameManager {
         }
 
         if (peca.getTipoPeca() == 10) {
-            pistas.add("Sou o JohnMcClane. Yippee ki yay. Sou duro de roer, mas não me sei mover");
+            pistas.add("Sou o John McClane. Yippee ki yay. Sou duro de roer, mas não me sei mover");
         }
         for (int column = 0; column < getBoardSize(); column++) { // x
             for (int line = 0; line < getBoardSize(); line++) { // y
