@@ -4,11 +4,11 @@ public class JohnMcClane extends Peca{
 
     protected final int pontos = 20;
     protected final String tipoPecaString = "John McClane";
-    int tentativasComer = 0;
+    protected int tentativasComer = 0;
     protected final int tipoPeca = 10;
 
 
-    public JohnMcClane() {
+    protected JohnMcClane() {
 
     }
 

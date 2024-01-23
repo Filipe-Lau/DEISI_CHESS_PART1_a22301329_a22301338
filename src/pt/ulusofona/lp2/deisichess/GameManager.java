@@ -581,7 +581,7 @@ public class GameManager {
                         } else if (peca.getEquipaPeca() == 10) {
                             squareInfo[4] = "rei_black.png";
                         } else {
-                            squareInfo[4] = "amarelo.png";
+                            squareInfo[4] = "rei_black.png";
                         }
                         break;
                     case 1: //RAINHA
@@ -590,7 +590,7 @@ public class GameManager {
                         } else if (peca.getEquipaPeca() == 10){
                             squareInfo[4] = "rainha_black.png";
                         } else {
-                            squareInfo[4] = "amarelo.png";
+                            squareInfo[4] = "rainha_yellow.png";
                         }
                         break;
                     case 2:// PONEI MAGICO
@@ -599,7 +599,7 @@ public class GameManager {
                         } else if (peca.getEquipaPeca() == 10){
                             squareInfo[4] = "ponei_magico_black.png";
                         } else {
-                            squareInfo[4] = "amarelo.png";
+                            squareInfo[4] = "ponei_magico_yellow.png";
                         }
                         break;
                     case 3:// PADRE DA VILA
@@ -608,7 +608,7 @@ public class GameManager {
                         } else if(peca.getEquipaPeca() == 10) {
                             squareInfo[4] = "padre_vila_black.png";
                         } else {
-                            squareInfo[4] = "amarelo.png";
+                            squareInfo[4] = "padre_vila_yellow.png";
                         }
                         break;
                     case 4:// TORRE HORIZONTAL
@@ -617,7 +617,7 @@ public class GameManager {
                         } else if(peca.getEquipaPeca() == 10){
                             squareInfo[4] = "torre_h_black.png";
                         } else {
-                        squareInfo[4] = "amarelo.png";
+                        squareInfo[4] = "torre_h_yellow.png";
                     }
                         break;
                     case 5:// TORRE VERTICAL
@@ -626,7 +626,7 @@ public class GameManager {
                         } else if(peca.getEquipaPeca() == 10){
                             squareInfo[4] = "torre_v_black.png";
                         } else {
-                            squareInfo[4] = "amarelo.png";
+                            squareInfo[4] = "torre_v_yellow.png";
                         }
                         break;
                     case 6:// HOMER SIMPSON
@@ -635,7 +635,7 @@ public class GameManager {
                         } else if (peca.getEquipaPeca() == 10){
                             squareInfo[4] = "homer_black.png";
                         } else {
-                            squareInfo[4] = "amarelo.png";
+                            squareInfo[4] = "homer_yellow.png";
                         }
                         break;
                     case 7:// JOKER
@@ -644,7 +644,7 @@ public class GameManager {
                         } else if (peca.getEquipaPeca() == 10){
                             squareInfo[4] = "joker_black.png";
                         } else {
-                            squareInfo[4] = "amarelo.png";
+                            squareInfo[4] = "joker_yellow.png";
                         }
                     case 10:
                         if (peca.getEquipaPeca() == 20) {
@@ -652,7 +652,7 @@ public class GameManager {
                         } else if (peca.getEquipaPeca() == 10){
                             squareInfo[4] = "joker_black.png";
                         } else {
-                            squareInfo[4] = "amarelo.png";
+                            squareInfo[4] = "joker_yellow.png";
                         }
                         break;
                 }

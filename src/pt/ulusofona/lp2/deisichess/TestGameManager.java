@@ -1,6 +1,10 @@
 package pt.ulusofona.lp2.deisichess;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.io.File;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -10,7 +14,18 @@ public class TestGameManager {
     public boolean compilar(){
         return true;
     }
+    @Test
+    public void testMoveValidar_ValidMove_ReturnsTrue() {
+        // Arrange
+        GameManager gameManager = new GameManager();
+        // Set up the initial state or dependencies, if needed.
 
+        // Act
+        boolean isValidMove = gameManager.moveValidar(0, 0, 1, 1);
+
+        // Assert
+        assertTrue(isValidMove);
+    }
     /*
     @Test
     public void testMoveValidar_ValidMove_ReturnsTrue() {
