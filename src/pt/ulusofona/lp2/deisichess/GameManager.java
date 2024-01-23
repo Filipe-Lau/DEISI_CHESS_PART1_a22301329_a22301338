@@ -281,6 +281,7 @@ public class GameManager {
                 if(johnMcClane.getTentativasComer() < 4){
                     johnMcClane.aumentaTentativasComer();
                 }
+                return true;
             }
             // VALIDA SE NÃO ESTOU A ATACAR UMA PEÇA DA MESMA EQUIPA E SE NÃO ESTOU A ATACAR UMA RAINHA COM UMA RAINHA
             return (peca.getEquipaPeca() != peca1.getEquipaPeca()) && (tipoPeca != 1 || tipoPeca1 != 1);
@@ -321,12 +322,12 @@ public class GameManager {
                     historico.getJogadasFeitas().put(nrDaJogada, pecaAJogar);
 
                     HistoricoJogada pecaCapturada = new HistoricoJogada(peca1, peca1.getPosX(), peca1.getPosY(), xTemp, yTemp);
-                    historico.getJogadasFeitas().put(-nrDaJogada, pecaCapturada);
+                    historico.getJogadasFeitas().put(nrDaJogada, pecaCapturada);
 
                     peca.incrementaNrJogadasValidas(); // INCREMENTA O NUMERO DE JOGADAS VALIDAS DA PECA
                     atualizarJogadasValidas(); // INCREMENTA AS JOGADAS VALIDAS DAS EQUIPAS
                     atualizarVezDeJogar(); // PRETA JOGA, A VEZ DE JOGAR MUDA PARA AS BRANCAS E VICE VERSA
-                    //atualizarHomer(); // ATUALIZAR O HOMER DAS RONDAS
+                    atualizarHomer(); // ATUALIZAR O HOMER DAS RONDAS
                     atualizarJoker(); // ATUALIZAR O JOKER DAS RONDAS
 
                     return true;
