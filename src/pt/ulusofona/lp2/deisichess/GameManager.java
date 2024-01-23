@@ -281,8 +281,8 @@ public class GameManager {
             }
             if(tipoPeca1 == 10){
                 JohnMcClane johnMcClane = (JohnMcClane) peca1;
-                if(johnMcClane.getTentativasComer() < 4){
-                    johnMcClane.aumentaTentativasComer();
+                if(johnMcClane.getTentativasComer() > 3){
+                    return false;
                 }
             }
             // VALIDA SE NÃO ESTOU A ATACAR UMA PEÇA DA MESMA EQUIPA E SE NÃO ESTOU A ATACAR UMA RAINHA COM UMA RAINHA
@@ -311,6 +311,7 @@ public class GameManager {
             if(peca1.getTipoPeca() == 10){
                 JohnMcClane johnMcClane = (JohnMcClane) peca1;
                 if(johnMcClane.getTentativasComer() < 4) {
+                    johnMcClane.aumentaTentativasComer();
                     int xTemp = peca.getPosX();
                     int yTemp = peca.getPosY();
 
