@@ -282,7 +282,9 @@ public class GameManager {
             if(tipoPeca1 == 10){
                 JohnMcClane johnMcClane = (JohnMcClane) peca1;
                 if(johnMcClane.getTentativasComer() < 4){
+                    johnMcClane.aumentaTentativasComer();
                     return false;
+
                 }
             }
             // VALIDA SE NÃO ESTOU A ATACAR UMA PEÇA DA MESMA EQUIPA E SE NÃO ESTOU A ATACAR UMA RAINHA COM UMA RAINHA
@@ -306,7 +308,20 @@ public class GameManager {
         nrDaJogada++;
         gameResult.aumentaJogadasSemComer();
 
-        if (peca1 != null) { // ATAQUE
+        if (peca1 != null) {// ATAQUE
+
+            if(peca1.getTipoPeca() == 10){
+                int xTemp = peca.getPosX();
+                int yTemp = peca.getPosY();
+
+                peca.setPosX(peca1.getPosX());
+                peca.setPosY(peca1.getPosY());
+
+                peca1.setPosX(xTemp);
+                peca1.setPosY(yTemp);
+
+                return true;
+            }
 
             atualizarCapturas(peca);
 

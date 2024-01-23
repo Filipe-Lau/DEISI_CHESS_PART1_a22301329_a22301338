@@ -15,6 +15,9 @@ public class JohnMcClane extends Peca{
     protected JohnMcClane(String idPeca, int equipaPeca, String nomePeca) {
         super(idPeca,equipaPeca, nomePeca);
     }
+    protected void aumentaTentativasComer(){
+        tentativasComer++;
+    }
 
 
     protected int getTentativasComer(){
